@@ -1,0 +1,16 @@
+.comments {
+    padding-left: 40px;
+}
+
+.comment {
+    &-photo {
+        width: 50px;
+        min-width: 50px;
+        vertical-align: middle;
+        line-height: 50px;
+        >img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}

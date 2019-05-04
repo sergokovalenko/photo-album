@@ -40,7 +40,7 @@ class Information extends Component {
                         <div className="col-6 information">
                             <div className="user-info">
                                 <div className="user-info-name">{name}</div>
-                                <div className="user-info-nick ml-3">{nickName}</div>
+                                <div className="user-info-nick text-monospace ml-3">{nickName}</div>
                                 <div className="user-info-bio">
                                     <span>About: </span>
                                     {

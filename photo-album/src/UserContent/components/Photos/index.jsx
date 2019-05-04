@@ -1,14 +1,14 @@
 import React from 'react';
 import Photo from './../Photo';
 
-const Photos = (props) => {
+const Photos = ({ photos, user }) => {
     return (
         <div className="cont">
             <div className="row">
             {
-                props.photos.map(photo => {
+                photos.map(photo => {
                     return (
-                        <Photo photo={photo} />
+                        <Photo photo={photo} user={user} />
                     );
                 })
             }
