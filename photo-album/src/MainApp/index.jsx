@@ -4,12 +4,9 @@ import Content from './../Content';
 
 const MainApp = () => {
     return (
-        <Route path='/' render={(props) => (
-                <div className="container">
-                    <Content {...props} />
-                </div>
-            )}
-        />
+        <div className="container">
+            <Route path='/user' component={Content} />
+        </div>
     );
 };
 
