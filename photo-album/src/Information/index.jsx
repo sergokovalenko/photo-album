@@ -15,13 +15,14 @@ class Information extends Component {
     }
 
     render() {
+        const { isBioShown } = this.state;
         const {
             biografy = 'biografy',
             name = 'Name Surname',
             nickName = 'nickname',
-            photoCount = 5
+            photoCount = 5,
+            url = 'https://im0-tub-ru.yandex.net/i?id=1ccc212c9173bbd571b5721dd8a0b1d1-l&n=13'
         } = this.props;
-        const { isBioShown } = this.state;
         const onClick = () => console.log('click');
 
         return (
@@ -31,7 +32,7 @@ class Information extends Component {
                         <div className="col-6 picture">
                             <img
                                 className="w-100 img-fluid img-thumbnail rounded-circle"
-                                src="https://im0-tub-ru.yandex.net/i?id=1ccc212c9173bbd571b5721dd8a0b1d1-l&n=13"
+                                src={url}
                                 alt="log"
                                 width="50%"
                             />
