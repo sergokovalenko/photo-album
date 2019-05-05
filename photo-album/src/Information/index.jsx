@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from './../components/Button';
+import UserDescription from './components/UserDescription';
+import AlbumDescription from './components/AlbumDescription';
 import './index.scss';
 
-const Information = ({ user }) => {
+const Information = ({ item, isUser }) => {
     const onClick = () => console.log('click');
-    const [isBioShown, changeBioVisibility] = useState(false);
-    const {
-        firstName,
-        lastName,
-        bio,
-        url,
-        birthDate,
-        photoCount,
-        nickname
-    } = user;
+    const { url } = item;
 
     return (
         <div className="wrapper">
@@ -28,22 +21,11 @@ const Information = ({ user }) => {
                         />
                     </div>
                     <div className="col-6 information">
-                        <div className="user-info">
-                            <div className="user-info-name">{`${firstName} ${lastName}`}</div>
-                            <div className="user-info-nick text-monospace ml-3">{nickname}</div>
-                            <div className="user-info-bio">
-                                <span>About: </span>
-                                {
-                                    isBioShown ?
-                                        <span>{bio} </span> :
-                                        null
-                                }
-                                <span className="user-info-bio--link" onClick={() => changeBioVisibility(!isBioShown)}>
-                                        {isBioShown ? 'Hide...' : 'Show...'}
-                                    </span>
-                            </div>
-                            <div className="user-info-photos">{photoCount} photos</div>
-                        </div>
+                        {
+                            isUser ?
+                                <UserDescription item={item} /> :
+                                <AlbumDescription item={item} />
+                        }
                     </div>
                 </div>
             </div>

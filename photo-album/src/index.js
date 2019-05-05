@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import InformationBlock from './Information';
 import MainApp from './MainApp';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';

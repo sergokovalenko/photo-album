@@ -1,16 +1,16 @@
 import React from 'react';
 import InformationBlock from './../Information';
-import UserContent from '../UserContent';
-import { users } from './../data';
+import PageContent from '../PageContent';
+import { albums, users } from './../data';
 
-const Content = props => {
-    const userId = +props.match.params.userId ? +props.match.params.userId : 1;
-    const user = users.find(user => user.id === userId);
+const Content = ({ isUser, ...props}) => {
+    const itemId = +props.match.params.itemId ? +props.match.params.itemId : 1;
+    const item = (isUser ? users : albums).find(el => el.id === itemId);
 
     return (
         <>
-            <InformationBlock {...props} user={user} />
-            <UserContent {...props} user={user} />
+            <InformationBlock {...props} isUser={isUser} item={item} />
+            <PageContent {...props} isUser={isUser} item={item} />
         </>
     );
 };

@@ -4,19 +4,6 @@
     border-radius: 10px;
 }
 
-.user-info {
-    &-name {
-        font-size: 30px;
-    }
-    &-bio {
-        &--link {
-            text-decoration: underline;
-            cursor: pointer;
-            color: gray;
-        }
-    }
-}
-
 .buttons-container {
     display: flex;
 }
