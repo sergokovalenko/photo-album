@@ -5,15 +5,15 @@ import './index.scss';
 
 const CommentsContainer = props => {
     const mapped = comments.map(comm => ({
-        ...comm,
-        ...users.find(user => user.id === comm.userId)
+        ...users.find(user => user.id === comm.userId),
+        ...comm
     }));
 
     return (
         <div className="comments mb-5">
             {
                 mapped.map(el => (
-                    <div className="comment d-flex mb-2">
+                    <div key={`c:${el.id}u:${el.userId}`} className="comment d-flex mb-2">
                         <div className="comment-photo mr-3">
                             <img src={el.url} alt="ava" className="rounded-circle w-100" />
                         </div>

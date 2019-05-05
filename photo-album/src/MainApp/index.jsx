@@ -5,7 +5,7 @@ import Content from './../Content';
 const MainApp = () => {
     return (
         <div className="container">
-            <Route path='/user' component={Content} />
+            <Route path='/user/:userId' component={Content} />
         </div>
     );
 };

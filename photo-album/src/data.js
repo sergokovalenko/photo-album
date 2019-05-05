@@ -23,9 +23,9 @@ export const comments = [
 ];
 
 export const users = [
-    { firstName: 'name1', lastName: 'famaly', birthDate: '5/4/2019', id: 1, userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=26de86a824ce957a2d1748be27eb358e-l&n=13' },
-    { firstName: 'name2', lastName: 'famaly', birthDate: '5/4/2019', id: 2, userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=c1923033276d94680bf940048b53d420-l&n=13' },
-    { firstName: 'name3', lastName: 'famaly', birthDate: '5/4/2019', id: 3, userId: 0, url: 'https://im0-tub-ru.yandex.net/i?id=2b9ee8c1720008d0370dc729e7c8ac57-l&n=13' },
-    { firstName: 'name4', lastName: 'famaly', birthDate: '5/4/2019', id: 4, userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=f050e40a84848bf5f70f55405e7b3a7b-l&n=13' },
-    { firstName: 'name5', lastName: 'famaly', birthDate: '5/4/2019', id: 5, userId: 0, url: 'https://im0-tub-ru.yandex.net/i?id=dbfdc7a3a246cf0cb7ad66899416e386-l&n=13' }
+    { firstName: 'name1', lastName: 'famaly', birthDate: '5/4/2019', id: 1, bio: 'bio', photoCount: 1, nickname: 'nickname', userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=26de86a824ce957a2d1748be27eb358e-l&n=13' },
+    { firstName: 'name2', lastName: 'famaly', birthDate: '5/4/2019', id: 2, bio: 'bio', photoCount: 4, nickname: 'nickname', userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=c1923033276d94680bf940048b53d420-l&n=13' },
+    { firstName: 'name3', lastName: 'famaly', birthDate: '5/4/2019', id: 3, bio: 'bio', photoCount: 5, nickname: 'nickname', userId: 0, url: 'https://im0-tub-ru.yandex.net/i?id=2b9ee8c1720008d0370dc729e7c8ac57-l&n=13' },
+    { firstName: 'name4', lastName: 'famaly', birthDate: '5/4/2019', id: 4, bio: 'bio', photoCount: 8, nickname: 'nickname', userId: 1, url: 'https://im0-tub-ru.yandex.net/i?id=f050e40a84848bf5f70f55405e7b3a7b-l&n=13' },
+    { firstName: 'name5', lastName: 'famaly', birthDate: '5/4/2019', id: 5, bio: 'bio', photoCount: 7, nickname: 'nickname', userId: 0, url: 'https://im0-tub-ru.yandex.net/i?id=dbfdc7a3a246cf0cb7ad66899416e386-l&n=13' }
 ];

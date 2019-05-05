@@ -18,7 +18,7 @@ class Photo extends Component {
                         data-target={`#${photo.name}`}
                     />
                 </div>
-                <div className="modal fade" id={photo.name} tabindex="-1" role="dialog" aria-hidden="true">
+                <div className="modal fade" id={photo.name} tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog modal-xl">
                         <div className="modal-content">
                             <img

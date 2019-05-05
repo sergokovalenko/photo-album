@@ -1,20 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Tabs from './components/Tabs';
-import Photos from './components/Photos';
-import { photos, users } from './../data';
+import PhotosContainer from './components/Photos';
+import { photos } from './../data';
 
-const UserContent = (props) => {
+const UserContent = ({ user, ...props }) => {
     const path = props.location.pathname;
     const activeTab = /albums/.test(path) ? 1 : (/friends/.test(path) ? 2 : 0);
 
     return (
         <div className="wrapper">
-            <Tabs activeTab={activeTab} />
+            <Tabs userId={user.id} activeTab={activeTab} />
             <Switch>
-                <Route exact path="/user" render={(props) => <Photos {...props} photos={photos} user={users[0]} />} />
-                <Route path="/user/albums" render={() => 'albums'} />
-                <Route path="/user/friends" render={() => 'friends'} />
+                <Route path="/user/:userId" render={props => <PhotosContainer {...props} photos={photos} user={user} />} />
+                <Route path="/user/:userId/albums" render={() => 'albums'} />
+                <Route path="/user/:userId/friends" render={() => 'friends'} />
             </Switch>
         </div>
     );

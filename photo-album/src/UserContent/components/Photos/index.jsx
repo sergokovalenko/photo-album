@@ -1,14 +1,14 @@
 import React from 'react';
 import Photo from './../Photo';
 
-const Photos = ({ photos, user }) => {
+const PhotosContainer = ({ photos, user }) => {
     return (
         <div className="cont">
             <div className="row">
             {
                 photos.map(photo => {
                     return (
-                        <Photo photo={photo} user={user} />
+                        <Photo key={`p:${photo.id}u:${user.id}`} photo={photo} user={user} />
                     );
                 })
             }
@@ -17,4 +17,4 @@ const Photos = ({ photos, user }) => {
     );
 };
 
-export default Photos;
+export default PhotosContainer;
