@@ -7,7 +7,7 @@ const UserDescription = ({ item }) => {
         firstName,
         lastName,
         bio,
-        birthDate,
+        // birthDate,
         photoCount,
         nickname
     } = item;
