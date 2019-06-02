@@ -1,5 +1,6 @@
 package ru.sstu.photos.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -9,16 +10,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebMVCConfig implements WebMvcConfigurer {
 
-    public WebMVCConfig() {
-        super();
-    }
+//    @Value("${file.directory.path}")
+//    private String serveDirectory;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/")
-//                .addResourceLocations("file:/");
-        registry.addResourceHandler("/*/**")
-                .addResourceLocations("classpath:/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
     }
-
 }
