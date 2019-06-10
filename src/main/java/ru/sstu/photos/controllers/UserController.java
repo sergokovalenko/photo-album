@@ -20,15 +20,14 @@ public class UserController {
         this.userRepo = userRepo;
     }
 
-
     @GetMapping
     public List<User> list() {
         return userRepo.findAll();
     }
 
     @GetMapping("{id}")
-    public User getOne(@PathVariable("id") User message) {
-        return message;
+    public User getOne(@PathVariable("id") User user) {
+        return user;
     }
 
     @PostMapping
