@@ -15,11 +15,90 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String text;
+
+    private String lastName;
+    private String firstName;
+
+    public User(String lastName, String firstName, String nickname, String email, String password, String url, LocalDateTime birthDate) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.nickname = nickname;
+        this.photoCount = 0;
+        this.url = url;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.verified = VERIFICATION_STATUS.NO;
+        this.password = password;
+    }
+
+    private VERIFICATION_STATUS verified;
+    private String nickname;
+    private int photoCount;
+    private String url;
+    private String email;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime birthDate;
+
+    public String getFirstName() { return firstName; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName;
+    }
+
+    public String getLastName() { return lastName;
+    }
+
+    public void setLastName(String lastName) { this.lastName = lastName;
+    }
+
+    public String getNickname() { return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getPhotoCount() {
+        return photoCount;
+    }
+
+    public void setPhotoCount(int photoCount) {
+        this.photoCount = photoCount;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public LocalDateTime getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDateTime birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public Long getId() {
         return id;
@@ -29,19 +108,19 @@ public class User {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public LocalDateTime getCreationDate() {
         return birthDate;
     }
 
     public void setCreationDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public VERIFICATION_STATUS getVerified() {
+        return verified;
+    }
+
+    public void setVerified(VERIFICATION_STATUS verified) {
+        this.verified = verified;
     }
 }
