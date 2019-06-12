@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Tabs from './components/Tabs';
 import PhotosContainer from './components/Photos';
-import { photos } from './../data';
+import FriendsContainer from './containers/Friends';
+import AlbumsContainer from './containers/Albums';
 
 const PageContent = ({ item, isUser = true, ...props }) => {
     const path = props.location.pathname;
@@ -12,12 +13,12 @@ const PageContent = ({ item, isUser = true, ...props }) => {
         <div className="wrapper">
             <Tabs activeTab={activeTab} itemId={item.id} isUser={isUser} />
             <Switch>
-                <Route path={`/${isUser ? 'user' : 'album'}/:itemId`} render={props => <PhotosContainer {...props} photos={photos} item={item} />} />
+                <Route exact path={`/${isUser ? 'user' : 'album'}/:itemId`} render={props => <PhotosContainer {...props} item={item} />} />
                 {
                     isUser ?
                         <>
-                            <Route path="/user/:itemId/albums" render={() => 'albums'} />
-                            <Route path="/user/:itemId/friends" render={() => 'friends'} />
+                            <Route path="/user/:itemId/albums" render={() => <AlbumsContainer item={item} />} />
+                            <Route path="/user/:itemId/friends" render={() => <FriendsContainer item={item} />} />
                         </> :
                         null
                 }
