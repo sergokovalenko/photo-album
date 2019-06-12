@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Photo from './../Photo';
+import { photos as datPhoto } from './../../../data';
 
-const PhotosContainer = ({ photos, item }) => {
+const PhotosContainer = ({ item }) => {
+    const [photos, setPhotos] = useState([]);
+
+    useEffect(() => {
+        // fetching data
+        setPhotos(datPhoto);
+    }, [item.id]);
+
     return (
         <div className="cont">
             <div className="row">
             {
-                photos.map(photo => (
-                    <Photo key={`p:${photo.id}u:${item.id}`} photo={photo} user={item} />
-                ))
+                photos.length > 0 ?
+                    photos.map(photo => (
+                        <Photo key={`p:${photo.id}u:${item.id}`} photo={photo} user={item} />
+                    )) :
+                    'There is no photo'
             }
             </div>
         </div>
