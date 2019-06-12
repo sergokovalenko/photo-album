@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { friends as dataFriends } from './../../../data';
+import { friends as dataFriends } from '../../../../data';
 import { Link } from "react-router-dom";
 
 const FriendsContainer = ({ item }) => {

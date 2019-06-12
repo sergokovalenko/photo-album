@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { albums as dataAlbums } from './../../../data';
+import { albums as dataAlbums } from '../../../../data';
 import { Link } from "react-router-dom";
 
 const AlbumsContainer = ({ item }) => {
