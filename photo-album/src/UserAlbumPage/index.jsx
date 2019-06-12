@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import InformationBlock from './../Information';
-import PageContent from '../PageContent';
+import InformationBlock from './Information';
+import PageContent from './PageContent';
 import { albums, users } from './../data';
 
 const Content = ({ isUser, ...props}) => {

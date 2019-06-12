@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './index.scss';
-import { users } from './../../../data';
+import { users } from './../../../../data';
 
 const AlbumDescription = ({ item, curUserId }) => {
     const {

@@ -1,7 +1,7 @@
 import React from 'react';
-import CommentsContainer from './../Comments';
-import PhotoOwner from './../PhotoOwner';
+import Comments from '../Comments';
 import './index.scss';
+import {Link} from "react-router-dom";
 
 const Photo = ({ photo, user }) => {
     const { url, name } = photo;
@@ -29,10 +29,15 @@ const Photo = ({ photo, user }) => {
                         <hr className="line" />
                         <div className="row">
                             <div className="col-9">
-                                <CommentsContainer photoId={photo.id} />
+                                <Comments photoId={photo.id} />
                             </div>
                             <div className="col-3">
-                                <PhotoOwner user={user} photo={photo} />
+                                {/* Photo Owner */}
+                                <div className="w-100 pb-3">
+                                    <span>Owner: </span>
+                                    <Link to={`/user/${user.id}`} className="text-primary info-user-name">{`${user.firstName} ${user.lastName}`}</Link>
+                                    <div>{photo.likes} likes</div>
+                                </div>
                             </div>
                         </div>
                     </div>

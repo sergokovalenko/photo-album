@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Tabs from './components/Tabs';
-import PhotosContainer from './components/Photos';
+import PhotosContainer from './containers/Photos';
 import FriendsContainer from './containers/Friends';
 import AlbumsContainer from './containers/Albums';
 

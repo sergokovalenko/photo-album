@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Photo from './../Photo';
-import { photos as datPhoto } from './../../../data';
+import Photo from '../../components/Photo';
+import { photos as datPhoto } from '../../../../data';
 
 const PhotosContainer = ({ item }) => {
     const [photos, setPhotos] = useState([]);

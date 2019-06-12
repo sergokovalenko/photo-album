@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Content from './../Content';
+import Content from '../UserAlbumPage';
 import Index from './../Index/index';
 
 const curUserId = 1;

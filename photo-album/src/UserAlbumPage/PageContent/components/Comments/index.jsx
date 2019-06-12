@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { comments as dataComm, users } from './../../../data';
+import { comments as dataComm, users } from '../../../../data';
 import './index.scss';
 
 const CommentsContainer = ({ photoId }) => {
