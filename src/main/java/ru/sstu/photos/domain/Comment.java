@@ -13,14 +13,14 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String text;
-    private int user;
+    private Long user;
     private Date date;
-    private int album;
+    private Long album;
 
-    public Comment(int id, String text, int user, Date date, int album) {
+    public Comment(Long id, String text, Long user, Date date, Long album) {
         this.id = id;
         this.text = text;
         this.user = user;
@@ -28,11 +28,11 @@ public class Comment {
         this.album = album;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,11 +44,11 @@ public class Comment {
         this.text = text;
     }
 
-    public int getUser() {
+    public Long getUser() {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(Long user) {
         this.user = user;
     }
 
@@ -60,11 +60,11 @@ public class Comment {
         this.date = date;
     }
 
-    public int getAlbum() {
+    public Long getAlbum() {
         return album;
     }
 
-    public void setAlbum(int album) {
+    public void setAlbum(Long album) {
         this.album = album;
     }
 }

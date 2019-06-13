@@ -38,14 +38,19 @@ public class PhotoController {
 
     @PutMapping("{id}")
     public Photo update(
-            @PathVariable("id") Photo messageFromDb,
-            @RequestBody Photo message
+            @PathVariable("id") Photo photoFromDb,
+            @RequestBody Photo photo
     ) {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+        BeanUtils.copyProperties(photo, photoFromDb, "id");
 
-        return photoRepo.save(messageFromDb);
+        return photoRepo.save(photoFromDb);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Photo photo) { photoRepo.delete(photo); }
+//    @DeleteMapping("{id}")
+//    public void delete(@PathVariable("id") Photo photo) { photoRepo.delete(photo); }
+
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable("id") Long photo) {
+        photoRepo.deleteById(photo);
+    }
 }

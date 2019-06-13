@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,9 @@ public class User {
     private String lastName;
     private String firstName;
 
-    public User(String lastName, String firstName, String nickname, String email, String password, String url, LocalDateTime birthDate) {
+    private User() {}
+
+    public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.nickname = nickname;
@@ -55,8 +58,7 @@ public class User {
     }
 
     @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDateTime birthDate;
+    private Instant birthDate;
 
     public String getFirstName() { return firstName; }
 
@@ -92,11 +94,11 @@ public class User {
         this.url = url;
     }
 
-    public LocalDateTime getBirthDate() {
+    public Instant getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(Instant birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -108,11 +110,11 @@ public class User {
         this.id = id;
     }
 
-    public LocalDateTime getCreationDate() {
+    public Instant getCreationDate() {
         return birthDate;
     }
 
-    public void setCreationDate(LocalDateTime birthDate) {
+    public void setCreationDate(Instant birthDate) {
         this.birthDate = birthDate;
     }
 

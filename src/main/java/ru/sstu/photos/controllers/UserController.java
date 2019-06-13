@@ -31,9 +31,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User message) {
-        message.setCreationDate(LocalDateTime.now());
-        return userRepo.save(message);
+    public User create(@RequestBody User user) {
+        return userRepo.save(user);
     }
 
     @PutMapping("{id}")

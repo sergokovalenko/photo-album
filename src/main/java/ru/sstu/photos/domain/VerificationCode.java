@@ -10,24 +10,24 @@ import javax.persistence.*;
 @ToString(of = {"user_id", "raw"})
 @EqualsAndHashCode(of = {"raw"})
 public class VerificationCode {
-    public VerificationCode(int user_id, String raw) {
+    public VerificationCode(Long user_id, String raw) {
         this.user_id = user_id;
         this.raw = raw;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    public int getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
-    private int user_id;
+    private Long user_id;
     private String raw;
 
     public String getRaw() {
@@ -38,11 +38,11 @@ public class VerificationCode {
         this.raw = raw;
     }
 
-    public int getId() {
+    public Long getId() {
         return user_id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.user_id = id;
     }
 }

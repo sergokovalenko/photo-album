@@ -13,13 +13,13 @@ public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String name;
     private String photos_count;
-    private int user_id;
+    private Long user_id;
 
-    public Album(int id, String name, String photos_count, int user_id, ACCESS access) {
+    public Album(Long id, String name, String photos_count, Long user_id, ACCESS access) {
         this.id = id;
         this.name = name;
         this.photos_count = photos_count;
@@ -27,11 +27,11 @@ public class Album {
         this.access = access;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,11 +51,11 @@ public class Album {
         this.photos_count = photos_count;
     }
 
-    public int getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
