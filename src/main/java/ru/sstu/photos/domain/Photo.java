@@ -12,34 +12,34 @@ import javax.persistence.*;
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    private int user_id;
+    private Long user_id;
     private String text;
-    private int likes;
+    private Integer likes;
 
     private Photo() {}
 
-    public Photo(int id, int user_id, String text) {
+    public Photo(Long id, Long user_id, String text) {
         this.id = id;
         this.user_id = user_id;
         this.text = text;
         this.likes = 0;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
@@ -51,11 +51,11 @@ public class Photo {
         this.text = text;
     }
 
-    public int getLikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 }
