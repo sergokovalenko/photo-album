@@ -4,6 +4,7 @@ import Tabs from './components/Tabs';
 import PhotosContainer from './containers/Photos';
 import FriendsContainer from './containers/Friends';
 import AlbumsContainer from './containers/Albums';
+import CommentsContainer from "./components/Comments";
 
 const PageContent = ({ item, isUser = true, ...props }) => {
     const path = props.location.pathname;
@@ -13,14 +14,17 @@ const PageContent = ({ item, isUser = true, ...props }) => {
         <div className="wrapper">
             <Tabs activeTab={activeTab} itemId={item.id} isUser={isUser} />
             <Switch>
-                <Route exact path={`/${isUser ? 'user' : 'album'}/:itemId`} render={props => <PhotosContainer {...props} item={item} />} />
                 {
                     isUser ?
                         <>
+                            <Route exact path="/user/:itemId" render={() => <AlbumsContainer item={item} />} />
                             <Route path="/user/:itemId/albums" render={() => <AlbumsContainer item={item} />} />
                             <Route path="/user/:itemId/friends" render={() => <FriendsContainer item={item} />} />
                         </> :
-                        null
+                        <>
+                            <Route exact path="/album/:itemId" render={props => <PhotosContainer {...props} item={item} />} />
+                            <Route path="/album/:itemId/comments" render={props => <CommentsContainer {...props} item={item} />} />
+                        </>
                 }
             </Switch>
         </div>

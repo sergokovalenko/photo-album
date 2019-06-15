@@ -4,7 +4,7 @@ import UserDescription from './components/UserDescription';
 import AlbumDescription from './components/AlbumDescription';
 import './index.scss';
 
-const Information = ({item, isUser, curUserId}) => {
+const Information = ({item, isUser, curUserId, isAdmin}) => {
     // const isCurUserPage = isUser && curUserId === item.id;
     const {url} = item;
     const addFriend = () => {

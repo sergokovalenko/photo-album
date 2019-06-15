@@ -16,7 +16,7 @@ const AlbumDescription = ({ item, curUserId }) => {
     const [user, setUser] = useState(null);
     useEffect(() => {
         // fetching data to take user by owner Id
-        fetch(`${window.host}/api/user}/${userId}`, {
+        fetch(`${window.host}/api/user/${userId}`, {
             ...restSettings,
             method: 'GET'
         }).then(result => responseHandler(result))

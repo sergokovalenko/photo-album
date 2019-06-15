@@ -1,5 +1,7 @@
 .comments {
-    padding-left: 40px;
+    textarea {
+        resize: none;
+    }
 }
 
 .comment {
