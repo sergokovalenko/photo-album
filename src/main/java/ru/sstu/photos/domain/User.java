@@ -23,8 +23,8 @@ public class User {
     private User() {}
 
     public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate) {
-        this.lastName = lastName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.nickname = nickname;
         this.photoCount = 0;
         this.url = url;
