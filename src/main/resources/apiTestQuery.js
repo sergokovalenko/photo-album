@@ -41,3 +41,11 @@ fetch(
         })
     }
 ).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    '/api/user/1',
+    {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    }
+).then(result => console.log(result));

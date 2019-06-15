@@ -3,7 +3,7 @@ import {friends as dataFriends} from '../../../../data';
 import {Link} from "react-router-dom";
 
 const FriendsContainer = ({item, curUserId}) => {
-    const isCurUser = item.id === curUserId;
+    // const isCurUser = item.id === curUserId;
     const [friends, setFriends] = useState([]);
     const [search, setSearch] = useState('');
     const f = (value) => {

@@ -5,7 +5,7 @@ import AlbumDescription from './components/AlbumDescription';
 import './index.scss';
 
 const Information = ({item, isUser, curUserId}) => {
-    const isCurUserPage = isUser && curUserId === item.id;
+    // const isCurUserPage = isUser && curUserId === item.id;
     const {url} = item;
     const addFriend = () => {
         // request

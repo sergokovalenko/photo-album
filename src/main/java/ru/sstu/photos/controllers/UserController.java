@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.UserRepo;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
