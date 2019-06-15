@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import UserDescription from './components/UserDescription';
 import AlbumDescription from './components/AlbumDescription';
 import './index.scss';
+import CreateUpdateAlbumModal from "./components/CreateUpdateAlbumModal";
 
 const Information = ({item, isUser, curUserId, isAdmin}) => {
     // const isCurUserPage = isUser && curUserId === item.id;
@@ -57,7 +58,7 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                             <Button
                                 content="Change album"
                                 data-toggle="modal"
-                                data-target="#newAlbum"
+                                data-target="#changeAlbum"
                             /> :
                             null
                     }
@@ -99,39 +100,8 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                     </div>
                 </div>
             </div>
-            <div className="modal fade" id="newAlbum" tabIndex="-1" role="dialog" aria-hidden="true">
-                <div className="modal-dialog modal-xl">
-                    <div className="modal-content">
-                        <form className="m-3">
-                            <div className="form-group">
-                                <label htmlFor="photo">Album picture</label>
-                                <input type="file" className="form-control-file" id="photo"/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="name">Name:</label>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    id="name"
-                                    placeholder="Creative name for your memories"
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group">
-                                <div className="form-check">
-                                    <label htmlFor="exampleFormControlSelect1">Visible for:</label>
-                                    <select className="form-control" id="exampleFormControlSelect1">
-                                        <option value="0">All</option>
-                                        <option value="1">Friends</option>
-                                        <option value="2">Only me</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button className="btn btn-primary">Create album</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <CreateUpdateAlbumModal id="newAlbum" item={null} />
+            <CreateUpdateAlbumModal id="changeAlbum" item={item} />
         </>
     );
 };
