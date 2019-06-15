@@ -10,6 +10,7 @@ import javax.persistence.*;
 @ToString(of = {"user_id", "raw"})
 @EqualsAndHashCode(of = {"raw"})
 public class VerificationCode {
+
     public VerificationCode(Long user_id, String raw) {
         this.user_id = user_id;
         this.raw = raw;

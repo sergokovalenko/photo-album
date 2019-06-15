@@ -26,31 +26,26 @@ public class PhotoController {
     }
 
     @GetMapping("{id}")
-    public Photo getOne(@PathVariable("id") Photo photo) {
-        return photo;
+    public Photo getOne(@PathVariable("id") Photo item) {
+        return item;
     }
 
     @PostMapping
-    public Photo create(@RequestBody Photo photo) {
-        photo.setLikes(0);
-        return photoRepo.save(photo);
+    public Photo create(@RequestBody Photo item) {
+        item.setLikes(0);
+        return photoRepo.save(item);
     }
 
     @PutMapping("{id}")
     public Photo update(
-            @PathVariable("id") Photo photoFromDb,
-            @RequestBody Photo photo
+            @PathVariable("id") Photo itemFromDb,
+            @RequestBody Photo item
     ) {
-        BeanUtils.copyProperties(photo, photoFromDb, "id");
+        BeanUtils.copyProperties(item, itemFromDb, "id");
 
-        return photoRepo.save(photoFromDb);
+        return photoRepo.save(itemFromDb);
     }
 
-//    @DeleteMapping("{id}")
-//    public void delete(@PathVariable("id") Photo photo) { photoRepo.delete(photo); }
-
-    @DeleteMapping("/{id}")
-    void delete(@PathVariable("id") Long photo) {
-        photoRepo.deleteById(photo);
-    }
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Long item) { photoRepo.deleteById(item); }
 }

@@ -42,4 +42,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/img/profiles/**")
                 .addResourceLocations("file://" + uploadProfilePath + "/");
     }*/
-}
+    }

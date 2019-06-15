@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.UserRepo;
 
+import java.time.Instant;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 @RestController
@@ -17,6 +19,24 @@ public class UserController {
     @Autowired
     public UserController(UserRepo userRepo) {
         this.userRepo = userRepo;
+        userRepo.save(new User(
+                "Ivanov",
+                "Ivan",
+                "Vano",
+                "vano@mail.ru",
+                "12345678",
+                "",
+                Instant.now()
+        ));
+        userRepo.save(new User(
+                "Vitin",
+                "Viktor",
+                "Vitya",
+                "vitya@mail.ru",
+                "12345678",
+                "",
+                Instant.now()
+        ));
     }
 
     @GetMapping
@@ -36,12 +56,12 @@ public class UserController {
 
     @PutMapping("{id}")
     public User update(
-            @PathVariable("id") User messageFromDb,
-            @RequestBody User message
+            @PathVariable("id") User userFromDb,
+            @RequestBody User user
     ) {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+        BeanUtils.copyProperties(user, userFromDb, "id");
 
-        return userRepo.save(messageFromDb);
+        return userRepo.save(userFromDb);
     }
 
     @DeleteMapping("{id}")
