@@ -61,6 +61,14 @@ const Information = ({item, isUser, curUserId}) => {
                             /> :
                             null
                     }
+                    {
+                        !isUser && curUserId === item.userId && isAdmin ?
+                            <Button
+                                content="Delete album"
+                                onClick={() => alert('Delete album')}
+                            /> :
+                            null
+                    }
                 </div>
             </div>
             <div className="modal fade" id="addPhoto" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -111,10 +119,12 @@ const Information = ({item, isUser, curUserId}) => {
                             </div>
                             <div className="form-group">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" id="private"/>
-                                    <label className="form-check-label" htmlFor="private">
-                                        Private
-                                    </label>
+                                    <label htmlFor="exampleFormControlSelect1">Visible for:</label>
+                                    <select className="form-control" id="exampleFormControlSelect1">
+                                        <option value="0">All</option>
+                                        <option value="1">Friends</option>
+                                        <option value="2">Only me</option>
+                                    </select>
                                 </div>
                             </div>
                             <button className="btn btn-primary">Create album</button>
