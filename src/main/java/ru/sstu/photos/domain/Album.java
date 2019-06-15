@@ -16,13 +16,11 @@ public class Album {
     private Long id;
 
     private String name;
-    private String photos_count;
+    private Integer photos_count;
     private Long user_id;
 
-    public Album(Long id, String name, String photos_count, Long user_id, ACCESS access) {
-        this.id = id;
+    public Album(String name, Long user_id, ACCESS access) {
         this.name = name;
-        this.photos_count = photos_count;
         this.user_id = user_id;
         this.access = access;
     }
@@ -44,11 +42,11 @@ public class Album {
         this.name = name;
     }
 
-    public String getPhotos_count() {
+    public Integer getPhotos_count() {
         return photos_count;
     }
 
-    public void setPhotos_count(String photos_count) {
+    public void setPhotos_count(Integer photos_count) {
         this.photos_count = photos_count;
     }
 

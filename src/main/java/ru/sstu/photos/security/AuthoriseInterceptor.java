@@ -1,4 +1,4 @@
-package ru.sstu.photos.controllers;
+package ru.sstu.photos.security;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
