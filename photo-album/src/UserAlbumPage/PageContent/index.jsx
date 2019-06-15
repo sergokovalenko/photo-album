@@ -23,7 +23,7 @@ const PageContent = ({ item, isUser = true, ...props }) => {
                         </> :
                         <>
                             <Route exact path="/album/:itemId" render={props => <PhotosContainer {...props} item={item} />} />
-                            <Route path="/album/:itemId/comments" render={props => <CommentsContainer {...props} item={item} />} />
+                            <Route path="/album/:itemId/comments" render={props => <CommentsContainer {...props} albumId={item.id} item={item} />} />
                         </>
                 }
             </Switch>

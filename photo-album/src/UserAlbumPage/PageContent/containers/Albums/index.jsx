@@ -1,9 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { albums as dataAlbums } from '../../../../data';
+import {albums as dataAlbums} from '../../../../data';
 import { Link } from "react-router-dom";
+import Search from "../../../../components/Search";
+import {restSettings} from "../../../../constants";
+import responseHandler from "../../../../helpers/responseHandler";
 
-const AlbumsContainer = ({ item }) => {
+const AlbumsContainer = ({ item, curUserId }) => {
     const [albums, setAlbums] = useState([]);
+    const [search, setSearch] = useState('');
+    const f = (value) => {
+        if (value && value.trim()) {
+            // fetching data
+            fetch(`${window.host}/album/${value}`, {
+                ...restSettings,
+                method: 'GET'
+            }).then(res => responseHandler(res))
+                .then(() => true)
+                .catch(() => {
+                    alert('albums weren\'t found')
+                });
+
+            setAlbums(dataAlbums.filter(el => el.access && el.name.includes(value)))
+        } else {
+            setAlbums(dataAlbums.filter(el => el.access));
+        }
+    };
 
     useEffect(() => {
         // fetching data
@@ -12,6 +33,15 @@ const AlbumsContainer = ({ item }) => {
 
     return (
         <div className="cont">
+            <div className="row">
+                <Search
+                    className="mb-3"
+                    onChange={(e) => setSearch(e.target.value)}
+                    onClick={() => f(search)}
+                    value={search}
+                    url={`/user/${item.id}/albums?q=${search}`}
+                />
+            </div>
             <div className="row">
                 {
                     albums.length > 0 ?

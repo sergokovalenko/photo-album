@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {friends as dataFriends} from '../../../../data';
 import {Link} from "react-router-dom";
+import Search from "../../../../components/Search";
+import {restSettings} from "../../../../constants";
+import responseHandler from "../../../../helpers/responseHandler";
 
 const FriendsContainer = ({item, curUserId}) => {
     // const isCurUser = item.id === curUserId;
@@ -9,7 +12,16 @@ const FriendsContainer = ({item, curUserId}) => {
     const f = (value) => {
         if (value && value.trim()) {
             // fetching data
-            setFriends(friends.filter(el => el.nickname.includes(value)))
+            fetch(`${window.host}/friend/${value}`, {
+                ...restSettings,
+                method: 'GET'
+            }).then(res => responseHandler(res))
+                .then(() => true)
+                .catch(() => {
+                    alert('albums weren\'t found')
+                });
+
+            setFriends(dataFriends.filter(el => el.nickname.includes(value)))
         } else {
             setFriends(dataFriends.filter(el => el.ownerId === item.id));
         }
@@ -23,26 +35,13 @@ const FriendsContainer = ({item, curUserId}) => {
     return (
         <div className="cont">
             <div className="row">
-                <div className="input-group mb-3">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search friends"
-                        aria-label="Search friends"
-                        aria-describedby="button-addon2"
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <div className="input-group-append">
-                        <Link
-                            to={`/user/${item.id}/friends?q=${search}`}
-                            className="btn btn-outline-primary"
-                            id="button-addon2"
-                            onClick={() => f(search)}
-                        >
-                            Search
-                        </Link>
-                    </div>
-                </div>
+                <Search
+                    className="mb-3"
+                    onChange={(e) => setSearch(e.target.value)}
+                    onClick={() => f(search)}
+                    value={search}
+                    url={`/user/${item.id}/friends?q=${search}`}
+                />
             </div>
             <div className="row m-0">
                 {

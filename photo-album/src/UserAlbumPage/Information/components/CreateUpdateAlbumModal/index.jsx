@@ -33,7 +33,7 @@ const CreateUpdateAlbumModal = ({ id, item }) => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        { item ? <input type="text" value={item.id} hidden /> : null }
+                        { item ? <input type="text" value={item.id} hidden readOnly /> : null }
                         <div className="form-group">
                             <label htmlFor="photo">Album picture</label>
                             <input

@@ -3,10 +3,27 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { Link } from 'react-router-dom';
 import { comments as dataComm, users } from '../../../../data';
 import './index.scss';
+import {restSettings} from "../../../../constants";
+import responseHandler from "../../../../helpers/responseHandler";
 
-const CommentsContainer = ({ photoId }) => {
+const CommentsContainer = ({ albumId, curUserId }) => {
     const [comments, setComments] = useState([]);
     const [commentValue, setComment] = useState('');
+    const sendComment = () => {
+        fetch(`${window.host}/comment`, {
+            ...restSettings,
+            body: JSON.stringify({
+                fromId: curUserId,
+                comment: commentValue,
+                albumId: albumId
+            })
+        }).then(res => responseHandler(res))
+            .then(() => true)
+            .catch(() => {
+                alert('comment wasn\'t sent')
+            });
+    };
+
     useEffect(() => {
         // fetching data
         const mapped = dataComm.map(comm => ({
@@ -15,7 +32,7 @@ const CommentsContainer = ({ photoId }) => {
         }));
 
         setComments(mapped);
-    }, [photoId]);
+    }, [albumId]);
 
     return (
         <div className="comments mt-3 mb-5">
@@ -32,7 +49,7 @@ const CommentsContainer = ({ photoId }) => {
                     />
                 </div>
                 <div className="col">
-                    <button onClick={() => console.log('click handler')} className="btn btn-primary">Comment</button>
+                    <button onClick={() => sendComment()} className="btn btn-primary">Comment</button>
                 </div>
             </div>
             {

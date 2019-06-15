@@ -2,9 +2,22 @@ import React from 'react';
 import Comments from '../Comments';
 import './index.scss';
 import {Link} from "react-router-dom";
+import {restSettings} from "../../../../constants";
+import responseHandler from "../../../../helpers/responseHandler";
 
-const Photo = ({ photo, user }) => {
+const Photo = ({ photo, user, curUserId }) => {
     const { url, name } = photo;
+    const like = () => {
+        fetch(`${window.host}/like`, {
+            ...restSettings,
+            body: JSON.stringify({
+                userId: curUserId,
+                photoId: photo.id
+            })
+        }).then(res => responseHandler(res))
+            .then(() => true)
+            .catch(() => alert('like error in Photo component'));
+    };
 
     return (
         <>
@@ -28,15 +41,17 @@ const Photo = ({ photo, user }) => {
                         />
                         <hr className="line" />
                         <div className="row">
-                            <div className="col-9">
-                                <Comments photoId={photo.id} />
-                            </div>
-                            <div className="col-3">
+                            {/*<div className="col-9">*/}
+                            {/*    <Comments photoId={photo.id} />*/}
+                            {/*</div>*/}
+                            {/*<div className="col-3">*/}
+                            <div className="col">
                                 {/* Photo Owner */}
                                 <div className="w-100 pb-3">
                                     <span>Owner: </span>
                                     <Link to={`/user/${user.id}`} className="text-primary info-user-name">{`${user.firstName} ${user.lastName}`}</Link>
                                     <div>{photo.likes} likes</div>
+                                    <button className="btn btn-danger" onClick={() => like()}>Like</button>
                                 </div>
                             </div>
                         </div>
