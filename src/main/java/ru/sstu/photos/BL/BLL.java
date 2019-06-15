@@ -1,6 +1,5 @@
 package ru.sstu.photos.BL;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.sstu.photos.domain.Token;
 import ru.sstu.photos.domain.User;

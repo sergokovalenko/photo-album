@@ -15,6 +15,8 @@ public class VerificationCode {
         this.raw = raw;
     }
 
+    private VerificationCode() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -26,6 +26,7 @@ public class Album {
         this.user_id = user_id;
         this.access = access;
     }
+    private Album() {}
 
     public Long getId() {
         return id;

@@ -20,6 +20,9 @@ public class Comment {
     private Date date;
     private Long album;
 
+    private Comment() {
+    }
+
     public Comment(Long id, String text, Long user, Date date, Long album) {
         this.id = id;
         this.text = text;

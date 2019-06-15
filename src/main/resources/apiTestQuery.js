@@ -1,5 +1,5 @@
 fetch(
-    '/api/photo',
+    'http://localhost:8080/api/photo',
     {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -7,16 +7,33 @@ fetch(
 ).then(result => result.json().then(x => console.log(x)));
 
 fetch(
-    '/api/photo',
+    'http://localhost:8080/api/photo',
     {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: 'first text ' + (new Date()).getMinutes(), user_id: 0 })
+        body: JSON.stringify({
+            text: 'first text ' + (new Date()).getMinutes(),
+            user_id: 0
+        })
     }
 ).then(result => result.json().then(x => console.log(x)));
 
 fetch(
-    '/api/photo/1',
+    'http://localhost:8080/api/photo/1',
+    {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            text: 'updated text ' + (new Date()).getMinutes(),
+            user_id: 1,
+            likes: 1
+        })
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+
+fetch(
+    'http://localhost:8080/api/photo/1',
     {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +44,7 @@ fetch(
 // USER
 
 fetch(
-    '/api/user',
+    'http://localhost:8080/api/user',
     {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,7 +52,7 @@ fetch(
             lastName: 'lastname',
             firstName: 'firstName',
             nickname: 'nickname',
-            birthDate: Date.now,
+            birthDate: Date.now(),
             email: 'email',
             password: 'password'
         })
@@ -43,7 +60,7 @@ fetch(
 ).then(result => result.json().then(x => console.log(x)));
 
 fetch(
-    '/api/user/1',
+    'http://localhost:8080/api/user/1',
     {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
