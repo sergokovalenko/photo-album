@@ -11,6 +11,25 @@
 //    background-size: cover;
 //}
 
+input.invalid {
+    color: rgb(200, 0, 0);
+    border-color: red;
+    box-shadow: 0 0 10px rgb(255, 0, 0);
+}
+
+input.invalid:focus {
+    border-color: red;
+    box-shadow: 0 0 10px rgb(255, 0, 0);
+}
+
+label.invalid {
+    margin-top: 5px;
+    color: red;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 13px;
+}
+
 .tab {
     position: relative;
 }
