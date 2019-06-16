@@ -87,7 +87,7 @@ public class UserController {
         return url;
     }
 
-    @RequestMapping("/getFriendsByNickname/{userId}/{query}")
+    @RequestMapping("/getFriendsByNicknameLastFirst/{userId}/{query}")
     public List<User> getFriendsByNickname(
             @PathVariable("userId") User user,
             @PathVariable("query") String query
@@ -104,6 +104,13 @@ public class UserController {
                 .filter(u -> u.getNickname().equals(query) || u.getLastName().equals(query) || u.getFirstName().equals(query)).collect(Collectors.toList());
 
         return filtered;
+    }
+
+    @RequestMapping("/getUsersByNicknameLastFirst/{query}")
+    public List<User> getFriendsByNickname(
+            @PathVariable("query") String query
+    ) {
+        return userRepo.findByFirstNameOrLastNameOrNickname(query, query, query);
     }
 
     @GetMapping

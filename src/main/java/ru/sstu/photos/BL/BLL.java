@@ -1,6 +1,5 @@
 package ru.sstu.photos.BL;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -115,12 +114,12 @@ public class BLL {
         return likeRepo.save(like);
     }
 
-    public String setPhoto(Photo photo, MultipartFile file) {
+    public Photo setPhoto(Photo photo, MultipartFile file) {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             String resultFilename;
 
             if (file.getSize() == 0) {
-                return new Gson().toJson("EMPTY_FILE");
+                return null; // as error
             }
 
             String uuidFile = UUID.randomUUID().toString();
@@ -137,7 +136,7 @@ public class BLL {
                 e.printStackTrace();
             }
         }
-        return new Gson().toJson(photoRepo.save(photo));
+        return photoRepo.save(photo);
     }
 
 //    public void removeUsersToken(TUser user) {

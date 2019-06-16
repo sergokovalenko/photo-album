@@ -165,7 +165,16 @@ fetch(
 ).then(result => result.json().then(x => console.log(x)));
 
 fetch(
-    'http://localhost:8080/api/user/getFriendsByNickname/8/Vitya',
+    'http://localhost:8080/api/user/getFriendsByNicknameLastFirst/8/Vitya',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/user/getUsersByNicknameLastFirst/Vitya',
     {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
