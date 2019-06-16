@@ -10,15 +10,24 @@ const CommentsContainer = ({ albumId, curUserId }) => {
     const [fullComments, setFullComments] = useState([]);
     const [commentValue, setComment] = useState('');
     const sendComment = () => {
-        fetch(`${window.host}/comment`, {
+        fetch(`${window.host}/api/comment/createComment`, {
             ...restSettings,
             body: JSON.stringify({
-                fromId: curUserId,
-                comment: commentValue,
-                albumId: albumId
+                user: curUserId,
+                text: commentValue,
+                album: albumId,
+                url: ''
             })
         }).then(res => responseHandler(res))
-            .then(() => true)
+            .then((res) => {
+                fetch(`${window.host}/api/user/${res.user}`, {
+                    ...restSettings,
+                    method: 'GET'
+                }).then(res => responseHandler(res))
+                    .then(user => {
+                        setFullComments([{ ...user, ...res }, ...fullComments])
+                    })
+            })
             .catch(() => {
                 alert('comment wasn\'t sent')
             });
@@ -31,7 +40,7 @@ const CommentsContainer = ({ albumId, curUserId }) => {
             method: 'GET'
         }).then(res => responseHandler(res))
             .then((res) => {
-                setComments(res);
+                setComments(res.reverse());
                 const fetches = res.reduce((acc, val) => {
                     acc.push(fetch(`${window.host}/api/user/${val.user}`, {
                         ...restSettings,
