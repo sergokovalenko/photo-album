@@ -11,13 +11,31 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
         const file = document.getElementById('file').files[0];
         data.append('file', file);
 
-        fetch(`${window.host}/api/photo`, {
-            ...restSettings,
-            headers: { 'Content-Type': 'multipart/form-data' },
-            body: data
-        }).then(res => responseHandler(res))
-            .then((res) => console.log(res))
-            .catch(() => alert('error sending file'));
+        window.$.ajax({
+            url: `${window.host}/api/photo`,
+            data: data,
+            method: 'POST',
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (request) {
+                alert('erer');
+                console.log('picture changed');
+            },
+            error: function (error) {
+                alert('error');
+                console.log(error);
+            }
+        });
+
+        // fetch(`${window.host}/api/photo`, {
+        //     ...restSettings,
+        //     headers: { 'Content-Type': 'multipart/form-data' },
+        //     body: data
+        // }).then(res => responseHandler(res))
+        //     .then((res) => console.log(res))
+        //     .catch(() => alert('error sending file'));
 
         // fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
         //     ...restSettings,
