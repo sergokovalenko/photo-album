@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"userId", "photoId"})
-@EqualsAndHashCode(of = {"userId", "photoId"})
 public class Like_ {
 
     @Id

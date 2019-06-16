@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"id", "user_id"})
-@EqualsAndHashCode(of = {"id"})
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

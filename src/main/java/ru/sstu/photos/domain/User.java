@@ -1,17 +1,10 @@
 package ru.sstu.photos.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Table
-@ToString(of = {"id", "nickname"})
-@EqualsAndHashCode(of = {"id"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"user_id", "raw"})
-@EqualsAndHashCode(of = {"raw"})
 public class VerificationCode {
 
     public VerificationCode(Long user_id, String raw) {

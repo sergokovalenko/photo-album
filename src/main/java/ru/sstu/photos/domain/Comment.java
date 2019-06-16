@@ -1,16 +1,11 @@
 package ru.sstu.photos.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
 
 @Entity
 @Table
-@ToString(of = {"id", "user", "album"})
-@EqualsAndHashCode(of = {"id"})
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
