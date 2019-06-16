@@ -37,7 +37,7 @@ class Signup extends Component {
             return false;
         }
 
-        return /^[\-а-яА-Яa-zA-Z]+$/i.test(val);
+        return /^[-а-яА-Яa-zA-Z]+$/i.test(val);
     };
 
     validateNick = (value) => {
@@ -51,7 +51,7 @@ class Signup extends Component {
             return false;
         }
 
-        return /^[\-а-яА-Яa-zA-Z0-9]+$/i.test(val);
+        return /^[-а-яА-Яa-zA-Z0-9]+$/i.test(val);
     };
 
     onNickChange = (value) => {

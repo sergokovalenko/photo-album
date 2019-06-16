@@ -72,11 +72,8 @@ class Index extends Component {
             return;
         }
 
-        fetch(`${window.host}/loginAlreadyExists`, {
-            ...restSettings,
-            body: JSON.stringify({
-                login
-            })
+        fetch(`${window.host}/loginAlreadyExists/${login}`, {
+            ...restSettings
         }).then(res => responseHandler(res))
             .then((resp) => {
                 if (resp) {
@@ -113,7 +110,7 @@ class Index extends Component {
                                     <div className="col-xs-12 col-sm-3 col-sm-offset-2">
                                         <h1>Photo album</h1>
                                         <ul>
-                                            <li><Link to='/user/1'>user</Link></li>
+                                            <li><Link to='/user/12'>user</Link></li>
                                             <li><Link to='/album/1'>album</Link></li>
                                             <li><Link to='/'>home</Link></li>
                                         </ul>

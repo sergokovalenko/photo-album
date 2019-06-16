@@ -54,7 +54,7 @@ public class PhotoController {
             @RequestParam(value = "file", required = false) MultipartFile file
     ) {
         item.setLikes(0);
-        return photoRepo.save(item);
+        return bll.setPhoto(item, file);
     }
 
     @PutMapping("{id}")

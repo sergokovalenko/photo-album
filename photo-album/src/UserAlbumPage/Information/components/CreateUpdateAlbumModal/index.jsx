@@ -12,10 +12,15 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
         data.append('file', file);
 
         fetch(`${window.host}/api/photo`, {
-            ...restSettings,
-            headers: { 'Content-Type': 'multipart/form-data' },
-            body: data
-        }).then(res => responseHandler(res))
+            body: data,
+            dataType: 'json',
+            method: 'POST',
+            headers: {
+                // 'Content-Type': 'multipart/form-data',
+                // 'Content-Length': file.size,
+            }
+            })
+            .then(res => responseHandler(res))
             .then((res) => console.log(res))
             .catch(() => alert('error sending file'));
 

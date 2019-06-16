@@ -1,14 +1,9 @@
 package ru.sstu.photos.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"id", "name"})
-@EqualsAndHashCode(of = {"id"})
 public class Album {
 
     @Id

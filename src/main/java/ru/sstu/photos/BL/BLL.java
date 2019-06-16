@@ -2,6 +2,7 @@ package ru.sstu.photos.BL;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sstu.photos.domain.Like_;
 import ru.sstu.photos.domain.Photo;
@@ -9,6 +10,7 @@ import ru.sstu.photos.domain.Token;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.LikeRepo;
 import ru.sstu.photos.repo.PhotoRepo;
+import ru.sstu.photos.repo.UserRepo;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,12 +32,14 @@ public class BLL {
 
     private final PhotoRepo photoRepo;
     private final LikeRepo likeRepo;
+    private final UserRepo userRepo;
 
     private HashMap<Object, Token> userToken = new HashMap<>(); //Key(Object) is ID of User
 
-    public BLL(PhotoRepo photoRepo, LikeRepo likeRepo) {
+    public BLL(PhotoRepo photoRepo, LikeRepo likeRepo, UserRepo userRepo) {
         this.photoRepo = photoRepo;
         this.likeRepo = likeRepo;
+        this.userRepo = userRepo;
     }
 
     public HashMap<Object, Token> getUserToken() {
@@ -137,6 +141,13 @@ public class BLL {
             }
         }
         return photoRepo.save(photo);
+    }
+
+    public Boolean loginAlreadyExists(String login) {
+        if (StringUtils.isEmpty(login)) {
+            return false;
+        }
+        return userRepo.findByNickname(login).getNickname().length() > 0;
     }
 
 //    public void removeUsersToken(TUser user) {
