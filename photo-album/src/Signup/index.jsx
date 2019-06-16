@@ -16,7 +16,7 @@ class Signup extends Component {
             emailErrorMessage: 'Invalid email',
             password: '',
             isPasswordValid: true,
-            passwordMessage: 'Password required, length 6 <= x <= 20',
+            passwordErrorMessage: 'Password required, length 6 <= x <= 20',
             name: '',
             isNameValid: true,
             nameErrorMessage: 'Invalid name',
@@ -37,6 +37,7 @@ class Signup extends Component {
             return false;
         }
 
+        //
         return /^[\-а-яА-Яa-zA-Z]+$/i.test(val);
     };
 
@@ -52,6 +53,44 @@ class Signup extends Component {
         }
 
         return /^[\-а-яА-Яa-zA-Z0-9]+$/i.test(val);
+    };
+
+    validateEmail = (value) => {
+        if (!value || !value.trim()) {
+            return false;
+        }
+
+        const val = value.trim();
+
+        if (val.length > 35) {
+            return false;
+        }
+
+        return /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)$/.test(val);
+    };
+
+    validatePassword = (value) => {
+        if (!value || !value.trim()) {
+            return false;
+        }
+
+        const val = value.trim();
+
+        return val.length >= 6 && val.length <= 20;
+    };
+
+    onPasswordChange = (value) => {
+        this.setState({
+            password: value.trim(),
+            isPasswordValid: this.validatePassword(value)
+        });
+    };
+
+    onEmailChange = (value) => {
+        this.setState({
+            email: value.trim(),
+            isEmailValid: this.validateEmail(value)
+        });
     };
 
     onNickChange = (value) => {
@@ -75,10 +114,23 @@ class Signup extends Component {
         });
     };
 
+    onSignup = (e) => {
+        e.preventDefault();
+
+        const { nickname, password, name, surname, email } = this.state;
+        const isEmailValid = this.validateEmail(email);
+        const isNameValid = this.validateName(name);
+        const isSurnameValid = this.validateName(surname);
+        const isNicknameValid = this.validateNick(nickname);
+        const isPasswordValid = this.validatePassword(password);
+    };
+
     render() {
         const {
             name, surname, isNameValid, isSurnameValid, surnameErrorMessage, nameErrorMessage,
-            nickname, isNicknameValid, nicknameErrorMessage
+            nickname, isNicknameValid, nicknameErrorMessage,
+            email, isEmailValid, emailErrorMessage,
+            password, isPasswordValid, passwordErrorMessage
         } = this.state;
 
         return (
@@ -149,22 +201,38 @@ class Signup extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="email">Email</label>
-                                                    <input type="email" className="form-control" id="email"
-                                                           maxLength="35"
-                                                           name="email"/>
-                                                    <label id="login-error" className="invalid" htmlFor="email"/>
+                                                    <input
+                                                        type="email"
+                                                        className={`form-control ${!isEmailValid ? 'invalid' : ''}`}
+                                                        id="email"
+                                                        maxLength="35"
+                                                        name="email"
+                                                        value={email}
+                                                        onChange={(e) => this.onEmailChange(e.target.value)}
+                                                    />
+                                                    <label id="login-error" className="invalid" htmlFor="email">
+                                                        { !isEmailValid ? emailErrorMessage : ''}
+                                                    </label>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="password">Password</label>
-                                                    <input type="password" className="form-control" id="password"
-                                                           maxLength="20" name="password"/>
+                                                    <input
+                                                        type="password"
+                                                        className={`form-control ${isPasswordValid ? '' : 'invalid'}`}
+                                                        id="password"
+                                                        maxLength="20"
+                                                        name="password"
+                                                        value={password}
+                                                        onChange={(event) => this.onPasswordChange(event.target.value)}
+                                                    />
                                                     <input type="hidden" id="token" name="token"/>
-                                                    <label id="password-error" className="invalid"
-                                                           htmlFor="password"/>
+                                                    <label id="password-error" className="invalid" htmlFor="password">
+                                                        { !isPasswordValid ? passwordErrorMessage : '' }
+                                                    </label>
                                                 </div>
                                                 <div className="form-group">
-                                                    <Link type="submit" className="btn btn-default" to="/signin"
-                                                          value="Sign in"/>
+                                                    <Link className="btn btn-default" to="/signin">Sign in</Link>
+                                                    <button className="btn btn-primary" onClick={(e) => this.onSignup(e)}>Sign up</button>
                                                 </div>
                                             </form>
                                         </div>

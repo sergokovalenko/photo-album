@@ -14,7 +14,7 @@ const FriendsContainer = ({item, curUserId}) => {
     const f = (value) => {
         if (value && value.trim()) {
             // fetching data
-            fetch(`${window.host}/friend/${value}`, {
+            fetch(`${window.host}/api/friend/${value}`, {
                 ...restSettings,
                 method: 'GET'
             }).then(res => responseHandler(res))

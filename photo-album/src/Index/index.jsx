@@ -47,7 +47,7 @@ class Index extends Component {
             return false;
         }
 
-        return /^[-а-яА-Яa-zA-Z0-9@.]+$/i.test(val);
+        return /^[-a-zA-Z0-9@.]+$/i.test(val);
     };
 
     onLoginChange = (value) => {
@@ -80,16 +80,59 @@ class Index extends Component {
         }).then(res => responseHandler(res))
             .then((resp) => {
                 if (resp) {
-                    // autorization request from messanger
+                    this.authorize();
                 } else {
-                    this.setState({ isLogFromServer: false });
+                    fetch(`${window.host}/loginAlreadyExists`, {
+                        ...restSettings,
+                        body: JSON.stringify({
+                            login
+                        })
+                    }).then(res => responseHandler(res))
+                        .then((answer) => {
+                            if (answer) {
+                                this.authorize();
+                            } else {
+                                this.setState({ isLogFromServer: false });
+                            }
+                        })
+                        .catch(() => {
+                            this.setState({ isLogFromServer: false });
+                            alert('Not implemented')
+                        });
                 }
             })
             .catch(() => {
                 this.setState({ isLogFromServer: false });
                 alert('Not implemented')
             });
-    }
+    };
+
+    authorize = () => {
+        const { login, password } = this.state;
+        fetch(`${window.host}/authorization`, {
+            ...restSettings,
+            body: JSON.stringify({
+                login, password
+            })
+        }).then(res => responseHandler(res))
+            .then((res) => {
+                switch (res) {
+                    case "User is not activated yet":
+                        this.setState({ isLogFromServer: false });
+                        break;
+                    case "No Such User":
+                    case "Incorrect password":
+                        this.setState({ isPasswordValid: false });
+                        break;
+                    default:
+                        localStorage.setItem("user", JSON.stringify(res));
+                        document.getElementById('token').value = res.token;
+                        document.getElementById('submit').click();
+                        break;
+                }
+            })
+            .catch(() => alert('not implemented'));
+    };
 
     render() {
         const {
@@ -153,10 +196,9 @@ class Index extends Component {
                                                     </label>
                                                 </div>
                                                 <div className="form-group">
+                                                    <button type="submit" className="d-none" id="submit"></button>
                                                     <button
-                                                        type="submit"
                                                         className="btn btn-default send"
-                                                        value=""
                                                         onClick={(e) => this.onSignin(e)}
                                                     >Sign In</button>
                                                     <a href="\signup" className="btn btn-default">Sign up</a>

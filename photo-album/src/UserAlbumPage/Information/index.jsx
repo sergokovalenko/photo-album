@@ -5,6 +5,7 @@ import AlbumDescription from './components/AlbumDescription';
 import CreateUpdateAlbumModal from "./components/CreateUpdateAlbumModal";
 import addFriend from "../../helpers/addFriendRequest";
 import './index.scss';
+import UploadPhoto from "./components/UploadPhoto";
 
 const Information = ({item, isUser, curUserId, isAdmin}) => {
     const {url, id, userId} = item;
@@ -68,34 +69,7 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                     }
                 </div>
             </div>
-            <div className="modal fade" id="addPhoto" tabIndex="-1" role="dialog" aria-hidden="true">
-                <div className="modal-dialog modal-xl">
-                    <div className="modal-content row m-3">
-                        <form className="m-3">
-                            <div className="form-group">
-                                <label htmlFor="uplPhoto">Select file</label>
-                                <input
-                                    type="file"
-                                    className="form-control-file"
-                                    id="uplPhoto"
-                                    accept="image/*,image/jpeg,image/png"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="tags">Tags:</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="tags"
-                                    placeholder="tag1 tag@2 tag_3"
-                                    readOnly
-                                />
-                            </div>
-                            <button className="btn btn-primary">Upload photo</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <UploadPhoto curUserId={curUserId} item={item} id="addPhoto" />
             <CreateUpdateAlbumModal curUserId={curUserId} id="newAlbum" item={null} />
             <CreateUpdateAlbumModal curUserId={curUserId} id="changeAlbum" item={item} />
         </>

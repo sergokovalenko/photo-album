@@ -11,14 +11,14 @@ const AlbumsContainer = ({ item, curUserId }) => {
     const f = (value) => {
         if (value && value.trim()) {
             // fetching data
-            fetch(`${window.host}/album/${value}`, {
-                ...restSettings,
-                method: 'GET'
-            }).then(res => responseHandler(res))
-                .then(() => true)
-                .catch(() => {
-                    alert('albums weren\'t found')
-                });
+            // fetch(`${window.host}/album/${value}`, {
+            //     ...restSettings,
+            //     method: 'GET'
+            // }).then(res => responseHandler(res))
+            //     .then(() => true)
+            //     .catch(() => {
+            //         alert('albums weren\'t found')
+            //     });
 
             setAlbums(dataAlbums.filter(el => el.access && el.name.includes(value)))
         } else {
