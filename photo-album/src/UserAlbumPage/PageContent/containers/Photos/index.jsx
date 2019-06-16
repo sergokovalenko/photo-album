@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Photo from '../../components/Photo';
-import { photos as datPhoto } from '../../../../data';
+import {restSettings} from "../../../../constants";
+import responseHandler from "../../../../helpers/responseHandler";
 
-const PhotosContainer = ({ item }) => {
+const PhotosContainer = ({ item, curUserId }) => {
     const [photos, setPhotos] = useState([]);
 
     useEffect(() => {
         // fetching data
-        setPhotos(datPhoto);
+        fetch(`${window.host}/api/album/getPhotosByAlbumId/${item.id}`, {
+            ...restSettings,
+            method: 'GET'
+        }).then(res => responseHandler(res))
+            .then((res) => setPhotos(res))
+            .catch(() => {
+                alert('error fetching photos')
+            });
     }, [item.id]);
 
     return (
@@ -16,7 +24,7 @@ const PhotosContainer = ({ item }) => {
             {
                 photos.length > 0 ?
                     photos.map(photo => (
-                        <Photo key={`p:${photo.id}u:${item.id}`} photo={photo} user={item} />
+                        <Photo key={`p:${photo.id}u:${item.id}`} curUserId={curUserId} photo={photo} />
                     )) :
                     'There is no photo'
             }

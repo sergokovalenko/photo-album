@@ -6,8 +6,8 @@ import FriendsContainer from './containers/Friends';
 import AlbumsContainer from './containers/Albums';
 import CommentsContainer from "./components/Comments";
 
-const PageContent = ({ item, isUser = true, ...props }) => {
-    const path = props.location.pathname;
+const PageContent = ({ item, isUser = true, ...parentProps }) => {
+    const path = parentProps.location.pathname;
     const activeTab = /albums/.test(path) ? 1 : (/friends/.test(path) ? 2 : 0);
 
     return (
@@ -22,8 +22,8 @@ const PageContent = ({ item, isUser = true, ...props }) => {
                             <Route path="/user/:itemId/friends" render={() => <FriendsContainer item={item} />} />
                         </> :
                         <>
-                            <Route exact path="/album/:itemId" render={props => <PhotosContainer {...props} item={item} />} />
-                            <Route path="/album/:itemId/comments" render={props => <CommentsContainer {...props} albumId={item.id} item={item} />} />
+                            <Route exact path="/album/:itemId" render={props => <PhotosContainer {...props} curUserId={parentProps.curUserId} item={item} />} />
+                            <Route path="/album/:itemId/comments" render={props => <CommentsContainer {...props} curUserId={parentProps.curUserId} albumId={item.id} item={item} />} />
                         </>
                 }
             </Switch>
