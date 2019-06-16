@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import {restSettings} from "../../../../constants";
 import responseHandler from "../../../../helpers/responseHandler";
+import {restSettings} from "../../../../constants";
 
-const CreateUpdateAlbumModal = ({ id, item }) => {
+const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [name, setName] = useState(item ? item.name : '');
     const [tag, setTag] = useState(item ? item.tag : '');
-    const [photo, setPhoto] = useState('');
     const [access, setAccess] = useState(item ? item.access : '0');
     const onButtonClick = () => {
-        fetch(`${window.host}/api/album`, {
+        fetch(`${window.host}/api/photo`, {
             ...restSettings,
-            body: JSON.stringify({
-                name,
-                tag,
-                photo: photo.length > 0 ? photo : null,
-                access,
-                id: item ? item.id : null
-            })
+            headers: { 'Content-Type': 'multipart/form-data' },
+            body: new FormData(document.getElementById('photo'))
         }).then(res => responseHandler(res))
-            .then(() => console.log('created'))
-            .catch(() => console.log('error'))
+            .then((res) => console.log(res))
+            .catch(() => alert('error sending file'));
+
+        // fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
+        //     ...restSettings,
+        //     body: JSON.stringify({
+        //         name,
+        //         access,
+        //         text: tag,
+        //         url: '' // from prev response
+        //     })
+        // }).then(res => responseHandler(res))
+        //     .then((res) => console.log(res))
+        //     .catch(() => alert('creating album error'));
     };
 
     return (
@@ -34,16 +40,14 @@ const CreateUpdateAlbumModal = ({ id, item }) => {
                     </div>
                     <div className="modal-body">
                         { item ? <input type="text" value={item.id} hidden readOnly /> : null }
-                        <div className="form-group">
+                        <form id="photo" encType="multipart/form-data"  className="form-group">
                             <label htmlFor="photo">Album picture</label>
                             <input
                                 type="file"
-                                value={photo}
                                 className="form-control-file"
-                                id="photo"
-                                onChange={(e) => setPhoto(e.target.value)}
+                                id="file"
                             />
-                        </div>
+                        </form>
                         <div className="form-group">
                             <label htmlFor="name">Name:</label>
                             <input
@@ -78,7 +82,7 @@ const CreateUpdateAlbumModal = ({ id, item }) => {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-primary" data-dismiss="modal">{ item ? 'Update' : 'Create'} album</button>
+                        <button className="btn btn-primary" data-dismiss="modal" onClick={() => onButtonClick()}>{ item ? 'Update' : 'Create'} album</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>

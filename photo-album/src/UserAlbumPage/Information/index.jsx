@@ -96,8 +96,8 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                     </div>
                 </div>
             </div>
-            <CreateUpdateAlbumModal id="newAlbum" item={null} />
-            <CreateUpdateAlbumModal id="changeAlbum" item={item} />
+            <CreateUpdateAlbumModal curUserId={curUserId} id="newAlbum" item={null} />
+            <CreateUpdateAlbumModal curUserId={curUserId} id="changeAlbum" item={item} />
         </>
     );
 };

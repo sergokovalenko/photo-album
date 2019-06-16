@@ -107,7 +107,7 @@ class Index extends Component {
             <main className="bg-img">
                 <div className="container">
                     <div className="row">
-                        <div className="tableEmitator">
+                        <div className="tableEmitator customForm">
                             <div className="cellEmitator">
                                 <div className="centeredBlock">
                                     <div className="col-xs-12 col-sm-3 col-sm-offset-2">
