@@ -2,16 +2,12 @@ import React from 'react';
 import Button from '../../components/Button';
 import UserDescription from './components/UserDescription';
 import AlbumDescription from './components/AlbumDescription';
-import './index.scss';
 import CreateUpdateAlbumModal from "./components/CreateUpdateAlbumModal";
+import addFriend from "../../helpers/addFriendRequest";
+import './index.scss';
 
 const Information = ({item, isUser, curUserId, isAdmin}) => {
-    // const isCurUserPage = isUser && curUserId === item.id;
-    const {url} = item;
-    const addFriend = () => {
-        // request
-        console.log('request data');
-    };
+    const {url, id, userId} = item;
 
     return (
         <>
@@ -36,9 +32,9 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                     </div>
                 </div>
                 <div className="buttons-container">
-                    { isUser && curUserId !== item.id ? <Button content="Add friend" onClick={addFriend}/> : null }
+                    { isUser && curUserId !== id ? <Button content="Add friend" onClick={() => addFriend(curUserId, id)}/> : null }
                     {
-                        isUser && curUserId === item.id ?
+                        isUser && curUserId === id ?
                             <>
                                 <Button
                                     content="Upload photo"
@@ -54,7 +50,7 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                             null
                     }
                     {
-                        !isUser && curUserId === item.userId ?
+                        !isUser && curUserId === userId ?
                             <Button
                                 content="Change album"
                                 data-toggle="modal"
@@ -63,7 +59,7 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                             null
                     }
                     {
-                        !isUser && curUserId === item.userId && isAdmin ?
+                        !isUser && curUserId === userId && isAdmin ?
                             <Button
                                 content="Delete album"
                                 onClick={() => alert('Delete album')}

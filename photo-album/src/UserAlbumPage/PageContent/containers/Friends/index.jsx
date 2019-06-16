@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import Search from "../../../../components/Search";
 import {restSettings} from "../../../../constants";
 import responseHandler from "../../../../helpers/responseHandler";
+import addFriend from "../../../../helpers/addFriendRequest";
 
 const FriendsContainer = ({item, curUserId}) => {
-    // const isCurUser = item.id === curUserId;
+    const isCurUser = item.id === curUserId;
     const [friends, setFriends] = useState([]);
     const [fetchedFriend, setFetchedFriends] = useState([]);
     const [search, setSearch] = useState('');
@@ -75,6 +76,11 @@ const FriendsContainer = ({item, curUserId}) => {
                                     <div className="d-inline-block ml-2">
                                         Name: <Link to={`/user/${friend.id}`}
                                                     className="text-primary info-user-name">{friend.firstName} {friend.lastName}</Link>
+                                        {
+                                            !isCurUser ?
+                                                <button className="btn btn-success" onClick={() => addFriend(curUserId, friend.id)}>Add friend</button>
+                                                : null
+                                        }
                                     </div>
                                 </div>
                             </div>

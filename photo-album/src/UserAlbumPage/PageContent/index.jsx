@@ -17,9 +17,9 @@ const PageContent = ({ item, isUser = true, ...parentProps }) => {
                 {
                     isUser ?
                         <>
-                            <Route exact path="/user/:itemId" render={() => <AlbumsContainer item={item} />} />
-                            <Route path="/user/:itemId/albums" render={() => <AlbumsContainer item={item} />} />
-                            <Route path="/user/:itemId/friends" render={() => <FriendsContainer item={item} />} />
+                            <Route exact path="/user/:itemId" render={() => <AlbumsContainer item={item} curUserId={parentProps.curUserId} />} />
+                            <Route path="/user/:itemId/albums" render={() => <AlbumsContainer item={item} curUserId={parentProps.curUserId} />} />
+                            <Route path="/user/:itemId/friends" render={() => <FriendsContainer item={item} curUserId={parentProps.curUserId} />} />
                         </> :
                         <>
                             <Route exact path="/album/:itemId" render={props => <PhotosContainer {...props} curUserId={parentProps.curUserId} item={item} />} />
