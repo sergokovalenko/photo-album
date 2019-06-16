@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -17,18 +18,17 @@ public class Comment {
 
     private String text;
     private Long user;
-    private Date date;
+    private Instant date;
     private Long album;
 
     private Comment() {
     }
 
-    public Comment(Long id, String text, Long user, Date date, Long album) {
-        this.id = id;
+    public Comment(String text, Long user, Long album) {
         this.text = text;
         this.user = user;
-        this.date = date;
         this.album = album;
+        this.date = Instant.now();
     }
 
     public Long getId() {
@@ -55,11 +55,11 @@ public class Comment {
         this.user = user;
     }
 
-    public Date getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 

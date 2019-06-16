@@ -18,11 +18,13 @@ public class Album {
     private String name;
     private Integer photos_count;
     private Long user_id;
+    private String url;
 
-    public Album(String name, Long user_id, ACCESS access) {
+    public Album(String name, Long user_id, ACCESS access, String url) {
         this.name = name;
         this.user_id = user_id;
         this.access = access;
+        this.url = url;
     }
     private Album() {}
 
@@ -67,4 +69,12 @@ public class Album {
     }
 
     private ACCESS access;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

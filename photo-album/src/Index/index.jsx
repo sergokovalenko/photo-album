@@ -159,7 +159,7 @@ class Index extends Component {
                                                         value=""
                                                         onClick={(e) => this.onSignin(e)}
                                                     >Sign In</button>
-                                                    <Link to="\signup" className="btn btn-default">Sign up</Link>
+                                                    <a href="\signup" className="btn btn-default">Sign up</a>
                                                 </div>
                                             </form>
                                         </div>

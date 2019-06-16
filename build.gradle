@@ -23,5 +23,6 @@ dependencies {
     compile('org.projectlombok:lombok')
     compile('javax.xml.bind:jaxb-api')
     compile('com.sun.xml.bind:jaxb-core')
-    compile('com.sun.xml.bind:jaxb-impl')
+	compile('com.sun.xml.bind:jaxb-impl')
+	compile('com.google.code:gson')
 }

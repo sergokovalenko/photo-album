@@ -17,13 +17,16 @@ public class Photo {
     private Long user_id;
     private String text;
     private Integer likes;
+    private Long albumId;
+    private String url;
 
     private Photo() {}
 
-    public Photo(Long id, Long user_id, String text) {
-        this.id = id;
+    public Photo(Long user_id, Long albumId, String text, String url) {
         this.user_id = user_id;
+        this.url = url;
         this.text = text;
+        this.albumId = albumId;
         this.likes = 0;
     }
 
@@ -57,5 +60,21 @@ public class Photo {
 
     public void setLikes(Integer likes) {
         this.likes = likes;
+    }
+
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -3,32 +3,38 @@ package ru.sstu.photos.controllers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
+import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 
 import java.time.Instant;
 import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/user")
 public class UserController {
 
     private final UserRepo userRepo;
+    private final FriendRepo friendRepo;
 
     @Autowired
-    public UserController(UserRepo userRepo) {
+    public UserController(UserRepo userRepo, FriendRepo friendRepo) {
         this.userRepo = userRepo;
-        userRepo.save(new User(
+        this.friendRepo = friendRepo;
+        User user1 = new User(
                 "Ivanov",
                 "Ivan",
                 "Vano",
                 "vano@mail.ru",
                 "12345678",
                 "",
-                Instant.now()
-        ));
-        userRepo.save(new User(
+                Instant.now());
+        User user2 = new User(
                 "Vitin",
                 "Viktor",
                 "Vitya",
@@ -36,7 +42,68 @@ public class UserController {
                 "12345678",
                 "",
                 Instant.now()
-        ));
+        );
+        User user3 = new User(
+                "vovin",
+                "vova",
+                "Vovan",
+                "vova@mail.ru",
+                "12345678",
+                "",
+                Instant.now()
+        );
+        userRepo.save(user1);
+        userRepo.save(user2);
+        userRepo.save(user3);
+
+        friendRepo.save(
+                new Friend(user1.getId(), user2.getId())
+        );
+    }
+
+    @RequestMapping("/addFriendToUser/{id}/{friend}")
+    public Friend addFriendToUser(
+            @PathVariable("id") User user,
+            @PathVariable("friend") User friend
+    ) {
+        Friend fr = new Friend(user.getId(), friend.getId()); // TODO: auto accept request now
+        Friend fr2 = new Friend(friend.getId(), user.getId());
+        friendRepo.save(fr2);
+        return friendRepo.save(fr);
+    }
+
+    @RequestMapping("/getFriendsById/{id}")
+    public List<User> addFriendToUser(
+            @PathVariable("id") User user
+    ) {
+        List<Friend> frl = friendRepo.findAllByUserId(user.getId());
+        List<User> url = new ArrayList<>();
+        frl.forEach((Friend f) -> {
+            Optional<User> us = userRepo.findById(f.getUserId2());
+            if (us.isPresent()) {
+                url.add(us.get());
+            }
+        });
+        return url;
+    }
+
+    @RequestMapping("/getFriendsByNickname/{userId}/{query}")
+    public List<User> getFriendsByNickname(
+            @PathVariable("userId") User user,
+            @PathVariable("query") String query
+    ) {
+        List<Friend> frs = friendRepo.findAllByUserId(user.getId());
+        List<User> list = new ArrayList<>();
+        frs.forEach((Friend f) -> {
+            Optional<User> us = userRepo.findById(f.getUserId2());
+            if (us.isPresent()) {
+                list.add(us.get());
+            };
+        });
+        List<User> filtered = list.stream()
+                .filter(u -> u.getNickname().equals(query) || u.getLastName().equals(query) || u.getFirstName().equals(query)).collect(Collectors.toList());
+
+        return filtered;
     }
 
     @GetMapping

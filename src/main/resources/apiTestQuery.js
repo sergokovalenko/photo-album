@@ -40,6 +40,75 @@ fetch(
     }
 ).then(result => console.log(result));
 
+// ALBUM
+
+fetch(
+    'http://localhost:8080/api/album/1',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/album',
+    {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: "test public album",
+            user_id: 8,
+            access: "ALL"
+        })
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/album/3',
+    {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: 'new album name',
+            user_id: 9,
+            access: "ME",
+            url: ""
+        })
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/album/3',
+    {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    }
+).then(result => console.log(result));
+
+// COMMENT
+
+fetch(
+    'http://localhost:8080/api/comment/getCommentsByAlbumId/1',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/comment/createComment',
+    {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: "a new interesting comment",
+            user: 8,
+            album: 1,
+            url: ""
+        })
+    }
+).then(result => result.json().then(x => console.log(x)));
+
 
 // USER
 
@@ -66,3 +135,49 @@ fetch(
         headers: { 'Content-Type': 'application/json' },
     }
 ).then(result => console.log(result));
+
+fetch(
+    'http://localhost:8080/img/uploads/1.png',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    }
+).then(result => console.log(result));
+
+"http://localhost:8080/api/album/getPhotosByAlbumId/1"
+
+fetch(
+    'http://localhost:8080/api/photo/likePhoto/4/8',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/user/addFriendToUser/8/9',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/user/getFriendsByNickname/8/Vitya',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    }
+).then(result => result.json().then(x => console.log(x)));
+
+fetch(
+    'http://localhost:8080/api/user/getFriendsById/8',
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    }
+).then(result => result.json().then(x => console.log(x)));

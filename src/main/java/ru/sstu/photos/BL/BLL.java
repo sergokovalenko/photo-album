@@ -1,25 +1,43 @@
 package ru.sstu.photos.BL;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import ru.sstu.photos.domain.Like_;
+import ru.sstu.photos.domain.Photo;
 import ru.sstu.photos.domain.Token;
 import ru.sstu.photos.domain.User;
+import ru.sstu.photos.repo.LikeRepo;
+import ru.sstu.photos.repo.PhotoRepo;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.UUID;
 
 @Service
 public class BLL {
-//
-//    @Value("${upload.path}")
-//    private String uploadPath;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 //
 //    @Value("${image.profile.path}")
 //    private String uploadProfilePath;
 //
-//    @Value("${image.mapping}")
-//    private String imageMapping;
+    @Value("${image.mapping}")
+    private String imageMapping;
+
+    private final PhotoRepo photoRepo;
+    private final LikeRepo likeRepo;
 
     private HashMap<Object, Token> userToken = new HashMap<>(); //Key(Object) is ID of User
+
+    public BLL(PhotoRepo photoRepo, LikeRepo likeRepo) {
+        this.photoRepo = photoRepo;
+        this.likeRepo = likeRepo;
+    }
 
     public HashMap<Object, Token> getUserToken() {
         return userToken;
@@ -90,6 +108,36 @@ public class BLL {
             }
         }
         return false;
+    }
+
+    public Like_ likePhoto(Photo photo, User user) {
+        Like_ like = new Like_(user.getId(), photo.getId());
+        return likeRepo.save(like);
+    }
+
+    public String setPhoto(Photo photo, MultipartFile file) {
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            String resultFilename;
+
+            if (file.getSize() == 0) {
+                return new Gson().toJson("EMPTY_FILE");
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            resultFilename = uuidFile + "." + file.getOriginalFilename();
+            try {
+                File uploadDir = new File("//" + uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                file.transferTo(new File(uploadPath + "\\" + resultFilename));
+                photo.setUrl(imageMapping + resultFilename);
+                photoRepo.save(photo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return new Gson().toJson(photoRepo.save(photo));
     }
 
 //    public void removeUsersToken(TUser user) {

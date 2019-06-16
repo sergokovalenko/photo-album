@@ -15,10 +15,10 @@ public class MappingController {
         this.bll = bll;
     }
 
-    @GetMapping("/")
-    public String root() {
-        return "redirect:/signin";
-    }
+//    @GetMapping("/")
+//    public String root() {
+//        return "index";
+//    }
 
     @GetMapping("/signin")
     public String signin() {
