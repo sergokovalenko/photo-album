@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Link } from 'react-router-dom';
-import { comments as dataComm, users } from '../../../../data';
-import './index.scss';
 import {restSettings} from "../../../../constants";
 import responseHandler from "../../../../helpers/responseHandler";
+import './index.scss';
 
 const CommentsContainer = ({ albumId, curUserId }) => {
     const [comments, setComments] = useState([]);
+    const [fullComments, setFullComments] = useState([]);
     const [commentValue, setComment] = useState('');
     const sendComment = () => {
         fetch(`${window.host}/comment`, {
@@ -26,12 +26,32 @@ const CommentsContainer = ({ albumId, curUserId }) => {
 
     useEffect(() => {
         // fetching data
-        const mapped = dataComm.map(comm => ({
-            ...users.find(user => user.id === comm.userId),
-            ...comm
-        }));
+        fetch(`${window.host}/api/comment/getCommentsByAlbumId/${albumId}`, {
+            ...restSettings,
+            method: 'GET'
+        }).then(res => responseHandler(res))
+            .then((res) => {
+                setComments(res);
+                const fetches = res.reduce((acc, val) => {
+                    acc.push(fetch(`${window.host}/api/user/${val.user}`, {
+                        ...restSettings,
+                        method: 'GET'
+                    }).then(res => responseHandler(res)));
 
-        setComments(mapped);
+                    return acc;
+                }, []);
+
+                Promise.all(fetches).then((users) => {
+                    const mapped = res.map(comm => ({
+                        ...users.find(user => user.id === comm.user),
+                        ...comm
+                    }));
+                    setFullComments(mapped);
+                });
+            })
+            .catch(() => {
+                alert('comment wasn\'t sent')
+            });
     }, [albumId]);
 
     return (
@@ -44,6 +64,7 @@ const CommentsContainer = ({ albumId, curUserId }) => {
                         value={commentValue}
                         onChange={(e) => setComment(e.target.value)}
                         maxRows={7}
+                        minRows={2}
                         maxLength={255}
                         autoFocus
                     />
@@ -53,21 +74,33 @@ const CommentsContainer = ({ albumId, curUserId }) => {
                 </div>
             </div>
             {
-                comments.length > 0 ?
-                    comments.map(el => (
-                        <div key={`c:${el.id}u:${el.userId}`} className="comment d-flex mb-2">
+                fullComments.length ?
+                    fullComments.map(el => (
+                        <div key={`c:${el.id}u:${el.user}`} className="comment d-flex mb-2">
                             <div className="comment-photo mr-3">
                                 <img src={el.url} alt="ava" className="rounded-circle w-100" />
                             </div>
                             <div className="comment-content border-bottom border-info w-100 pb-3">
-                                <Link to={`/user/${el.userId}`} className="d-block text-primary comment-user-name">
+                                <Link to={`/user/${el.user}`} className="d-block text-primary comment-user-name">
                                     {el.firstName} {el.lastName}
                                 </Link>
                                 <div className="comment-text">{el.text}</div>
                             </div>
                         </div>
-                    )):
-                    'No comments'
+                    )) :
+                    comments.length > 0 ?
+                        comments.map(el => (
+                            <div key={`c:${el.id}u`} className="comment d-flex mb-2">
+                                <div className="comment-photo mr-3">
+                                    <img src="" width="50px" height="50px" alt="ava" className="rounded-circle" />
+                                </div>
+                                <div className="comment-content border-bottom border-info w-100 pb-3">
+                                    <span>Name Surname</span>
+                                    <div className="comment-text">{el.text}</div>
+                                </div>
+                            </div>
+                        )):
+                        'No comments'
             }
         </div>
     );

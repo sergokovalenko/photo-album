@@ -4,7 +4,7 @@ import Content from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 
-const curUserId = 1;
+const curUserId = 12;
 
 const MainApp = () => {
     return (

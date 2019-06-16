@@ -47,7 +47,7 @@ class Index extends Component {
             return false;
         }
 
-        return /^[\-а-яА-Яa-zA-Z0-9@.]+$/i.test(val);
+        return /^[-а-яА-Яa-zA-Z0-9@.]+$/i.test(val);
     };
 
     onLoginChange = (value) => {

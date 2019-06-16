@@ -52,7 +52,7 @@ const Signup = (props) => {
                                                     htmlFor="password" />
                                             </div>
                                             <div className="form-group">
-                                                <input type="submit" className="btn btn-default" href="/signin" value="Sign in"/>
+                                                <Link type="submit" className="btn btn-default" to="/signin" value="Sign in" />
                                             </div>
                                         </form>
                                     </div>

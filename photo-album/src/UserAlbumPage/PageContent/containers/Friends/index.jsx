@@ -8,6 +8,7 @@ import responseHandler from "../../../../helpers/responseHandler";
 const FriendsContainer = ({item, curUserId}) => {
     // const isCurUser = item.id === curUserId;
     const [friends, setFriends] = useState([]);
+    const [fetchedFriend, setFetchedFriends] = useState([]);
     const [search, setSearch] = useState('');
     const f = (value) => {
         if (value && value.trim()) {
@@ -18,17 +19,28 @@ const FriendsContainer = ({item, curUserId}) => {
             }).then(res => responseHandler(res))
                 .then(() => true)
                 .catch(() => {
-                    alert('albums weren\'t found')
+                    alert('error fetching friends')
                 });
 
-            setFriends(dataFriends.filter(el => el.nickname.includes(value)))
+            setFriends(fetchedFriend.filter(el => el.nickname.includes(value)))
         } else {
-            setFriends(dataFriends.filter(el => el.ownerId === item.id));
+            setFriends(fetchedFriend.filter(el => el.ownerId === item.id));
         }
     };
 
     useEffect(() => {
         // fetching data
+        fetch(`${window.host}/api/user/getFriendsById/${item.id}`, {
+            ...restSettings,
+            method: 'GET'
+        }).then(res => responseHandler(res))
+            .then((res) => {
+                setFetchedFriends(res);
+                setFriends(res);
+            })
+            .catch(() => {
+                alert('error fetching friends')
+            });
         setFriends(dataFriends.filter(el => el.ownerId === item.id));
     }, [item.id]);
 
