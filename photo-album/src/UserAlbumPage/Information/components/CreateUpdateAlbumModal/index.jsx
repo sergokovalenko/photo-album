@@ -7,10 +7,14 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [tag, setTag] = useState(item ? item.tag : '');
     const [access, setAccess] = useState(item ? item.access : '0');
     const onButtonClick = () => {
+        const data = new FormData();
+        const file = document.getElementById('file').files[0];
+        data.append('file', file);
+
         fetch(`${window.host}/api/photo`, {
             ...restSettings,
             headers: { 'Content-Type': 'multipart/form-data' },
-            body: new FormData(document.getElementById('photo'))
+            body: data
         }).then(res => responseHandler(res))
             .then((res) => console.log(res))
             .catch(() => alert('error sending file'));
