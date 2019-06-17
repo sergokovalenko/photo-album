@@ -4,9 +4,13 @@ import {restSettings} from "../../../../constants";
 
 const UploadPhoto = ({curUserId, id, item}) => {
     const [tag, setTag] = useState(item ? item.tag : '');
+    const [file, setFile] = useState('');
     const onButtonClick = () => {
         const data = new FormData();
-        const file = document.getElementById('file').files[0];
+
+        if (!file) {
+            return;
+        }
 
         data.append('file', file);
 
@@ -16,20 +20,20 @@ const UploadPhoto = ({curUserId, id, item}) => {
             headers: {'Content-Type': 'multipart/form-data'},
             body: data
         }).then(res => responseHandler(res))
-            .then((res) => console.log(res))
-            .catch(() => alert('error sending file'));
-
-        // fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
-        //     ...restSettings,
-        //     method: 'PUT'
-        //     body: JSON.stringify({
-        //         user_id: curUserId,
-        //         text: tag,
-        //         url: '' // from prev response
-        //     })
-        // }).then(res => responseHandler(res))
-        //     .then((res) => console.log(res))
-        //     .catch(() => alert('creating album error'));
+            .then(null, () => {
+                fetch(`${window.host}/api/photo`, {
+                    ...restSettings,
+                    method: 'POST',
+                    body: JSON.stringify({
+                        text: tag,
+                        user_id: curUserId,
+                        album_id: item.id,
+                        url: file ? `img/uploads/${file}` : null
+                    })
+                }).then(res => responseHandler(res))
+                    .then((res) => console.log(res))
+                    .catch(() => alert('creating album error'));
+            });
     };
 
     return (

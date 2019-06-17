@@ -8,7 +8,7 @@ import './index.scss';
 import UploadPhoto from "./components/UploadPhoto";
 
 const Information = ({item, isUser, curUserId, isAdmin}) => {
-    const {url, id, userId} = item;
+    const {url, id, user_id} = item;
 
     return (
         <>
@@ -36,6 +36,15 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                     { isUser && curUserId !== id ? <Button content="Add friend" onClick={() => addFriend(curUserId, id)}/> : null }
                     {
                         isUser && curUserId === id ?
+                            <Button
+                                content="Create album"
+                                data-toggle="modal"
+                                data-target="#newAlbum"
+                            /> :
+                            null
+                    }
+                    {
+                        !isUser && curUserId === user_id ?
                             <>
                                 <Button
                                     content="Upload photo"
@@ -43,24 +52,15 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                                     data-target="#addPhoto"
                                 />
                                 <Button
-                                    content="Create album"
+                                    content="Change album"
                                     data-toggle="modal"
-                                    data-target="#newAlbum"
+                                    data-target="#changeAlbum"
                                 />
-                            </> :
+                            </>:
                             null
                     }
                     {
-                        !isUser && curUserId === userId ?
-                            <Button
-                                content="Change album"
-                                data-toggle="modal"
-                                data-target="#changeAlbum"
-                            /> :
-                            null
-                    }
-                    {
-                        !isUser && curUserId === userId && isAdmin ?
+                        !isUser && curUserId === user_id || isAdmin ?
                             <Button
                                 content="Delete album"
                                 onClick={() => alert('Delete album')}
