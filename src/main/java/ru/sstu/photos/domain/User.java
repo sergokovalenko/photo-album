@@ -2,6 +2,7 @@ package ru.sstu.photos.domain;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table
@@ -13,6 +14,8 @@ public class User {
     private String lastName;
     private String firstName;
     private Boolean isAdmin = false;
+    private String code;
+
 
     private User() {}
 
@@ -26,6 +29,7 @@ public class User {
         this.email = email;
         this.verified = VERIFICATION_STATUS.NO;
         this.password = password;
+        this.code = UUID.randomUUID().toString();
     }
 
     public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate, Boolean isAdmin) {
@@ -39,6 +43,7 @@ public class User {
         this.verified = VERIFICATION_STATUS.NO;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.code = UUID.randomUUID().toString();
     }
 
     private VERIFICATION_STATUS verified;
@@ -139,5 +144,13 @@ public class User {
 
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
