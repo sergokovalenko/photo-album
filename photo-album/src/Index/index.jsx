@@ -79,23 +79,25 @@ class Index extends Component {
                 if (resp) {
                     this.authorize();
                 } else {
-                    fetch(`${window.host}/loginAlreadyExists`, {
-                        ...restSettings,
-                        body: JSON.stringify({
-                            login
-                        })
-                    }).then(res => responseHandler(res))
-                        .then((answer) => {
-                            if (answer) {
-                                this.authorize();
-                            } else {
-                                this.setState({ isLogFromServer: false });
-                            }
-                        })
-                        .catch(() => {
-                            this.setState({ isLogFromServer: false });
-                            alert('Not implemented')
-                        });
+                    this.setState({ isLogFromServer: false });
+                    alert('83 строка в индексе');
+                    // fetch(`${window.host}/loginAlreadyExists`, {
+                    //     ...restSettings,
+                    //     body: JSON.stringify({
+                    //         login
+                    //     })
+                    // }).then(res => responseHandler(res))
+                    //     .then((answer) => {
+                    //         if (answer) {
+                    //             this.authorize();
+                    //         } else {
+                    //             this.setState({ isLogFromServer: false });
+                    //         }
+                    //     })
+                    //     .catch(() => {
+                    //         this.setState({ isLogFromServer: false });
+                    //         alert('Not implemented')
+                    //     });
                 }
             })
             .catch(() => {
@@ -106,13 +108,11 @@ class Index extends Component {
 
     authorize = () => {
         const { login, password } = this.state;
-        fetch(`${window.host}/authorization`, {
-            ...restSettings,
-            body: JSON.stringify({
-                login, password
-            })
+        fetch(`${window.host}/authorization/${login}/${password}`, {
+            ...restSettings
         }).then(res => responseHandler(res))
             .then((res) => {
+                console.log(res);
                 switch (res) {
                     case "User is not activated yet":
                         this.setState({ isLogFromServer: false });

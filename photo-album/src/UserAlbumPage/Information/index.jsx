@@ -63,7 +63,15 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                         !isUser && curUserId === user_id || isAdmin ?
                             <Button
                                 content="Delete album"
-                                onClick={() => alert('Delete album')}
+                                onClick={() => {
+                                    fetch(
+                                        `http://localhost:8080/api/album/${item.id}`,
+                                        {
+                                            method: 'DELETE',
+                                            headers: { 'Content-Type': 'application/json' },
+                                        }
+                                    ).then(result => console.log(result));
+                                }}
                             /> :
                             null
                     }
