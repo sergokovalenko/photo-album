@@ -12,6 +12,7 @@ public class User {
 
     private String lastName;
     private String firstName;
+    private Boolean isAdmin = false;
 
     private User() {}
 
@@ -117,5 +118,13 @@ public class User {
 
     public void setVerified(VERIFICATION_STATUS verified) {
         this.verified = verified;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

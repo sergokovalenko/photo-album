@@ -2,7 +2,11 @@ package ru.sstu.photos.controllers;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.sstu.photos.BL.BLL;
+import ru.sstu.photos.BL.Encoder;
 import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.FriendRepo;
@@ -21,11 +25,13 @@ public class UserController {
 
     private final UserRepo userRepo;
     private final FriendRepo friendRepo;
+    private final BLL bll;
 
     @Autowired
-    public UserController(UserRepo userRepo, FriendRepo friendRepo) {
+    public UserController(UserRepo userRepo, FriendRepo friendRepo, BLL bll) {
         this.userRepo = userRepo;
         this.friendRepo = friendRepo;
+        this.bll = bll;
         User user1 = new User(
                 "Ivanov",
                 "Ivan",
@@ -125,6 +131,7 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user) {
+        user.setPassword(Encoder.hash256(user.getPassword()));
         return userRepo.save(user);
     }
 

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import ru.sstu.photos.domain.Like_;
-import ru.sstu.photos.domain.Photo;
-import ru.sstu.photos.domain.Token;
-import ru.sstu.photos.domain.User;
+import ru.sstu.photos.domain.*;
 import ru.sstu.photos.repo.LikeRepo;
 import ru.sstu.photos.repo.PhotoRepo;
 import ru.sstu.photos.repo.UserRepo;
@@ -147,8 +144,38 @@ public class BLL {
         if (StringUtils.isEmpty(login)) {
             return false;
         }
-        return userRepo.findByNickname(login).getNickname().length() > 0;
+        User us = userRepo.findByNickname(login);
+        return us != null;
     }
+
+    public TUser authorization(String login, String password) {
+        if (!loginAlreadyExists(login)) {
+            return null;
+        }
+        String newPass = Encoder.hash256(password);
+        User user = userRepo.findByNicknameAndPassword(login, newPass);
+        if (user == null) {
+            return null;
+        }
+
+        if (user.getVerified() == VERIFICATION_STATUS.YES) {
+            Token tkn = new Token();
+            TUser tuser = new TUser(user.getLastName(),
+                    user.getFirstName(),
+                    user.getNickname(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getUrl(),
+                    user.getBirthDate(),
+                    tkn.getStringToken());
+
+            addTokenToUser(tuser, tkn);
+            return tuser;
+        } else {
+            return null;
+        }
+    }
+
 
 //    public void removeUsersToken(TUser user) {
 //        this.userToken.remove(user.getId());

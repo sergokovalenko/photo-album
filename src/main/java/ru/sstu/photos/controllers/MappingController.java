@@ -1,10 +1,11 @@
 package ru.sstu.photos.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.BL.BLL;
+import ru.sstu.photos.domain.Response;
+import ru.sstu.photos.domain.TUser;
 
-@Controller
+@RestController
 public class MappingController {
 
     private final BLL bll;
@@ -27,26 +28,15 @@ public class MappingController {
     public String enter(@RequestParam String token) {
         return bll.checkToken(token) ? "redirect:/main" : "redirect:/signin ";
     }
-    @GetMapping("/main")
-    public String main() {
-        return "main";
-    }
-
-    @GetMapping("/signup")
-    public String signup() {
-        return "registration";
-    }
-
-    @PostMapping("/logout")
-    public String logout(@RequestParam String token) {
-//        bll.setStatusOnline(bll.getUserIdByToken(token), 4);
-        bll.removeToken(token);
-        return "redirect:/signin";
-    }
 
     @RequestMapping(value = "/loginAlreadyExists/{login}", method = RequestMethod.POST, produces = "application/json")
-    public Boolean loginAlreadyExists(@PathVariable String login) {
-        return bll.loginAlreadyExists(login);
+    public Response loginAlreadyExists(@PathVariable String login) {
+        return bll.loginAlreadyExists(login) ? new Response("YES") : new Response("NO");
+    }
+
+    @RequestMapping(value = "/authorization/{login}/{password}", method = RequestMethod.POST, produces = "application/json")
+    public TUser authorization(@PathVariable String login, @PathVariable String password) {
+        return bll.authorization(login, password);
     }
 
 }
