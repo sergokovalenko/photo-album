@@ -1,4 +1,4 @@
-package ru.sstu.photos.services;
+package ru.sstu.photos.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,7 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MailSender {
+public class MyMailSender {
     @Autowired
     private JavaMailSender mailSender;
 

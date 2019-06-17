@@ -10,7 +10,7 @@ import ru.sstu.photos.domain.User;
 public class UserService{
 
     @Autowired
-    private  MailSender mail;
+    private MyMailSender mail;
 
     @Value("${host.url}")
     private String hostUrl;

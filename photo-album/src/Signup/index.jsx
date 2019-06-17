@@ -150,7 +150,7 @@ class Signup extends Component {
                                                         id="firstName"
                                                         maxLength="35"
                                                         name="firstName"
-                                                        value={name}
+                                                        responseHandler                     value={name}
                                                         onChange={(e) => this.onNameChange(e.target.value)}
                                                     />
                                                     <label id="login-error" className="invalid" htmlFor="firstName">
