@@ -28,6 +28,19 @@ public class User {
         this.password = password;
     }
 
+    public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate, Boolean isAdmin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickname = nickname;
+        this.photoCount = 0;
+        this.url = url;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.verified = VERIFICATION_STATUS.NO;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
     private VERIFICATION_STATUS verified;
     private String nickname;
     private int photoCount;

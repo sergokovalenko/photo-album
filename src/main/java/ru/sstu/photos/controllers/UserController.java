@@ -2,8 +2,6 @@ package ru.sstu.photos.controllers;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.BL.BLL;
 import ru.sstu.photos.BL.Encoder;
@@ -13,7 +11,6 @@ import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 
 import java.time.Instant;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,9 +55,19 @@ public class UserController {
                 "",
                 Instant.now()
         );
+        User user4 = new User(
+                "Admin",
+                "Admin",
+                "Admin",
+                "Admin@mail.ru",
+                "12345678",
+                "",
+                Instant.now(),
+                true);
         userRepo.save(user1);
         userRepo.save(user2);
         userRepo.save(user3);
+        userRepo.save(user4);
 
         friendRepo.save(
                 new Friend(user1.getId(), user2.getId())
