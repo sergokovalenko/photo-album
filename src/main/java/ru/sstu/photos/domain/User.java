@@ -12,6 +12,7 @@ public class User {
 
     private String lastName;
     private String firstName;
+    private Boolean isAdmin = false;
 
     private User() {}
 
@@ -25,6 +26,19 @@ public class User {
         this.email = email;
         this.verified = VERIFICATION_STATUS.NO;
         this.password = password;
+    }
+
+    public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate, Boolean isAdmin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickname = nickname;
+        this.photoCount = 0;
+        this.url = url;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.verified = VERIFICATION_STATUS.NO;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     private VERIFICATION_STATUS verified;
@@ -117,5 +131,13 @@ public class User {
 
     public void setVerified(VERIFICATION_STATUS verified) {
         this.verified = verified;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

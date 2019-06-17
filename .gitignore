@@ -28,5 +28,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
-
+s
 /photo-album/node_modules
+/photo-album/build
+/src/main/resources/static

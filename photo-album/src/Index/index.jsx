@@ -11,7 +11,7 @@ class Index extends Component {
             login: '',
             isLoginValid: true,
             isLogFromServer: true,
-            loginErrorMessage: 'Login required, length => 6, letters and digits only',
+            loginErrorMessage: 'Login required, length => 4, letters and digits only',
             loginServerMessage: 'Login or email does not exist',
             password: '',
             isPasswordValid: true,
@@ -43,7 +43,7 @@ class Index extends Component {
 
         const val = value.trim();
 
-        if (val.length < 6) {
+        if (val.length < 4) {
             return false;
         }
 

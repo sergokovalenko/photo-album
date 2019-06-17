@@ -190,3 +190,21 @@ fetch(
 
     }
 ).then(result => result.json().then(x => console.log(x)));
+
+fetch(`${window.host}/loginAlreadyExists/Vovan`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+}).then(x => x.json()).then(x => console.log(x))
+
+window.$.ajax({
+    url: 'http://localhost:8080/authorization/Vano/12345678',
+    method: 'POST',
+    success: function (request) {
+        console.log(request);
+    },
+    error: function (error) {
+        alert('error');
+        console.log(error);
+    }
+});
+

@@ -3,13 +3,14 @@ package ru.sstu.photos.controllers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.sstu.photos.BL.BLL;
+import ru.sstu.photos.BL.Encoder;
 import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 
 import java.time.Instant;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +22,13 @@ public class UserController {
 
     private final UserRepo userRepo;
     private final FriendRepo friendRepo;
+    private final BLL bll;
 
     @Autowired
-    public UserController(UserRepo userRepo, FriendRepo friendRepo) {
+    public UserController(UserRepo userRepo, FriendRepo friendRepo, BLL bll) {
         this.userRepo = userRepo;
         this.friendRepo = friendRepo;
+        this.bll = bll;
         User user1 = new User(
                 "Ivanov",
                 "Ivan",
@@ -52,9 +55,19 @@ public class UserController {
                 "",
                 Instant.now()
         );
+        User user4 = new User(
+                "Admin",
+                "Admin",
+                "Admin",
+                "Admin@mail.ru",
+                "12345678",
+                "",
+                Instant.now(),
+                true);
         userRepo.save(user1);
         userRepo.save(user2);
         userRepo.save(user3);
+        userRepo.save(user4);
 
         friendRepo.save(
                 new Friend(user1.getId(), user2.getId())
@@ -125,6 +138,7 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user) {
+        user.setPassword(Encoder.hash256(user.getPassword()));
         return userRepo.save(user);
     }
 

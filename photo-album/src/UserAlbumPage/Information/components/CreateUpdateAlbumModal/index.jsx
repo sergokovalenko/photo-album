@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import responseHandler from "../../../../helpers/responseHandler";
-import {restSettings} from "../../../../constants";
+// import responseHandler from "../../../../helpers/responseHandler";
+// import {restSettings} from "../../../../constants";
 
 const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [name, setName] = useState(item ? item.name : '');
