@@ -20,7 +20,7 @@ public class BLL {
 
     @Value("${upload.path}")
     private String uploadPath;
-//
+    //
 //    @Value("${image.profile.path}")
 //    private String uploadProfilePath;
 //
@@ -176,6 +176,15 @@ public class BLL {
         }
     }
 
+        public boolean activateUser(String code) {
+            User usr = userRepo.findByCode(code);
+            if (usr == null) {
+                return false;
+            }
+            usr.setCode(null);
+            userRepo.save(usr);
+            return true;
+        }
 
 //    public void removeUsersToken(TUser user) {
 //        this.userToken.remove(user.getId());
@@ -206,4 +215,4 @@ public class BLL {
 //            return new Gson().toJson("User is not activated yet");
 //        }
 //    }
-}
+    }

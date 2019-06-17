@@ -9,6 +9,7 @@ import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
+import ru.sstu.photos.service.UserService;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,12 +24,14 @@ public class UserController {
     private final UserRepo userRepo;
     private final FriendRepo friendRepo;
     private final BLL bll;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepo userRepo, FriendRepo friendRepo, BLL bll) {
+    public UserController(UserRepo userRepo, FriendRepo friendRepo, BLL bll, UserService userService) {
         this.userRepo = userRepo;
         this.friendRepo = friendRepo;
         this.bll = bll;
+        this.userService = userService;
         User user1 = new User(
                 "Ivanov",
                 "Ivan",
@@ -139,6 +142,8 @@ public class UserController {
     @PostMapping
     public User create(@RequestBody User user) {
         user.setPassword(Encoder.hash256(user.getPassword()));
+        userService.sendActivationEmail(user);
+
         return userRepo.save(user);
     }
 
