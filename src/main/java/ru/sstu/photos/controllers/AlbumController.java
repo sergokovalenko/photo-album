@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.domain.ACCESS;
 import ru.sstu.photos.domain.Album;
 import ru.sstu.photos.domain.Photo;
+import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.AlbumRepo;
 import ru.sstu.photos.repo.PhotoRepo;
 
@@ -22,14 +23,19 @@ public class AlbumController {
     public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo) {
         this.albumRepo = albumRepo;
         this.photoRepo = photoRepo;
-        albumRepo.save(new Album("test album", 1L, ACCESS.ALL, ""));
-        albumRepo.save(new Album("test album me", 1L, ACCESS.ME, ""));
-        albumRepo.save(new Album("test album friend", 1L, ACCESS.FRIENDS, ""));
+        albumRepo.save(new Album("test album", 12L, ACCESS.ALL, ""));
+        albumRepo.save(new Album("test album me", 12L, ACCESS.ME, ""));
+        albumRepo.save(new Album("test album friend", 12L, ACCESS.FRIENDS, ""));
     }
 
     @RequestMapping("/getPhotosByAlbumId/{id}")
     public List<Photo> getPhotosByAlbumId(@PathVariable("id") Album album) {
         return photoRepo.findAllByAlbumId(album.getId());
+    }
+
+    @RequestMapping("/getAlbumsByUserId/{id}")
+    public List<Album> getAlbumsByUserId(@PathVariable("id") User user) {
+        return albumRepo.findAllByUserId(user.getId());
     }
 
     @GetMapping

@@ -11,11 +11,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="lastName")
     private String lastName;
+    @Column(name="firstName")
     private String firstName;
+    @Column(name="isAdmin")
     private Boolean isAdmin = false;
+    @Column(name="code")
     private String code;
-
 
     private User() {}
 
@@ -32,7 +35,7 @@ public class User {
         this.code = UUID.randomUUID().toString();
     }
 
-    public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate, Boolean isAdmin) {
+    public User(String lastName, String firstName, String nickname, String email, String password, String url, Instant birthDate, Boolean isAdmin, VERIFICATION_STATUS ver) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -40,18 +43,26 @@ public class User {
         this.url = url;
         this.birthDate = birthDate;
         this.email = email;
-        this.verified = VERIFICATION_STATUS.NO;
         this.password = password;
-        this.isAdmin = isAdmin;
         this.code = UUID.randomUUID().toString();
+        this.isAdmin = isAdmin;
+        this.verified = ver;
     }
 
+    @Column(name="verified")
     private VERIFICATION_STATUS verified;
+    @Column(name="nickname")
     private String nickname;
+    @Column(name="photoCount")
     private int photoCount;
+    @Column(name="url")
     private String url;
+    @Column(name="email")
     private String email;
+    @Column(name="password")
     private String password;
+    @Column(name="birthDate")
+    private Instant birthDate;
 
     public String getPassword() {
         return password;
@@ -69,8 +80,6 @@ public class User {
         this.email = email;
     }
 
-    @Column(updatable = false)
-    private Instant birthDate;
 
     public String getFirstName() { return firstName; }
 

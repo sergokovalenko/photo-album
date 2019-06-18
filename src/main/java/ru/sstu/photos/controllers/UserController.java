@@ -7,6 +7,7 @@ import ru.sstu.photos.BL.BLL;
 import ru.sstu.photos.BL.Encoder;
 import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
+import ru.sstu.photos.domain.VERIFICATION_STATUS;
 import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 import ru.sstu.photos.service.UserService;
@@ -15,6 +16,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,36 +39,43 @@ public class UserController {
                 "Ivan",
                 "Vano",
                 "vano@mail.ru",
-                "12345678",
+                "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
                 "",
-                Instant.now());
+                Instant.now(),
+                false,
+                VERIFICATION_STATUS.YES);
         User user2 = new User(
                 "Vitin",
                 "Viktor",
                 "Vitya",
                 "vitya@mail.ru",
-                "12345678",
+                "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
                 "",
-                Instant.now()
+                Instant.now(),
+                false,
+                VERIFICATION_STATUS.YES
         );
         User user3 = new User(
                 "vovin",
                 "vova",
                 "Vovan",
                 "vova@mail.ru",
-                "12345678",
+                "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
                 "",
-                Instant.now()
+                Instant.now(),
+                false,
+                VERIFICATION_STATUS.YES
         );
         User user4 = new User(
                 "Admin",
                 "Admin",
                 "Admin",
                 "Admin@mail.ru",
-                "12345678",
+                "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
                 "",
                 Instant.now(),
-                true);
+                true,
+                VERIFICATION_STATUS.YES);
         userRepo.save(user1);
         userRepo.save(user2);
         userRepo.save(user3);
@@ -142,6 +151,7 @@ public class UserController {
     @PostMapping
     public User create(@RequestBody User user) {
         user.setPassword(Encoder.hash256(user.getPassword()));
+        user.setCode(UUID.randomUUID().toString());
         userService.sendActivationEmail(user);
 
         return userRepo.save(user);
