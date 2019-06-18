@@ -208,3 +208,15 @@ window.$.ajax({
     }
 });
 
+window.$.ajax({
+    url: 'http://localhost:8080/api/album/getAlbumsByUserId/12',
+    method: 'POST',
+    success: function (request) {
+        console.log(request);
+    },
+    error: function (error) {
+        alert('error');
+        console.log(error);
+    }
+});
+
