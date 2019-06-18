@@ -6,52 +6,31 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [name, setName] = useState(item ? item.name : '');
     const [tag, setTag] = useState(item ? item.tag : '');
     const [access, setAccess] = useState(item ? item.access : '0');
+    const [file, setFile] = useState('');
     const onButtonClick = () => {
         const data = new FormData();
-        const file = document.getElementById('fileForm');
-
-        // const a = window.$('#file');
-
-        const formData = new FormData(file);
         data.append('file', file);
 
-        window.$.ajax({
-            url: `${window.host}/api/photo`,
-            data: formData,
-            method: 'POST',
-            cache: false,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function (request) {
-                alert('erer');
-                console.log('picture changed');
-            },
-            error: function (error) {
-                alert('error');
-                console.log(error);
-            }
-        });
-
-        // fetch(`${window.host}/api/photo`, {
-        //     ...restSettings,
-        //     headers: { 'Content-Type': 'multipart/form-data' },
-        //     body: data
-        // }).then(res => responseHandler(res))
-        //     .then((res) => console.log(res))
-        //     .catch(() => alert('error sending file'));
-
-        // fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
-        //     ...restSettings,
-        //     body: JSON.stringify({
-        //         name,
-        //         access,
-        //         text: tag,
-        //         url: '' // from prev response
-        //     })
-        // }).then(res => responseHandler(res))
-        //     .then((res) => console.log(res))
-        //     .catch(() => alert('creating album error'));
+        fetch(`${window.host}/api/photo`, {
+            ...restSettings,
+            headers: { 'Content-Type': 'multipart/form-data' },
+            body: data
+        }).then(res => responseHandler(res))
+            .then(null, () => {
+                fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
+                    ...restSettings,
+                    method: item ? 'PUT' : 'POST',
+                    body: JSON.stringify({
+                        name,
+                        access,
+                        text: tag,
+                        user_id: curUserId,
+                        url: file ? `img/uploads/${file}` : null
+                    })
+                }).then(res => responseHandler(res))
+                    .then((res) => console.log(res))
+                    .catch(() => alert('creating album error'));
+            });
     };
 
     return (
@@ -72,6 +51,7 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
                                 type="file"
                                 className="form-control-file"
                                 id="file"
+                                onChange={(e) => setFile(e.target.files[0] ? e.target.files[0].name : '')}
                             />
                         </form>
                         <div className="form-group">
