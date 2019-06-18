@@ -1,18 +1,18 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Route, Redirect } from 'react-router-dom';
 import Content from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 
-const curUserId = 12;
-
 const MainApp = () => {
+    const [user, setUser] = useState({});
+
     return (
         <div className="container">
-            <Route path="/" exact component={Index} />
+            <Route path="/" exact render={() => <Index authorize={(val) => setUser(val)} />} />
             <Route path="/signup" exact component={Signup} />
-            <Route path='/user/:itemId' render={props => <Content {...props} curUserId={curUserId} isUser={true} />} />
-            <Route path='/album/:itemId' render={props => <Content {...props} curUserId={curUserId} isUser={false} />} />
+            <Route path='/user/:itemId' render={props => user && user.id ? <Content {...props} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />
+            <Route path='/album/:itemId' render={props => user && user.id ? <Content {...props} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
         </div>
     );
 };

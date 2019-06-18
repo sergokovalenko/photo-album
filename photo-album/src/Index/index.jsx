@@ -80,7 +80,6 @@ class Index extends Component {
                     this.authorize();
                 } else {
                     this.setState({ isLogFromServer: false });
-                    alert('83 строка в индексе');
                 }
             })
             .catch(() => {
@@ -95,23 +94,12 @@ class Index extends Component {
             ...restSettings
         }).then(res => responseHandler(res))
             .then((res) => {
-                console.log(res);
-                switch (res) {
-                    case "User is not activated yet":
-                        this.setState({ isLogFromServer: false });
-                        break;
-                    case "No Such User":
-                    case "Incorrect password":
-                        this.setState({ isPasswordValid: false });
-                        break;
-                    default:
-                        localStorage.setItem("user", JSON.stringify(res));
-                        document.getElementById('token').value = res.token;
-                        document.getElementById('submit').click();
-                        break;
-                }
+                this.props.authorize(res);
+                localStorage.setItem("user", JSON.stringify(res));
+                document.getElementById('token').value = res.token;
+                document.getElementById('submit').click();
             })
-            .catch(() => alert('not implemented'));
+            .catch(() => this.setState({ isLogFromServer: false }));
     };
 
     render() {

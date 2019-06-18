@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {albums as dataAlbums} from '../../../../data';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Search from "../../../../components/Search";
 import {restSettings} from "../../../../constants";
 import responseHandler from "../../../../helpers/responseHandler";
 
-const AlbumsContainer = ({ item, curUserId }) => {
+const AlbumsContainer = ({item, curUserId}) => {
     const [albums, setAlbums] = useState([]);
     const [search, setSearch] = useState('');
     const f = (value) => {
         if (value && value.trim()) {
             // fetching data
-            // fetch(`${window.host}/album/${value}`, {
+            // fetch(`${window.host}/api/album/getAlbumsByUserId/${value}`, {
             //     ...restSettings,
             //     method: 'GET'
             // }).then(res => responseHandler(res))
@@ -28,6 +28,17 @@ const AlbumsContainer = ({ item, curUserId }) => {
 
     useEffect(() => {
         // fetching data
+        fetch(`${window.host}/api/album/getAlbumsByUserId/${curUserId}`, {
+            ...restSettings,
+            method: 'GET'
+        }).then(res => responseHandler(res))
+            .then((res) => {
+                setAlbums(res);
+            })
+            .catch(() => {
+                alert('albums weren\'t found')
+            });
+
         setAlbums(dataAlbums.filter(el => el.access));
     }, [item.id]);
 
