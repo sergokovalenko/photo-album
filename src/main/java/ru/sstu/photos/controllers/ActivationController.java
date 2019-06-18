@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.sstu.photos.BL.BLL;
+import ru.sstu.photos.domain.Response;
 
 @Controller
 public class ActivationController {
@@ -13,9 +14,9 @@ public class ActivationController {
     private BLL bll;
 
     @GetMapping("/activate/{code}")
-    public String activate(@PathVariable String code) {
+    public Response activate(@PathVariable String code) {
         boolean isActivated = bll.activateUser(code);
 
-        return isActivated ? "redirect:/" : "No such Code";
+        return isActivated ? new Response("SUCCESS") : new Response("INVALID CODE");
     }
 }
