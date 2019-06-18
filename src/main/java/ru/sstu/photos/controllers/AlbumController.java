@@ -23,9 +23,9 @@ public class AlbumController {
     public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo) {
         this.albumRepo = albumRepo;
         this.photoRepo = photoRepo;
-        albumRepo.save(new Album("test album", 12L, ACCESS.ALL, ""));
-        albumRepo.save(new Album("test album me", 12L, ACCESS.ME, ""));
-        albumRepo.save(new Album("test album friend", 12L, ACCESS.FRIENDS, ""));
+        albumRepo.save(new Album("test album", 12L, ACCESS.ALL, "img/uploads/img1342273306.jpg"));
+        albumRepo.save(new Album("test album me", 12L, ACCESS.ME, "img/uploads/6.jpg"));
+        albumRepo.save(new Album("test album friend", 12L, ACCESS.FRIENDS, "img/uploads/Auto___Maserati_____Red_Maserati_sports_082603_.jpg"));
     }
 
     @RequestMapping("/getPhotosByAlbumId/{id}")

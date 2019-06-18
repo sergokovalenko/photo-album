@@ -24,10 +24,10 @@ public class PhotoController {
     public PhotoController(PhotoRepo photoRepo, BLL bll) {
         this.photoRepo = photoRepo;
         this.bll = bll;
-        photoRepo.save(new Photo(1L, 1L, "Test photo 1", ""));
-        photoRepo.save(new Photo(1L, 1L, "Test photo 2", ""));
-        photoRepo.save(new Photo(1L, 1L, "Test photo 3", ""));
-        photoRepo.save(new Photo(1L, 1L, "Test photo 4", ""));
+        photoRepo.save(new Photo(12L, 1L, "Test photo 1", "/img/uploads/2.png"));
+        photoRepo.save(new Photo(12L, 1L, "Test photo 2", "/img/uploads/3.jpg"));
+        photoRepo.save(new Photo(12L, 1L, "Test photo 3", "/img/uploads/4.jpg"));
+        photoRepo.save(new Photo(12L, 1L, "Test photo 4", "/img/uploads/5.jpeg"));
     }
 
     @RequestMapping("/likePhoto/{id}/{userId}")

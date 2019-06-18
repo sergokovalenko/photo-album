@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './index.scss';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {restSettings} from "../constants";
 import responseHandler from "../helpers/responseHandler";
 
@@ -15,7 +15,8 @@ class Index extends Component {
             loginServerMessage: 'Login or email does not exist',
             password: '',
             isPasswordValid: true,
-            passwordMessage: 'Password required, length 6 <= x <= 20'
+            passwordMessage: 'Password required, length 6 <= x <= 20',
+            go: null
         };
     }
 
@@ -97,7 +98,7 @@ class Index extends Component {
                 this.props.authorize(res);
                 localStorage.setItem("user", JSON.stringify(res));
                 document.getElementById('token').value = res.token;
-                document.getElementById('submit').click();
+                this.setState({ go: res.id });
             })
             .catch(() => this.setState({ isLogFromServer: false }));
     };
@@ -111,10 +112,12 @@ class Index extends Component {
             loginServerMessage,
             password,
             isPasswordValid,
-            passwordMessage
+            passwordMessage,
+            go
         } = this.state;
 
         return (
+            !go ?
             <main className="bg-img">
                 <div className="container">
                     <div className="row">
@@ -131,7 +134,7 @@ class Index extends Component {
                                     </div>
                                     <div className="col-xs-12 col-sm-5 col-sm-offset-2">
                                         <div className="tab">
-                                            <form className="form-horizontal" id="form" action="/enter" method="post">
+                                            <form className="form-horizontal" id="form">
                                                 <div className="form-group">
                                                     <label htmlFor="login">E-mail or Login</label>
                                                     <input
@@ -179,7 +182,8 @@ class Index extends Component {
                         </div>
                     </div>
                 </div>
-            </main>
+            </main> :
+                <Redirect to={`/user/${go}`} />
         );
     }
 }
