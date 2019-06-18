@@ -168,7 +168,7 @@ public class BLL {
                     user.getUrl(),
                     user.getBirthDate(),
                     tkn.getStringToken());
-
+            tuser.setId(user.getId());
             addTokenToUser(tuser, tkn);
             return tuser;
         } else {
