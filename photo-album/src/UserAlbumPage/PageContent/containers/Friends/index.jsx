@@ -14,16 +14,19 @@ const FriendsContainer = ({item, curUserId}) => {
     const f = (value) => {
         if (value && value.trim()) {
             // fetching data
-            fetch(`${window.host}/api/friend/${value}`, {
+            fetch(`${window.host}/api/user/getUsersByNicknameLastFirst/${value}`, {
                 ...restSettings,
                 method: 'GET'
             }).then(res => responseHandler(res))
-                .then(() => true)
+                .then((res) => {
+                    console.log(res);
+                    setFriends(res);
+                })
                 .catch(() => {
                     alert('error fetching friends')
                 });
 
-            setFriends(fetchedFriend.filter(el => el.nickname.includes(value)))
+            // setFriends(fetchedFriend.filter(el => el.nickname.includes(value)))
         } else {
             setFriends(fetchedFriend.filter(el => el.ownerId === item.id));
         }
@@ -42,7 +45,7 @@ const FriendsContainer = ({item, curUserId}) => {
             .catch(() => {
                 alert('error fetching friends')
             });
-        setFriends(dataFriends.filter(el => el.ownerId === item.id));
+        // setFriends(dataFriends.filter(el => el.ownerId === item.id));
     }, [item.id]);
 
     return (

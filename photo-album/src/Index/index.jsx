@@ -76,28 +76,11 @@ class Index extends Component {
             ...restSettings
         }).then(res => responseHandler(res))
             .then((resp) => {
-                if (resp) {
+                if (resp.text === 'YES') {
                     this.authorize();
                 } else {
                     this.setState({ isLogFromServer: false });
                     alert('83 строка в индексе');
-                    // fetch(`${window.host}/loginAlreadyExists`, {
-                    //     ...restSettings,
-                    //     body: JSON.stringify({
-                    //         login
-                    //     })
-                    // }).then(res => responseHandler(res))
-                    //     .then((answer) => {
-                    //         if (answer) {
-                    //             this.authorize();
-                    //         } else {
-                    //             this.setState({ isLogFromServer: false });
-                    //         }
-                    //     })
-                    //     .catch(() => {
-                    //         this.setState({ isLogFromServer: false });
-                    //         alert('Not implemented')
-                    //     });
                 }
             })
             .catch(() => {
