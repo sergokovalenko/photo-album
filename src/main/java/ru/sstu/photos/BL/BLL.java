@@ -182,6 +182,7 @@ public class BLL {
                 return false;
             }
             usr.setCode(null);
+            usr.setVerified(VERIFICATION_STATUS.YES);
             userRepo.save(usr);
             return true;
         }

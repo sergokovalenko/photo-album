@@ -22,7 +22,8 @@ class Signup extends Component {
             nameErrorMessage: 'Invalid name',
             surname: '',
             isSurnameValid: true,
-            surnameErrorMessage: 'Invalid surname'
+            surnameErrorMessage: 'Invalid surname',
+            response: {}
         };
     }
 
@@ -106,6 +107,13 @@ class Signup extends Component {
         });
     };
 
+    onDatehange = (value) => {
+        this.setState({
+            birthDate: value.trim(),
+            isNameValid: true
+        });
+    };
+
     onSurnameChange = (value) => {
         this.setState({
             surname: value.trim(),
@@ -122,6 +130,31 @@ class Signup extends Component {
         const isSurnameValid = this.validateName(surname);
         const isNicknameValid = this.validateNick(nickname);
         const isPasswordValid = this.validatePassword(password);
+
+        if (isPasswordValid && isNicknameValid && isSurnameValid && isNameValid && isEmailValid) {
+            this.sendUser();
+        }
+    };
+
+    sendUser = () => {
+        fetch(
+            `${window.host}/api/user`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    lastName: this.state.surname,
+                    firstName: this.state.name,
+                    nickname: this.state.nickname,
+                    email: this.state.email,
+                    password: this.state.password,
+                    birthDate: this.birthDate
+                })
+            }
+        ).then(result => result.json().then(x => {
+            console.log(x);
+            this.setState({response: x});
+        }));
     };
 
     render() {
@@ -195,6 +228,7 @@ class Signup extends Component {
                                                         id="birthDate"
                                                         maxLength="35"
                                                         name="birthDate"
+                                                        onChange={(e) => this.onDatehange(e.target.value)}
                                                     />
                                                     <label id="login-error" className="invalid" htmlFor="birthDate"/>
                                                 </div>
@@ -230,7 +264,7 @@ class Signup extends Component {
                                                     </label>
                                                 </div>
                                                 <div className="form-group">
-                                                    <Link className="btn btn-default" to="/signin">Sign in</Link>
+                                                    <Link className="btn btn-default" to="/">Sign in</Link>
                                                     <button className="btn btn-primary" onClick={(e) => this.onSignup(e)}>Sign up</button>
                                                 </div>
                                             </form>
