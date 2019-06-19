@@ -38,6 +38,13 @@ public class AlbumController {
         return albumRepo.findAllByUserId(user.getId());
     }
 
+    @RequestMapping(value = "/getAlbumByQuery/{query}", method = RequestMethod.GET)
+    public List<Album> getFriendsByNickname(
+            @PathVariable("query") String query
+    ) {
+        return albumRepo.findByNameContaining(query);
+    }
+
     @GetMapping
     public List<Album> list() {
         return albumRepo.findAll();

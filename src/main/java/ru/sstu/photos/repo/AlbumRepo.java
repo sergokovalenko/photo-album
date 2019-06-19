@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AlbumRepo extends JpaRepository<Album, Long> {
     List<Album> findAllByUserId(Long userId);
+    List<Album> findByNameContaining(String query);
 }

@@ -17,11 +17,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     compile ('org.springframework.boot:spring-boot-devtool')
-    compile 'org.springframework:spring-context-support'
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile 'org.mariadb.jdbc:mariadb-java-client'
-    compile 'javax.mail:mail'
+    compile ('org.springframework:spring-context-support')
+    compile ('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile ('org.mariadb.jdbc:mariadb-java-client')
+    compile 'javax.mail:mail:1.4.1'
+    compile 'org.springframework.boot:spring-boot-starter-mail'
     compile('javax.xml.bind:jaxb-api')
     compile('com.sun.xml.bind:jaxb-core')
 	compile('com.sun.xml.bind:jaxb-impl')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.6.RELEASE'
 }
