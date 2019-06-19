@@ -40,7 +40,7 @@ const AlbumsContainer = ({item, curUserId}) => {
             });
 
         setAlbums(dataAlbums.filter(el => el.access));
-    }, [item.id]);
+    }, [item.id, curUserId]);
 
     return (
         <div className="cont">

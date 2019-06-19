@@ -1,9 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import UserAlbumPage from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 import fetcher from "../helpers/fetcher";
+import UserPage from "../UserPage";
 
 class StartPoint extends Component {
     constructor(props) {
@@ -14,6 +15,10 @@ class StartPoint extends Component {
             friends: [],
             albums: []
         };
+
+        // remove on authorize
+        this.updateFriends();
+        this.updateAlbums();
     }
 
     friendsInterval = null;
@@ -28,11 +33,15 @@ class StartPoint extends Component {
         if (this.friendsInterval) {
             clearInterval(this.friendsInterval);
         }
+        console.log('1 update');
 
         this.friendsInterval = setInterval(() => {
+            console.log('hei');
             fetcher(
                 `${window.host}/api/user/getFriendsById/${user.id}`,
-                (res) => this.setState({ friends: res }),
+                (res) => {
+                    this.setState({friends: res} )
+                },
                 'error fetching friends'
             );
         }, 5000);
@@ -80,21 +89,17 @@ class StartPoint extends Component {
             user, isAuthorized,
             friends, albums
         } = this.state;
-        const handlers = {
-            onFriendsSearch: val => this.onFriendsSearch(val),
-            updateFriends: () => this.updateFriends()
-        };
-        const albumHandlers = {
-            onAlbumsSearch: val => this.onAlbumsSearch(val),
-            updateAlbums: () => this.updateAlbums()
-        };
+        const currentUser = { user, albums, friends };
+
+        console.log('rerender');
 
         return (
             <div className="container">
                 <Route path="/" exact render={() => <Index authorize={(val) => this.onAuthorize(val)} />} />
                 <Route path="/signup" exact component={Signup} />
-                <Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />
-                <Route path='/album/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
+                <Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserPage {...props} curUser={currentUser} curUserId={user.id} /> : <Redirect to="/" />} />
+                {/*<Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUser={currentUser} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />*/}
+                <Route path='/album/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUser={currentUser} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
             </div>
         );
     }

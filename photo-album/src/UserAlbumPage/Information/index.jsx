@@ -7,8 +7,8 @@ import addFriend from "../../helpers/addFriendRequest";
 import './index.scss';
 import UploadPhoto from "./components/UploadPhoto";
 
-const Information = ({item, isUser, curUserId, isAdmin}) => {
-    const {url, id, user_id} = item;
+const Information = ({item, isUser, curUserId}) => {
+    const {url, id, user_id, admin} = item;
 
     return (
         <>
@@ -60,7 +60,7 @@ const Information = ({item, isUser, curUserId, isAdmin}) => {
                             null
                     }
                     {
-                        !isUser && curUserId === user_id || isAdmin ?
+                        (!isUser && curUserId) === user_id || admin ?
                             <Button
                                 content="Delete album"
                                 onClick={() => {
