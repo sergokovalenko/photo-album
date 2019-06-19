@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetcher from "../helpers/fetcher";
-import Information from "../UserAlbumPage/Information";
+import Information from "../components/Information";
 import {restSettings} from "../constants";
 import responseHandler from "../helpers/responseHandler";
 import AlbumContent from "./AlbumContent";

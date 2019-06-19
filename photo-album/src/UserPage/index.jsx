@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetcher from "../helpers/fetcher";
-import Information from "../UserAlbumPage/Information";
+import Information from "../components/Information";
 import UserContent from "./UserContent";
 
 class UserPage extends Component {

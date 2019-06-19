@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Tabs from "../../UserAlbumPage/PageContent/components/Tabs";
+import Tabs from "../../components/Tabs";
 import Photos from "../Photos";
 import Comments from "../Comments";
 

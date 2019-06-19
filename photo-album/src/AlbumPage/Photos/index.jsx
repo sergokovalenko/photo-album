@@ -1,5 +1,5 @@
 import React from 'react';
-import Photo from "../../UserAlbumPage/PageContent/components/Photo";
+import Photo from "../../components/Photo";
 
 const Photos = ({ photos, curUserId }) => {
     return (

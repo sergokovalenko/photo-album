@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Link } from 'react-router-dom';
+import './index.scss';
 
 const Comments = ({ comments, createComment }) => {
     const [commentValue, setComment] = useState('');

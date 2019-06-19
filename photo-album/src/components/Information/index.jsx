@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../components/Button';
+import Button from '../Button';
 import UserDescription from './components/UserDescription';
 import AlbumDescription from './components/AlbumDescription';
 import CreateUpdateAlbumModal from "./components/CreateUpdateAlbumModal";

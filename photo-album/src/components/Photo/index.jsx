@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './index.scss';
 import {Link} from "react-router-dom";
-import {restSettings} from "../../../../constants";
-import responseHandler from "../../../../helpers/responseHandler";
+import {restSettings} from "../../constants";
+import responseHandler from "../../helpers/responseHandler";
 
 const Photo = ({ photo, curUserId }) => {
     const { url, text } = photo;
