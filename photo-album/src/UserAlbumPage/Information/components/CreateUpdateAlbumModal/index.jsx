@@ -11,7 +11,7 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
         const data = new FormData();
         data.append('file', file);
 
-        fetch(`${window.host}/api/photo`, {
+        fetch(`${window.host}/uploadFile`, {
             ...restSettings,
             headers: { 'Content-Type': 'multipart/form-data' },
             body: data
