@@ -4,17 +4,9 @@ import {Link} from "react-router-dom";
 import {restSettings} from "../../constants";
 import responseHandler from "../../helpers/responseHandler";
 
-const Photo = ({ photo, curUserId }) => {
+const Photo = ({ photo }) => {
     const { url, text } = photo;
     const [user, setUser] = useState(null);
-    const likePhoto = () => {
-        fetch(`${window.host}/api/photo/likePhoto/${photo.id}/${curUserId}`, {
-            ...restSettings,
-            method: 'GET'
-        }).then(res => responseHandler(res))
-            .then(() => alert('Liked! Increment counter'))
-            .catch(() => alert('like error in Photo component'));
-    };
 
     useEffect(() => {
         fetch(`${window.host}/api/user/${photo.user_id}`, {
@@ -22,7 +14,7 @@ const Photo = ({ photo, curUserId }) => {
             method: 'GET'
         }).then(res => responseHandler(res))
             .then((res) => setUser(res))
-            .catch(() => alert('like error in Photo component'));
+            .catch(() => alert('кривой айди юзера для фотки'));
     }, [photo.id, photo.user_id]);
 
     return (
@@ -56,8 +48,6 @@ const Photo = ({ photo, curUserId }) => {
                                             <Link to={`/user/${user.id}`} className="text-primary info-user-name">{`${user.firstName} ${user.lastName}`}</Link>
                                             : 'Loading...'
                                     }
-                                    <div>{photo.likes} likes</div>
-                                    <button className="btn btn-danger" onClick={() => likePhoto()}>Like</button>
                                 </div>
                             </div>
                         </div>

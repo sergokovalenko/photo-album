@@ -45,7 +45,7 @@ class StartPoint extends Component {
         }, 5000);
     };
 
-    onFriendsSearch = (value) => {
+    onFriendsSearch = (value, isCur) => {
         if (value && value.trim()) {
             fetcher(
                 `${window.host}/api/user/getUsersByNicknameLastFirst/${value}`,
@@ -88,6 +88,7 @@ class StartPoint extends Component {
             friends, albums
         } = this.state;
         const currentUser = { user, albums, friends };
+        console.log(friends);
 
 
         return (
@@ -96,12 +97,12 @@ class StartPoint extends Component {
                 <Route path="/signup" exact component={Signup} />
                 <Route path='/user/:itemId' render={
                     props => isAuthorized && user.id ?
-                        <UserPage {...props} curUser={currentUser} curUserId={user.id} />
+                        <UserPage {...props} curUser={currentUser} curUserId={user.id} onSearch={(val) => this.onFriendsSearch(val)} />
                         : <Redirect to="/" />
                 } />
                 <Route path='/album/:itemId' render={
                     props => isAuthorized && user.id ?
-                        <AlbumPage {...props} curUser={currentUser} curUserId={user.id} />
+                        <AlbumPage {...props} curUser={currentUser} curUserId={user.id} onSearch={(val) => this.onAlbumsSearch(val)} />
                         : <Redirect to="/" />
                 } />
             </div>
