@@ -19,7 +19,7 @@ const Tabs = ({ itemId, activeTab, isUser = true }) => (
                         <li className="nav-item">
                             <Link
                                 to={`/album/${itemId}/`}
-                                className={`nav-link ${activeTab === 0 || !isUser ? 'active' : ''}`}
+                                className={`nav-link ${activeTab === 1 ? 'active' : ''}`}
                                 href="#"
                             >
                                 All photos
@@ -28,7 +28,7 @@ const Tabs = ({ itemId, activeTab, isUser = true }) => (
                         <li className="nav-item">
                             <Link
                                 to={`/album/${itemId}/comments`}
-                                className={`nav-link ${activeTab === 0 || !isUser ? 'active' : ''}`}
+                                className={`nav-link ${activeTab === 2 ? 'active' : ''}`}
                                 href="#"
                             >
                                 Comments
