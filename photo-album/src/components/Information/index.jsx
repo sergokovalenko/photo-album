@@ -9,7 +9,7 @@ import UploadPhoto from "./components/UploadPhoto";
 import {Redirect} from "react-router-dom";
 
 const Information = ({item, isUser, curUserId, isFriend}) => {
-    const [isDeleted, delete] = useState(false);
+    const [isDeleted, deleteAlbum] = useState(false);
     const {url, id, userId, admin} = item;
 
     return (
@@ -75,7 +75,7 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                                             method: 'DELETE',
                                             headers: { 'Content-Type': 'application/json' },
                                         }
-                                    ).then(result => result.ok ? delete(true) : alert('Deleting problems'));
+                                    ).then(result => result.ok ? deleteAlbum(true) : alert('Deleting problems'));
                                 }}
                             /> :
                             null
