@@ -4,7 +4,7 @@ import UserAlbumPage from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 import fetcher from "../helpers/fetcher";
-import FileUpload from './../FileUpload/index'
+import FileUpload from './../FileUpload/index';
 
 class StartPoint extends Component {
     constructor(props) {
@@ -19,16 +19,6 @@ class StartPoint extends Component {
 
     friendsInterval = null;
     albumInterval = null;
-    return (
-        <div className="container">
-            <Route path="/" exact render={() => <Index authorize={(val) => setUser(val)} />} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/file" exact component={FileUpload} />
-            <Route path='/user/:itemId' render={props => user && user.id ? <Content {...props} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />
-            <Route path='/album/:itemId' render={props => user && user.id ? <Content {...props} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
-        </div>
-    );
-};
 
     onAuthorize = (user) => {
         this.setState({ user, isAuthorized: true });
@@ -103,6 +93,7 @@ class StartPoint extends Component {
         return (
             <div className="container">
                 <Route path="/" exact render={() => <Index authorize={(val) => this.onAuthorize(val)} />} />
+                <Route path="/file" exact component={FileUpload} />
                 <Route path="/signup" exact component={Signup} />
                 <Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />
                 <Route path='/album/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
