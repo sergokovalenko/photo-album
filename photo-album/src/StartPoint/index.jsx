@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import UserAlbumPage from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 import fetcher from "../helpers/fetcher";
 import UserPage from "../UserPage";
+import AlbumPage from "../AlbumPage";
 
 class StartPoint extends Component {
     constructor(props) {
@@ -33,10 +33,8 @@ class StartPoint extends Component {
         if (this.friendsInterval) {
             clearInterval(this.friendsInterval);
         }
-        console.log('1 update');
 
         this.friendsInterval = setInterval(() => {
-            console.log('hei');
             fetcher(
                 `${window.host}/api/user/getFriendsById/${user.id}`,
                 (res) => {
@@ -91,15 +89,21 @@ class StartPoint extends Component {
         } = this.state;
         const currentUser = { user, albums, friends };
 
-        console.log('rerender');
 
         return (
             <div className="container">
                 <Route path="/" exact render={() => <Index authorize={(val) => this.onAuthorize(val)} />} />
                 <Route path="/signup" exact component={Signup} />
-                <Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserPage {...props} curUser={currentUser} curUserId={user.id} /> : <Redirect to="/" />} />
-                {/*<Route path='/user/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUser={currentUser} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />*/}
-                <Route path='/album/:itemId' render={props => isAuthorized && user.id ? <UserAlbumPage {...props} curUser={currentUser} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
+                <Route path='/user/:itemId' render={
+                    props => isAuthorized && user.id ?
+                        <UserPage {...props} curUser={currentUser} curUserId={user.id} />
+                        : <Redirect to="/" />
+                } />
+                <Route path='/album/:itemId' render={
+                    props => isAuthorized && user.id ?
+                        <AlbumPage {...props} curUser={currentUser} curUserId={user.id} />
+                        : <Redirect to="/" />
+                } />
             </div>
         );
     }

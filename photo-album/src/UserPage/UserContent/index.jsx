@@ -5,8 +5,7 @@ import Albums from "../Albums";
 import Friends from "../Friends";
 
 const UserContent = ({ item, friends, albums, path, ...parentProps }) => {
-    // const path = parentProps.location.pathname;
-    const activeTab = /albums/.test(path) ? 1 : (/friends/.test(path) ? 2 : 0);
+    const activeTab = /albums/.test(path) ? 1 : 2;
 
     return (
         <div className="wrapper">

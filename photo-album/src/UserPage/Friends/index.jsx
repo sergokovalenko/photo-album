@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Search from "../../components/Search";
 import addFriend from "../../helpers/addFriendRequest";
 
-const FriendsContainer = ({item, friends, handlers, curUserId}) => {
+const FriendsContainer = ({item, friends, curUserId}) => {
     const isCurUser = item.id === curUserId;
     const [search, setSearch] = useState('');
 

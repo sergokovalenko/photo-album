@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
 import fetcher from "../helpers/fetcher";
 import Information from "../UserAlbumPage/Information";
-import PageContent from "../UserAlbumPage/PageContent";
 import UserContent from "./UserContent";
 
 class UserPage extends Component {
     constructor(props) {
         super(props);
         const itemId = isNaN(parseInt(props.match.params.itemId)) ? props.curUserId : parseInt(props.match.params.itemId);
-        console.log(itemId);
 
         if (itemId === props.curUserId && props.curUser.user) {
-            console.log('current');
             this.state = { ...props.curUser };
         } else {
-            console.log('no current');
             this.state = {
                 user: null,
                 albums: [],
