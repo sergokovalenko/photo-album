@@ -11,7 +11,6 @@ class UserPage extends Component {
         if (itemId === props.curUserId && props.curUser.user) {
             this.state = { ...props.curUser, isCur: true };
         } else {
-            console.log(props.curUser.friends.map(el => el.id).includes(itemId));
             this.state = {
                 user: null,
                 albums: [],
@@ -75,6 +74,18 @@ class UserPage extends Component {
         }
     };
 
+    onAlbumSearch = (value, isCur) => {
+        if (isCur) {
+            this.props.onAlbumsSearch(value);
+        } else {
+            const { albums } = this.state;
+
+            this.setState({
+                albums: albums.filter(alb => alb.name.includes(value))
+            });
+        }
+    };
+
     render() {
         const { user, friends, albums, isFriend } = this.state;
         const { curUser, curUserId, location } = this.props;
@@ -91,6 +102,7 @@ class UserPage extends Component {
                     curUser={curUser}
                     isFriend={isFriend}
                     onSearch={(val, is) => this.onSearch(val, is)}
+                    onAlbumSearch={(val, is) => this.onAlbumSearch(val, is)}
                 />
             </> :
             'Fetching data';

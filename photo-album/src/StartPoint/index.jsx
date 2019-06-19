@@ -78,7 +78,11 @@ class StartPoint extends Component {
 
     onAlbumsSearch = (value) => {
         if (value && value.trim()) {
-            // not implemented
+            fetcher(
+                `${window.host}/api/album/getAlbumByQuery/${value}`,
+                (res) => this.setState({ friends: res }),
+                'error fetching albums'
+            );
         } else {
             this.updateAlbums();
         }
@@ -99,7 +103,13 @@ class StartPoint extends Component {
                 <Route path="/signup" exact component={Signup} />
                 <Route path='/user/:itemId' render={
                     props => isAuthorized && user.id ?
-                        <UserPage {...props} curUser={currentUser} curUserId={user.id} onSearch={(val) => this.onFriendsSearch(val)} />
+                        <UserPage
+                            {...props}
+                            curUser={currentUser}
+                            curUserId={user.id}
+                            onSearch={(val) => this.onFriendsSearch(val)}
+                            onAlbumsSearch={val => this.onAlbumsSearch(val)}
+                        />
                         : <Redirect to="/" />
                 } />
                 <Route path='/album/:itemId' render={

@@ -2,8 +2,12 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import Search from "../../components/Search";
 
-const Albums = ({item, albums}) => {
+const Albums = ({item, albums, curUserId, onAlbumSearch}) => {
+    const isCurUser = item.id === curUserId;
     const [search, setSearch] = useState('');
+    const onSearchClick = () => {
+        onAlbumSearch(search, isCurUser);
+    };
 
     return (
         <div className="cont">
@@ -11,7 +15,7 @@ const Albums = ({item, albums}) => {
                 <Search
                     className="mb-3"
                     onChange={(e) => setSearch(e.target.value)}
-                    onClick={() => {}}
+                    onClick={onSearchClick}
                     value={search}
                     url={`/user/${item.id}/albums?q=${search}`}
                 />
@@ -20,19 +24,15 @@ const Albums = ({item, albums}) => {
                 {
                     albums.length > 0 ?
                         albums.map(album => {
-                            if (!search || search && album.name.includes(search)) {
-                                return (
-                                    <Link to={`/album/${album.id}`} key={album.name} className="col-4 mt-3">
-                                        <img
-                                            src={album.url}
-                                            alt={album.name}
-                                            className="pointer rounded-lg w-100 h-100"
-                                        />
-                                    </Link>
-                                );
-                            }
-
-                            return null;
+                            return (
+                                <Link to={`/album/${album.id}`} key={album.name} className="col-4 mt-3">
+                                    <img
+                                        src={album.url}
+                                        alt={album.name}
+                                        className="pointer rounded-lg w-100 h-100"
+                                    />
+                                </Link>
+                            );
                         }) :
                         'There is no albums'
                 }
