@@ -1,8 +1,5 @@
 package ru.sstu.photos.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity
