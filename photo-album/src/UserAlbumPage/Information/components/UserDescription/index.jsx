@@ -8,7 +8,6 @@ const UserDescription = ({ item }) => {
         lastName,
         bio,
         // birthDate,
-        photoCount,
         nickname
     } = item;
 
@@ -27,7 +26,6 @@ const UserDescription = ({ item }) => {
                     {isBioShown ? 'Hide...' : 'Show...'}
                 </span>
             </div>
-            <div className="user-info-photos">{photoCount} photos</div>
         </div>
     );
 };

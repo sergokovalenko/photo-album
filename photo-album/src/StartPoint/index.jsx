@@ -3,17 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import UserAlbumPage from '../UserAlbumPage';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
-import {restSettings} from "../constants";
-import responseHandler from "../helpers/responseHandler";
-import {albums as dataAlbums} from "../data";
 import fetcher from "../helpers/fetcher";
 
 class StartPoint extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
-            isAuthorized: false,
+            user: { id: 12, firstName: 'Fake', lastName: 'Authorize', nickname: 'nick' },
+            isAuthorized: true,
             friends: [],
             albums: []
         };
@@ -103,17 +100,4 @@ class StartPoint extends Component {
     }
 }
 
-const MainApp = () => {
-    const [user, setUser] = useState({});
-
-    return (
-        <div className="container">
-            <Route path="/" exact render={() => <Index authorize={(val) => setUser(val)} />} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path='/user/:itemId' render={props => user && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={true} /> : <Redirect to="/" />} />
-            <Route path='/album/:itemId' render={props => user && user.id ? <UserAlbumPage {...props} curUserId={user.id} isUser={false} /> : <Redirect to="/" />} />
-        </div>
-    );
-};
-
-export default MainApp;
+export default StartPoint;
