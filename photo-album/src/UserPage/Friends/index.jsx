@@ -3,10 +3,9 @@ import {Link} from "react-router-dom";
 import Search from "../../components/Search";
 import addFriend from "../../helpers/addFriendRequest";
 
-const FriendsContainer = ({item, friends, curUserId, onSearch}) => {
+const FriendsContainer = ({item, friends, curUserId, onSearch, friendsIds}) => {
     const isCurUser = item.id === curUserId;
     const [search, setSearch] = useState('');
-    let copyedFriends = [...friends];
     const onSearchClick = () => {
         onSearch(search, isCurUser);
     };
@@ -24,13 +23,21 @@ const FriendsContainer = ({item, friends, curUserId, onSearch}) => {
             </div>
             <div className="row m-0">
                 {
-                    copyedFriends.length > 0 ?
-                        copyedFriends.map(friend => {
+                    friends.length > 0 ?
+                        friends.map(friend => {
+                            const {
+                                nickname,
+                                url,
+                                firstName,
+                                lastName,
+                                id
+                            } = friend;
+
                             return (
-                                <div key={friend.nickname} className="col-12 card mt-3">
+                                <div key={nickname} className="col-12 card mt-3">
                                     <div className="card-body">
                                         <img
-                                            src={friend.url}
+                                            src={url}
                                             alt="avatar"
                                             className="rounded-circle mr-2"
                                             width="60px"
@@ -38,15 +45,15 @@ const FriendsContainer = ({item, friends, curUserId, onSearch}) => {
                                             onClick={() => alert('like')}
                                         />
                                         <div className="d-inline-block">
-                                            Nickname: {friend.nickname}
+                                            Nickname: {nickname}
                                         </div>
                                         <div className="d-inline-block ml-2">
                                             Name: <Link to={`/user/${friend.id}`}
-                                                        className="text-primary info-user-name">{friend.firstName} {friend.lastName}</Link>
+                                                        className="text-primary info-user-name">{firstName} {lastName}</Link>
                                             {
-                                                !isCurUser ?
+                                                !isCurUser && !friendsIds.includes(id) ?
                                                     <button className="btn btn-success"
-                                                            onClick={() => addFriend(curUserId, friend.id)}>Add
+                                                            onClick={() => addFriend(curUserId, id)}>Add
                                                         friend</button>
                                                     : null
                                             }
@@ -54,7 +61,6 @@ const FriendsContainer = ({item, friends, curUserId, onSearch}) => {
                                     </div>
                                 </div>
                             );
-
                         }) :
                         null
                 }

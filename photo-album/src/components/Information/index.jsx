@@ -7,7 +7,7 @@ import addFriend from "../../helpers/addFriendRequest";
 import './index.scss';
 import UploadPhoto from "./components/UploadPhoto";
 
-const Information = ({item, isUser, curUserId}) => {
+const Information = ({item, isUser, curUserId, isFriend}) => {
     const {url, id, user_id, admin} = item;
 
     return (
@@ -33,7 +33,7 @@ const Information = ({item, isUser, curUserId}) => {
                     </div>
                 </div>
                 <div className="buttons-container">
-                    { isUser && curUserId !== id ? <Button content="Add friend" onClick={() => addFriend(curUserId, id)}/> : null }
+                    { isUser && curUserId !== id && !isFriend ? <Button content="Add friend" onClick={() => addFriend(curUserId, id)}/> : null }
                     {
                         isUser && curUserId === id ?
                             <Button

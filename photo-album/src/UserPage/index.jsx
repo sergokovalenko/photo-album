@@ -11,10 +11,12 @@ class UserPage extends Component {
         if (itemId === props.curUserId && props.curUser.user) {
             this.state = { ...props.curUser, isCur: true };
         } else {
+            console.log(props.curUser.friends.map(el => el.id).includes(itemId));
             this.state = {
                 user: null,
                 albums: [],
                 friends: [],
+                isFriend: props.curUser.friends.map(el => el.id).includes(itemId),
                 isCur: false
             };
             this.getData(itemId);
@@ -51,7 +53,7 @@ class UserPage extends Component {
         );
         fetcher(
             `${window.host}/api/user/getFriendsById/${id}`,
-            (res) => this.setState({ friends: res }),
+            (res) => this.setState({ friends: res, isFriend: this.props.curUser.friends.map(el => el.id).includes(id) }),
             'error fetching friends'
         );
         fetcher(
@@ -64,10 +66,8 @@ class UserPage extends Component {
     onSearch = (value, isCur) => {
         if (isCur) {
             this.props.onSearch(value);
-            console.log('1');
         } else {
             const { friends } = this.state;
-            console.log('2');
 
             this.setState({
                 friends: friends.filter(fr => fr.nickname.includes(value))
@@ -76,17 +76,20 @@ class UserPage extends Component {
     };
 
     render() {
-        const { user, friends, albums, isCur } = this.state;
+        const { user, friends, albums, isFriend } = this.state;
+        const { curUser, curUserId, location } = this.props;
 
         return user ?
             <>
-                <Information curUserId={this.props.curUserId} isUser={true} item={user} />
+                <Information curUserId={curUserId} isUser={true} isFriend={isFriend} item={user} />
                 <UserContent
-                    path={this.props.location.pathname}
+                    path={location.pathname}
                     item={user}
                     albums={albums}
                     friends={friends}
-                    curUserId={this.props.curUserId}
+                    curUserId={curUserId}
+                    curUser={curUser}
+                    isFriend={isFriend}
                     onSearch={(val, is) => this.onSearch(val, is)}
                 />
             </> :

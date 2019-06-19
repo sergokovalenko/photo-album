@@ -14,6 +14,7 @@ class StartPoint extends Component {
             user: { id: 12, firstName: 'Fake', lastName: 'Authorize', nickname: 'nick' },
             isAuthorized: true,
             friends: [],
+            friendsIds: [],
             albums: []
         };
 
@@ -39,14 +40,14 @@ class StartPoint extends Component {
             fetcher(
                 `${window.host}/api/user/getFriendsById/${user.id}`,
                 (res) => {
-                    this.setState({friends: res} )
+                    this.setState({friends: res, friendsIds: res.map(el => el.id)} )
                 },
                 'error fetching friends'
             );
         }, 5000);
     };
 
-    onFriendsSearch = (value, isCur) => {
+    onFriendsSearch = (value) => {
         if (value && value.trim()) {
             fetcher(
                 `${window.host}/api/user/getUsersByNicknameLastFirst/${value}`,
@@ -86,9 +87,9 @@ class StartPoint extends Component {
     render() {
         const {
             user, isAuthorized,
-            friends, albums
+            friends, albums, friendsIds
         } = this.state;
-        const currentUser = { user, albums, friends };
+        const currentUser = { user, albums, friends, friendsIds };
 
 
         return (
