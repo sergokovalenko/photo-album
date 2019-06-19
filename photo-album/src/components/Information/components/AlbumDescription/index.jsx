@@ -46,7 +46,7 @@ const AlbumDescription = ({ item, curUserId }) => {
                     'User not found'
             }
             <div className="album-info-photos">Album include {photoCount} photos</div>
-            <div className="album-info-access">Album is visible for {access == '0' ? 'all' : access == '1' ? 'friends only' : 'me'}</div>
+            <div className="album-info-access">Album is visible for {access.toLowerCase()}</div>
         </div>
     );
 };

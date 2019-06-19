@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import Search from "../../components/Search";
 
-const Albums = ({item, albums, curUserId, onAlbumSearch}) => {
+const Albums = ({item, albums, curUserId, onAlbumSearch, isFriend}) => {
     const isCurUser = item.id === curUserId;
     const [search, setSearch] = useState('');
     const onSearchClick = () => {
@@ -24,15 +24,19 @@ const Albums = ({item, albums, curUserId, onAlbumSearch}) => {
                 {
                     albums.length > 0 ?
                         albums.map(album => {
-                            return (
-                                <Link to={`/album/${album.id}`} key={album.name} className="col-4 mt-3">
-                                    <img
-                                        src={album.url}
-                                        alt={album.name}
-                                        className="pointer rounded-lg w-100 h-100"
-                                    />
-                                </Link>
-                            );
+                            const { access, name, url, id } = album;
+
+                            if (isCurUser || access === 'ALL' || isFriend && access === 'FRIENDS') {
+                                return (
+                                    <Link to={`/album/${id}`} key={name} className="col-4 mt-3">
+                                        <img
+                                            src={url}
+                                            alt={name}
+                                            className="pointer rounded-lg w-100 h-100"
+                                        />
+                                    </Link>
+                                );
+                            }
                         }) :
                         'There is no albums'
                 }
