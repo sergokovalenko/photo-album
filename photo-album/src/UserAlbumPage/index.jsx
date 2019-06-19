@@ -4,7 +4,7 @@ import PageContent from './PageContent';
 import {restSettings} from "../constants";
 import responseHandler from "../helpers/responseHandler";
 
-const Content = ({ isUser, ...props}) => {
+const UserAlbumPage = ({ isUser, ...props}) => {
     const itemId = +props.match.params.itemId ? +props.match.params.itemId : 1;
     const [curItem, setItem] = useState(null);
 
@@ -27,4 +27,4 @@ const Content = ({ isUser, ...props}) => {
         'Wrong request';
 };
 
-export default Content;
+export default UserAlbumPage;
