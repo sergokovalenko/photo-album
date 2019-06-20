@@ -34,10 +34,10 @@ const UploadPhoto = ({curUserId, id, item}) => {
 
     const onButtonClick = (event) => {
         event.preventDefault();
-        var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
-        var singleFileUploadError = document.querySelector('#singleFileUploadError');
-
+        const singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+        const singleFileUploadError = document.querySelector('#singleFileUploadError');
         const files = singleFileUploadInput.files;
+
         if (files.length === 0) {
             singleFileUploadError.innerHTML = "Please select a file";
             singleFileUploadError.style.display = "block";
@@ -51,13 +51,10 @@ const UploadPhoto = ({curUserId, id, item}) => {
             <div className="modal-dialog modal-xl">
                 <div className="modal-content row m-3">
                     <form className="m-3">
-                        <form id="singleUploadForm" name="singleUploadForm">
-                            <input id="singleFileUploadInput" type="file" name="file"
-                                   className="file-input" required/>
-                        </form>
+                        <input id="singleFileUploadInput" type="file" name="file"
+                               className="file-input" required />
                         <div className="upload-response">
                             <div id="singleFileUploadError"/>
-                            <div id="singleFileUploadSuccess"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tags">Tags:</label>

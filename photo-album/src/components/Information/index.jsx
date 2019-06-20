@@ -67,6 +67,24 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                             null
                     }
                     {
+                        !isUser && curUserId !== userId ?
+                            <Button
+                                content="Like album"
+                                data-toggle="modal"
+                                onClick={() => {
+                                    fetch(
+                                        `http://localhost:8080/api/album/likeAlbum/${item.id}/${curUserId}`,
+                                        {
+                                            method: 'DELETE',
+                                            headers: { 'Content-Type': 'application/json' },
+                                        }
+                                    ).then(result => result.ok ? console.log('liked') : console.log('ne liked'));
+                                }
+                                }
+                            /> :
+                            null
+                    }
+                    {
                         (!isUser && curUserId) === userId || admin ?
                             <Button
                                 content="Delete album"
