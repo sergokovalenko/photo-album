@@ -3,37 +3,47 @@ import responseHandler from "../../../../helpers/responseHandler";
 import {restSettings} from "../../../../constants";
 
 const UploadPhoto = ({curUserId, id, item}) => {
-    const [tag, setTag] = useState(item ? item.tag : '');
-    const [file] = useState('');
-    const onButtonClick = () => {
-        const data = new FormData();
+    const [tag, setTag] = useState('');
 
-        if (!file) {
-            return;
-        }
+    const uploadSingleFile = function uploadSingleFile(file) {
+        const formData = new FormData();
+        formData.append("file", file);
 
-        data.append('file', file);
-
-        fetch(`${window.host}/api/photo`, {
-            // ...restSettings,
+        fetch(`${window.host}/uploadFile`, {
             method: 'POST',
-            headers: {'Content-Type': 'multipart/form-data'},
-            body: data
-        }).then(res => responseHandler(res))
-            .then(null, () => {
+            body: formData
+        }).then(res => {
+            return responseHandler(res).then(x => file = x);
+        })
+            .then(x => file = x)
+            .then(() => {
                 fetch(`${window.host}/api/photo`, {
                     ...restSettings,
                     method: 'POST',
                     body: JSON.stringify({
                         text: tag,
+                        albumId: item.id,
                         user_id: curUserId,
-                        album_id: item.id,
-                        url: file ? `img/uploads/${file}` : null
+                        url: file ? `downloadFile/${file.fileName}` : null
                     })
                 }).then(res => responseHandler(res))
                     .then((res) => console.log(res))
-                    .catch(() => console.log('creating album error'));
+                    .catch(() => console.log('creating photo error'));
             });
+    };
+
+    const onButtonClick = (event) => {
+        event.preventDefault();
+        var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+        var singleFileUploadError = document.querySelector('#singleFileUploadError');
+
+        const files = singleFileUploadInput.files;
+        if (files.length === 0) {
+            singleFileUploadError.innerHTML = "Please select a file";
+            singleFileUploadError.style.display = "block";
+        } else {
+            uploadSingleFile(files[0]);
+        }
     };
 
     return (
@@ -41,14 +51,13 @@ const UploadPhoto = ({curUserId, id, item}) => {
             <div className="modal-dialog modal-xl">
                 <div className="modal-content row m-3">
                     <form className="m-3">
-                        <div className="form-group">
-                            <label htmlFor="file">Select file</label>
-                            <input
-                                type="file"
-                                className="form-control-file"
-                                id="file"
-                                accept="image/*,image/jpeg,image/png"
-                            />
+                        <form id="singleUploadForm" name="singleUploadForm">
+                            <input id="singleFileUploadInput" type="file" name="file"
+                                   className="file-input" required/>
+                        </form>
+                        <div className="upload-response">
+                            <div id="singleFileUploadError"/>
+                            <div id="singleFileUploadSuccess"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="tags">Tags:</label>
@@ -61,7 +70,7 @@ const UploadPhoto = ({curUserId, id, item}) => {
                                 onChange={(e) => setTag(e.target.value)}
                             />
                         </div>
-                        <button className="btn btn-primary" onClick={() => onButtonClick()}>Upload photo</button>
+                        <button className="btn btn-primary" onClick={onButtonClick}>Upload photo</button>
                     </form>
                 </div>
             </div>

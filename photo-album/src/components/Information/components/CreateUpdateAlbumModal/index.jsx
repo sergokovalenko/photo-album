@@ -7,8 +7,6 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [tag, setTag] = useState(item ? item.tag : '');
     const [access, setAccess] = useState(item ? item.access : '0');
 
-    const [file, setFile] = useState('');
-
     const uploadSingleFile = function uploadSingleFile(file) {
         var formData = new FormData();
         formData.append("file", file);
