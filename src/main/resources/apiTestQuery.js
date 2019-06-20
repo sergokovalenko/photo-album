@@ -220,3 +220,11 @@ window.$.ajax({
     }
 });
 
+fetch(
+    `${window.host}/api/album/getAlbumByQuery/test`,
+    {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    }
+).then(result => result.json().then(x => console.log(x)));
+

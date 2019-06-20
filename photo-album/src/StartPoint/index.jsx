@@ -11,7 +11,7 @@ class StartPoint extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: { id: 12, firstName: 'Fake', lastName: 'Authorize', nickname: 'nick' },
+            user: { id: 28, firstName: 'Fake', lastName: 'Mock user', nickname: 'testUser', url: 'img/uploads/7.jpg' },
             isAuthorized: true,
             friends: [],
             friendsIds: [],

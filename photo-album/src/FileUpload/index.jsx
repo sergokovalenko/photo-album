@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 
 class FileUpload extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         var singleUploadForm = document.querySelector('#singleUploadForm');

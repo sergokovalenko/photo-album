@@ -3,13 +3,12 @@ package ru.sstu.photos.controllers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.sstu.photos.domain.ACCESS;
-import ru.sstu.photos.domain.Album;
-import ru.sstu.photos.domain.Photo;
-import ru.sstu.photos.domain.User;
+import ru.sstu.photos.BL.BLL;
+import ru.sstu.photos.domain.*;
 import ru.sstu.photos.repo.AlbumRepo;
 import ru.sstu.photos.repo.PhotoRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,14 +17,18 @@ public class AlbumController {
 
     private final AlbumRepo albumRepo;
     private final PhotoRepo photoRepo;
+    private final BLL bll;
 
     @Autowired
-    public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo) {
+    public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo, BLL bll) {
         this.albumRepo = albumRepo;
         this.photoRepo = photoRepo;
-        albumRepo.save(new Album("test album", 12L, ACCESS.ALL, "img/uploads/img1342273306.jpg"));
-        albumRepo.save(new Album("test album me", 12L, ACCESS.ME, "img/uploads/6.jpg"));
-        albumRepo.save(new Album("test album friend", 12L, ACCESS.FRIENDS, "img/uploads/Auto___Maserati_____Red_Maserati_sports_082603_.jpg"));
+        this.bll = bll;
+        albumRepo.save(new Album("test album", 28L, ACCESS.ALL, "img/uploads/img1342273306.jpg"));
+        albumRepo.save(new Album("simple album", 28L, ACCESS.ALL, "img/uploads/6.jpg"));
+        albumRepo.save(new Album("My BEST album", 29L, ACCESS.ALL, "img/uploads/8.jpg"));
+        albumRepo.save(new Album("test album me", 28L, ACCESS.ME, "img/uploads/6.jpeg"));
+        albumRepo.save(new Album("test album friend", 30L, ACCESS.FRIENDS, "img/uploads/Auto___Maserati_____Red_Maserati_sports_082603_.jpg"));
     }
 
     @RequestMapping("/getPhotosByAlbumId/{id}")
@@ -33,9 +36,18 @@ public class AlbumController {
         return photoRepo.findAllByAlbumId(album.getId());
     }
 
+    @RequestMapping("/likeAlbum/{id}/{userId}")
+    public Like_ likeAlbum(
+            @PathVariable("id") Album album,
+            @PathVariable("userId") User user
+    ) {
+        return bll.likeAlbum(album, user);
+    }
+
+
     @RequestMapping("/getAlbumsByUserId/{id}")
     public List<Album> getAlbumsByUserId(@PathVariable("id") User user) {
-        return albumRepo.findAllByUserId(user.getId());
+        return user != null ? albumRepo.findAllByUserId(user.getId()): new ArrayList<Album>();
     }
 
     @RequestMapping(value = "/getAlbumByQuery/{query}", method = RequestMethod.GET)

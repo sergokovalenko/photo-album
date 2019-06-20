@@ -1,5 +1,6 @@
 package ru.sstu.photos.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import ru.sstu.photos.BL.Encoder;
 import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.domain.VERIFICATION_STATUS;
+import ru.sstu.photos.domain.Views.View;
 import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 import ru.sstu.photos.service.UserService;
@@ -72,7 +74,7 @@ public class UserController {
                 "Admin",
                 "Admin@mail.ru",
                 "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-                "",
+                "img/uploads/logan.jpg",
                 Instant.now(),
                 true,
                 VERIFICATION_STATUS.YES);
@@ -81,9 +83,12 @@ public class UserController {
         userRepo.save(user3);
         userRepo.save(user4);
 
-        friendRepo.save(
-                new Friend(user1.getId(), user2.getId())
-        );
+//        friendRepo.save(
+//                new Friend(user1.getId(), user2.getId())
+//        );
+        addFriendToUser(user1, user3);
+        addFriendToUser(user2, user3);
+        addFriendToUser(user3, user4);
     }
 
     @RequestMapping("/addFriendToUser/{id}/{friend}")
@@ -91,16 +96,25 @@ public class UserController {
             @PathVariable("id") User user,
             @PathVariable("friend") User friend
     ) {
-        Friend fr = new Friend(user.getId(), friend.getId()); // TODO: auto accept request now
-        Friend fr2 = new Friend(friend.getId(), user.getId());
-        friendRepo.save(fr2);
-        return friendRepo.save(fr);
+        if (user == null || friend == null ) {
+            return null;
+        }
+        if (friendRepo.findByUserIdAndUserId2(user.getId(), friend.getId()) == null) {
+            Friend fr = new Friend(user.getId(), friend.getId()); // TODO: auto accepting request now
+            Friend fr2 = new Friend(friend.getId(), user.getId()); // friend request is accepted by default
+            friendRepo.save(fr2);
+            return friendRepo.save(fr);
+        }
+        return null;
     }
 
     @RequestMapping("/getFriendsById/{id}")
-    public List<User> addFriendToUser(
+    public List<User> getFriendsById(
             @PathVariable("id") User user
     ) {
+        if (user == null) {
+            return new ArrayList<User>();
+        }
         List<Friend> frl = friendRepo.findAllByUserId(user.getId());
         List<User> url = new ArrayList<>();
         frl.forEach((Friend f) -> {
@@ -168,5 +182,6 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
+    @JsonView(View.UI.class)
     public void delete(@PathVariable("id") User user) { userRepo.delete(user); }
 }

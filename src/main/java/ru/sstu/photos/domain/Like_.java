@@ -11,22 +11,14 @@ public class Like_ {
     private Long id;
 
     private Long userId;
-    private Long photoId;
+    private Long albumId;
 
-    public Like_(Long userId, Long photoId) {
+    public Like_(Long userId, Long albumId) {
         this.userId = userId;
-        this.photoId = photoId;
+        this.albumId = albumId;
     }
 
     private Like_() {}
-
-    public Long getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(Long photoId) {
-        this.photoId = photoId;
-    }
 
     public Long getUserId() {
         return userId;
@@ -42,5 +34,13 @@ public class Like_ {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
     }
 }

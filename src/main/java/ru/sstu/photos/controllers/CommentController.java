@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.domain.Album;
 import ru.sstu.photos.domain.Comment;
-import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.CommentRepo;
 
 import java.util.List;
@@ -19,10 +18,17 @@ public class CommentController {
     @Autowired
     public CommentController(CommentRepo item) {
         this.commentRepo = item;
-        commentRepo.save(new Comment("Very interesting comment", 8L, 1L));
-        commentRepo.save(new Comment("Another very interesting comment", 9L, 1L));
-        commentRepo.save(new Comment("Very interesting comment", 8L, 2L));
-        commentRepo.save(new Comment("Another very interesting comment", 9L, 3L));
+        commentRepo.save(new Comment("Very interesting comment", 28L, 1L));
+        commentRepo.save(new Comment("Another very interesting comment", 28L, 1L));
+        commentRepo.save(new Comment("Very interesting comment", 28L, 2L));
+        commentRepo.save(new Comment("Another very interesting comment", 28L, 1L));
+        commentRepo.save(new Comment("Another lorem ipsum dolor very interesting comment", 29L, 3L));
+        commentRepo.save(new Comment("Another very lorem ipsum dolor interesting comment", 29L, 1L));
+        commentRepo.save(new Comment("Another very lorem ipsum dolor", 29L, 3L));
+        commentRepo.save(new Comment("Another very interesting comment", 29L, 4L));
+        commentRepo.save(new Comment("Another lorem ipsum dolor very interesting comment", 30L, 4L));
+        commentRepo.save(new Comment("Another very lorem ipsum dolor interesting comment", 30L, 4L));
+        commentRepo.save(new Comment("Another very lorem ipsum dolor", 31L, 5L));
     }
 
     @RequestMapping(value = "/getCommentsByAlbumId/{id}", method = RequestMethod.GET)

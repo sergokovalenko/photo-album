@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.sstu.photos.BL.BLL;
-import ru.sstu.photos.domain.Like_;
 import ru.sstu.photos.domain.Photo;
-import ru.sstu.photos.domain.User;
 import ru.sstu.photos.repo.PhotoRepo;
 
 import java.util.List;
@@ -24,18 +22,17 @@ public class PhotoController {
     public PhotoController(PhotoRepo photoRepo, BLL bll) {
         this.photoRepo = photoRepo;
         this.bll = bll;
-        photoRepo.save(new Photo(12L, 1L, "Test photo 1", "/img/uploads/2.png"));
-        photoRepo.save(new Photo(12L, 1L, "Test photo 2", "/img/uploads/3.jpg"));
-        photoRepo.save(new Photo(12L, 1L, "Test photo 3", "/img/uploads/4.jpg"));
-        photoRepo.save(new Photo(12L, 1L, "Test photo 4", "/img/uploads/5.jpeg"));
-    }
-
-    @RequestMapping("/likePhoto/{id}/{userId}")
-    public Like_ likePhoto(
-            @PathVariable("id") Photo photo,
-            @PathVariable("userId") User user
-    ) {
-        return bll.likePhoto(photo, user);
+        photoRepo.save(new Photo(28L, 1L,  "/img/uploads/2.png"));
+        photoRepo.save(new Photo(28L, 2L,  "/img/uploads/3.jpg"));
+        photoRepo.save(new Photo(28L, 3L,  "/img/uploads/8.jpg"));
+        photoRepo.save(new Photo(28L, 11L,  "/img/uploads/9.jpg"));
+        photoRepo.save(new Photo(28L, 1L,  "/img/uploads/7.jpg"));
+        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/6.jpeg"));
+        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/5.jpeg"));
+        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/3.png"));
+        photoRepo.save(new Photo(30L, 1L,  "/img/uploads/3.jpg"));
+        photoRepo.save(new Photo(30L, 4L,  "/img/uploads/2.png"));
+        photoRepo.save(new Photo(31L, 5L,  "/img/uploads/1.png"));
     }
 
     @GetMapping

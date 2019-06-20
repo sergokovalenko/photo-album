@@ -10,17 +10,15 @@ public class Photo {
     private Long id;
 
     private Long user_id;
-    private String text;
     private Integer likes;
     private Long albumId;
     private String url;
 
     private Photo() {}
 
-    public Photo(Long user_id, Long albumId, String text, String url) {
+    public Photo(Long user_id, Long albumId, String url) {
         this.user_id = user_id;
         this.url = url;
-        this.text = text;
         this.albumId = albumId;
         this.likes = 0;
     }
@@ -39,14 +37,6 @@ public class Photo {
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public Integer getLikes() {

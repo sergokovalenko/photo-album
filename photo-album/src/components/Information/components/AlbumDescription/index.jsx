@@ -10,13 +10,13 @@ const AlbumDescription = ({ item, curUserId }) => {
         id,
         photoCount,
         name,
-        user_id,
+        userId,
         access
     } = item;
     const [user, setUser] = useState(null);
     useEffect(() => {
         // fetching data to take user by owner Id
-        fetch(`${window.host}/api/user/${user_id}`, {
+        fetch(`${window.host}/api/user/${userId}`, {
             ...restSettings,
             method: 'GET'
         }).then(result => responseHandler(result))
@@ -25,8 +25,8 @@ const AlbumDescription = ({ item, curUserId }) => {
                 setUser(null);
             });
 
-        setUser(users.find(el => el.id === user_id));
-    }, [id, user_id]);
+        setUser(users.find(el => el.id === userId));
+    }, [id, userId]);
 
     return (
         <div className="album-info">
@@ -35,9 +35,9 @@ const AlbumDescription = ({ item, curUserId }) => {
                 user ?
                     <div className="album-info-nick text-monospace ml-3">
                         Owner:
-                        <Link to={`/user/${user_id}`} className="text-primary info-user-name">
+                        <Link to={`/user/${userId}`} className="text-primary info-user-name">
                             {
-                                curUserId === user_id ?
+                                curUserId === userId ?
                                     'You' :
                                     `${user.firstName} ${user.lastName}`
                             }

@@ -14,28 +14,28 @@ const Photo = ({ photo }) => {
             method: 'GET'
         }).then(res => responseHandler(res))
             .then((res) => setUser(res))
-            .catch(() => alert('кривой айди юзера для фотки'));
+            .catch(() => console.log('кривой айди юзера для фотки'));
     }, [photo.id, photo.user_id]);
 
     return (
         <>
             <div className="col-4 mt-3">
                 <img
-                    src={url}
+                    src={window.host + '/' + url}
                     alt={text}
                     className="pointer rounded-lg w-100 h-100"
                     data-toggle="modal"
-                    data-target={`#${text.replace(/ /g, '_')}`}
+                    data-target={`#${text && text.replace(/ /g, '_')}`}
                 />
             </div>
-            <div className="modal fade" id={text.replace(/ /g, '_')} tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal fade" id={text && text.replace(/ /g, '_')} tabIndex="-1" role="dialog" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <img
-                            src={url}
+                            src={window.host + url}
                             alt={text}
                             className="rounded-lg mx-auto w-90 mt-5 pointer"
-                            onClick={() => alert('like')}
+                            onClick={() => console.log('like')}
                         />
                         <hr className="line" />
                         <div className="row">

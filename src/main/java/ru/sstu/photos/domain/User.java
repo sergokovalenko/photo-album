@@ -1,5 +1,8 @@
 package ru.sstu.photos.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import ru.sstu.photos.domain.Views.View;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
@@ -59,7 +62,9 @@ public class User {
     private String url;
     @Column(name="email")
     private String email;
+
     @Column(name="password")
+    @JsonView(View.REST.class)
     private String password;
     @Column(name="birthDate")
     private Instant birthDate;

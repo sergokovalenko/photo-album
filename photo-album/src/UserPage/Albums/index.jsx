@@ -20,11 +20,11 @@ const Albums = ({item, albums}) => {
                 {
                     albums.length > 0 ?
                         albums.map(album => {
-                            if (!search || search && album.name.includes(search)) {
+                            if (!search || search && album.name && album.name.includes(search)) {
                                 return (
                                     <Link to={`/album/${album.id}`} key={album.name} className="col-4 mt-3">
                                         <img
-                                            src={album.url}
+                                            src={window.host + '/' + album.url}
                                             alt={album.name}
                                             className="pointer rounded-lg w-100 h-100"
                                         />

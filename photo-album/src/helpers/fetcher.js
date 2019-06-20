@@ -10,7 +10,7 @@ const fetcher = (url, thenFunc, errorString = 'error') => {
             thenFunc(res);
         })
         .catch(() => {
-            alert(errorString);
+            console.log(errorString);
         });
 };
 

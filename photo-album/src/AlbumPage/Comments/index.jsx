@@ -34,7 +34,7 @@ const Comments = ({ comments, createComment }) => {
                     comments.map(el => (
                         <div key={`c:${el.id}u:${el.user}`} className="comment d-flex mb-2">
                             <div className="comment-photo mr-3">
-                                <img src={el.url} alt="ava" className="rounded-circle w-100" />
+                                <img src={window.host + '/' + el.url} alt="ava" className="rounded-circle w-100" />
                             </div>
                             <div className="comment-content border-bottom border-info w-100 pb-3">
                                 <Link to={`/user/${el.user}`} className="d-block text-primary comment-user-name">

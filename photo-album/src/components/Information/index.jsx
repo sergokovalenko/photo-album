@@ -18,7 +18,7 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                         <div className="col-6 picture">
                             <img
                                 className="w-100 img-fluid img-thumbnail rounded-circle"
-                                src={url}
+                                src={window.host + '/' + url}
                                 alt="log"
                                 width="50%"
                             />
@@ -33,7 +33,9 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                     </div>
                 </div>
                 <div className="buttons-container">
-                    { isUser && curUserId !== id && !isFriend ? <Button content="Add friend" onClick={() => addFriend(curUserId, id)}/> : null }
+                    { isUser && curUserId !== id && !isFriend ?
+                        <Button content="Add friend" display onClick={() =>
+                        addFriend(curUserId, id)}/> : null }
                     {
                         isUser && curUserId === id ?
                             <Button

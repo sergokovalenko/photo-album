@@ -37,22 +37,22 @@ const FriendsContainer = ({item, friends, curUserId, onSearch, friendsIds}) => {
                                 <div key={nickname} className="col-12 card mt-3">
                                     <div className="card-body">
                                         <img
-                                            src={url}
+                                            src={window.host + '/' + url}
                                             alt="avatar"
                                             className="rounded-circle mr-2"
                                             width="60px"
                                             height="60px"
-                                            onClick={() => alert('like')}
+                                            onClick={() => console.log('like')}
                                         />
-                                        <div className="d-inline-block">
+                                        <div className="d-inline-block mr-2 ml-2">
                                             Nickname: {nickname}
                                         </div>
                                         <div className="d-inline-block ml-2">
                                             Name: <Link to={`/user/${friend.id}`}
                                                         className="text-primary info-user-name">{firstName} {lastName}</Link>
                                             {
-                                                !isCurUser && !friendsIds.includes(id) ?
-                                                    <button className="btn btn-success"
+                                                !isCurUser && !(friendsIds && friendsIds.includes(id)) ?
+                                                    <button className="btn btn-success ml-2"
                                                             onClick={() => addFriend(curUserId, id)}>Add
                                                         friend</button>
                                                     : null

@@ -4,7 +4,7 @@ import {restSettings} from "../../../../constants";
 
 const UploadPhoto = ({curUserId, id, item}) => {
     const [tag, setTag] = useState(item ? item.tag : '');
-    const [file, setFile] = useState('');
+    const [file] = useState('');
     const onButtonClick = () => {
         const data = new FormData();
 
@@ -32,7 +32,7 @@ const UploadPhoto = ({curUserId, id, item}) => {
                     })
                 }).then(res => responseHandler(res))
                     .then((res) => console.log(res))
-                    .catch(() => alert('creating album error'));
+                    .catch(() => console.log('creating album error'));
             });
     };
 

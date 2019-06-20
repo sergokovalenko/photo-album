@@ -27,15 +27,20 @@ class AlbumPage extends Component {
         }
     }
 
-    getData = (id) => {
+    getData = (id, curUserId) => {
         fetcher(
             `${window.host}/api/album/${id}`,
             (res) => this.setState({ album: res }),
             'error fetching albums'
         );
         fetcher(
-            `${window.host}/api/album/getPhotosByAlbumId//${id}`,
+            `${window.host}/api/album/getPhotosByAlbumId/${id}`,
             (res) => this.setState({ photos: res }),
+            'error fetching photos'
+        );
+        fetcher(
+            `${window.host}/api/user/${curUserId}`,
+            (res) => this.setState({ url: res.url }),
             'error fetching photos'
         );
         fetcher(
@@ -57,7 +62,7 @@ class AlbumPage extends Component {
                         ...comm
                     }));
                     this.setState({ comments: mapped.reverse() });
-                }, () => alert('Опять в бд кривой id для юзера'));
+                }, () => console.log('Опять в бд кривой id для юзера'));
             },
             'error fetching comments'
         );
@@ -80,10 +85,10 @@ class AlbumPage extends Component {
             })
         }).then(res => responseHandler(res))
             .then(() => {
-                this.getData(albumId);
+                this.getData(albumId, curUserId);
             })
             .catch(() => {
-                alert('comment wasn\'t sent')
+                console.log('comment wasn\'t sent')
             });
     }
 

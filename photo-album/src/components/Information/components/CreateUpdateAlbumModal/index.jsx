@@ -6,17 +6,44 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
     const [name, setName] = useState(item ? item.name : '');
     const [tag, setTag] = useState(item ? item.tag : '');
     const [access, setAccess] = useState(item ? item.access : '0');
+
     const [file, setFile] = useState('');
-    const onButtonClick = () => {
-        const data = new FormData();
-        data.append('file', file);
+
+    const uploadSingleFile = function uploadSingleFile(file) {
+        var formData = new FormData();
+        formData.append("file", file);
+
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("POST",`${window.host}//uploadFile`);
+        //
+        //
+        //
+        // xhr.onload = function () {
+        //     console.log(xhr.responseText);
+        //     var response = JSON.parse(xhr.responseText);
+        //     if (xhr.status == 200) {
+        //         singleFileUploadError.style.display = "none";
+        //         singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
+        //         singleFileUploadSuccess.style.display = "block";
+        //     } else {
+        //         singleFileUploadSuccess.style.display = "none";
+        //         singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+        //     }
+        // };
+        //
+        // xhr.send(formData);
+
 
         fetch(`${window.host}/uploadFile`, {
-            ...restSettings,
-            headers: { 'Content-Type': 'multipart/form-data' },
-            body: data
-        }).then(res => responseHandler(res))
-            .then(null, () => {
+            method: 'POST',
+            body: formData
+        }).then(res => {
+            debugger;
+            return responseHandler(res).then(x => file = x);
+        })
+            .then(x => file = x)
+            .then(() => {
+                debugger;
                 fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
                     ...restSettings,
                     method: item ? 'PUT' : 'POST',
@@ -24,13 +51,52 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
                         name,
                         access,
                         text: tag,
-                        user_id: curUserId,
-                        url: file ? `img/uploads/${file}` : null
+                        userId: curUserId,
+                        url: file ? `downloadFile/${file.fileName}` : null
                     })
                 }).then(res => responseHandler(res))
                     .then((res) => console.log(res))
-                    .catch(() => alert('creating album error'));
+                    .catch(() => console.log('creating album error'));
             });
+    };
+
+    const onButtonClick = (event) => {
+        var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+        var singleFileUploadError = document.querySelector('#singleFileUploadError');
+
+        const files = singleFileUploadInput.files;
+        if (files.length === 0) {
+            singleFileUploadError.innerHTML = "Please select a file";
+            singleFileUploadError.style.display = "block";
+        }
+        uploadSingleFile(files[0]);
+        event.preventDefault();
+
+
+        //
+        // const data = new FormData();
+        // data.append('file', file);
+        //
+        // fetch(`${window.host}/uploadFile`, {
+        //     ...restSettings,
+        //     headers: { 'Content-Type': 'multipart/form-data' },
+        //     body: data
+        // }).then(res => responseHandler(res))
+        //     .then(null, () => {
+        //         fetch(`${window.host}/api/album/${item ? item.id : ''}`, {
+        //             ...restSettings,
+        //             method: item ? 'PUT' : 'POST',
+        //             body: JSON.stringify({
+        //                 name,
+        //                 access,
+        //                 text: tag,
+        //                 user_id: curUserId,
+        //                 url: file ? `img/uploads/${file}` : null
+        //             })
+        //         }).then(res => responseHandler(res))
+        //             .then((res) => console.log(res))
+        //             .catch(() => console.log('creating album error'));
+        //     });
     };
 
     return (
@@ -45,15 +111,16 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
                     </div>
                     <div className="modal-body">
                         { item ? <input type="text" value={item.id} hidden readOnly /> : null }
-                        <form id="photo" encType="multipart/form-data"  className="form-group">
-                            <label htmlFor="photo">Album picture</label>
-                            <input
-                                type="file"
-                                className="form-control-file"
-                                id="file"
-                                onChange={(e) => setFile(e.target.files[0] ? e.target.files[0].name : '')}
-                            />
+
+                        <form id="singleUploadForm" name="singleUploadForm">
+                            <input id="singleFileUploadInput" type="file" name="file"
+                                   className="file-input" required/>
                         </form>
+                        <div className="upload-response">
+                            <div id="singleFileUploadError"/>
+                            <div id="singleFileUploadSuccess"/>
+                        </div>
+
                         <div className="form-group">
                             <label htmlFor="name">Name:</label>
                             <input
@@ -88,8 +155,8 @@ const CreateUpdateAlbumModal = ({ curUserId, id, item }) => {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-primary" data-dismiss="modal" onClick={() => onButtonClick()}>{ item ? 'Update' : 'Create'} album</button>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button className="btn btn-primary" /*data-dismiss="modal"*/ onClick={(event) => onButtonClick(event)}>{ item ? 'Update' : 'Create'} album</button>
+                        <button type="button" data-dismiss="modal" className="btn btn-secondary">Close</button>
                     </div>
                 </div>
             </div>

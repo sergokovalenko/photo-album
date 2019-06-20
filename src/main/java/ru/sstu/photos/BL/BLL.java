@@ -110,8 +110,8 @@ public class BLL {
         return false;
     }
 
-    public Like_ likePhoto(Photo photo, User user) {
-        Like_ like = new Like_(user.getId(), photo.getId());
+    public Like_ likeAlbum(Album album, User user) {
+        Like_ like = new Like_(user.getId(), album.getId());
         return likeRepo.save(like);
     }
 
