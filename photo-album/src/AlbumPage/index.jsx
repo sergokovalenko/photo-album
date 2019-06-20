@@ -40,7 +40,7 @@ class AlbumPage extends Component {
         );
         fetcher(
             `${window.host}/api/user/${curUserId}`,
-            (res) => this.setState({ url: res.url }),
+            (res) => this.setState({ url: res.url, user: res }),
             'error fetching photos'
         );
         fetcher(
@@ -62,6 +62,7 @@ class AlbumPage extends Component {
                         ...comm
                     }));
                     this.setState({ comments: mapped.reverse() });
+                    this.setState({ user: users.find(user => user.id) });
                 }, () => console.log('Опять в бд кривой id для юзера'));
             },
             'error fetching comments'
@@ -93,11 +94,11 @@ class AlbumPage extends Component {
     };
 
     render() {
-        const { album, photos, comments } = this.state;
+        const { album, photos, comments, user } = this.state;
 
         return album ?
             <>
-                <Information curUserId={this.props.curUserId} isUser={false} item={album} />
+                <Information curUserId={this.props.curUserId} isUser={false} item={album} user={user} />
                 <AlbumContent
                     createComment={(val) => this.createComment(val)}
                     path={this.props.location.pathname}

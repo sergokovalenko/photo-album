@@ -8,7 +8,7 @@ import responseHandler from "../../../../helpers/responseHandler";
 const AlbumDescription = ({ item, curUserId }) => {
     const {
         id,
-        photoCount,
+        likes,
         name,
         userId,
         access
@@ -45,7 +45,7 @@ const AlbumDescription = ({ item, curUserId }) => {
                     </div> :
                     'User not found'
             }
-            <div className="album-info-photos">Album include {photoCount} photos</div>
+            <div className="album-info-photos">Album has {likes} likes</div>
             <div className="album-info-access">Album is visible for {access.toLowerCase()}</div>
         </div>
     );

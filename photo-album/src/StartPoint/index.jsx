@@ -12,13 +12,13 @@ class StartPoint extends Component {
         super(props);
         this.state = {
             user: {id: 28, firstName: 'Fake', lastName: 'Mock user', nickname: 'testUser', url: 'img/uploads/7.jpg'},
-            isAuthorized: true,
+            isAuthorized: false, // TODO:  remove on authorize
             friends: [],
             friendsIds: [],
             albums: []
         };
 
-        // remove on authorize
+        // TODO:  remove on authorize
         this.updateFriends();
         this.updateAlbums();
     }
@@ -30,9 +30,13 @@ class StartPoint extends Component {
         this.setState({user, isAuthorized: true});
     };
 
+    onLogout = () => {
+        this.setState({user: null, isAuthorized: false});
+    }
+
     updateFriends = () => {
         const {user} = this.state;
-        if (this.friendsInterval) {
+        if (user && this.friendsInterval) {
             clearInterval(this.friendsInterval);
         }
 
@@ -108,11 +112,14 @@ class StartPoint extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to={'/user/' + user.id}>Home <span className="sr-only">(current)</span></Link>
+                            <li className="nav-item">
+                                <Link className="nav-link" to={(() => user ? ('/user/' + user.id) : '/')()}>Home <span className="sr-only"/></Link>
                             </li>
-                            <li className="nav-item active">
-                                <Link className="nav-link" to={'/user/' + user.id + '/albums'}>My albums <span className="sr-only">(current)</span></Link>
+                            <li className="nav-item">
+                                 <Link className="nav-link" to={(() => user ? ('/user/' + user.id + '/albums') : '/')()}>My albums <span className="sr-only"/></Link>
+                            </li>
+                            <li className="nav-item primary">
+                                <Link onClick={this.onLogout} className="nav-link" to={'/'}>Logout <span className="sr-only"/></Link>
                             </li>
                         </ul>
                     </div>

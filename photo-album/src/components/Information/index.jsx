@@ -8,9 +8,10 @@ import './index.scss';
 import UploadPhoto from "./components/UploadPhoto";
 import {Redirect} from "react-router-dom";
 
-const Information = ({item, isUser, curUserId, isFriend}) => {
+const Information = ({item, isUser, curUserId, isFriend, user}) => {
     const [isDeleted, deleteAlbum] = useState(false);
-    const {url, id, userId, admin} = item;
+        const {url, id, userId, isAdmin} = item;
+        const admin = user ? user.admin : false;
 
     return (
         <>
