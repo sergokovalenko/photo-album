@@ -20,7 +20,7 @@ const SingleFriend = ({ friend, curUserId, friendsIds, isCurUser }) => {
         <div key={nickname} className="col-12 card mt-3">
             <div className="card-body">
                 <img
-                    src={url}
+                    src={window.host + '/' + url}
                     alt="avatar"
                     className="rounded-circle mr-2"
                     width="60px"
