@@ -64,7 +64,6 @@ public class User {
     private String email;
 
     @Column(name="password")
-    @JsonView(View.REST.class)
     private String password;
     @Column(name="birthDate")
     private Instant birthDate;

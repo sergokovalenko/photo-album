@@ -1,6 +1,5 @@
 package ru.sstu.photos.controllers;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,6 @@ import ru.sstu.photos.BL.Encoder;
 import ru.sstu.photos.domain.Friend;
 import ru.sstu.photos.domain.User;
 import ru.sstu.photos.domain.VERIFICATION_STATUS;
-import ru.sstu.photos.domain.Views.View;
 import ru.sstu.photos.repo.FriendRepo;
 import ru.sstu.photos.repo.UserRepo;
 import ru.sstu.photos.service.UserService;
@@ -113,7 +111,7 @@ public class UserController {
             @PathVariable("id") User user
     ) {
         if (user == null) {
-            return new ArrayList<User>();
+            return new ArrayList<>();
         }
         List<Friend> frl = friendRepo.findAllByUserId(user.getId());
         List<User> url = new ArrayList<>();
@@ -182,6 +180,5 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    @JsonView(View.UI.class)
     public void delete(@PathVariable("id") User user) { userRepo.delete(user); }
 }

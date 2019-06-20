@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sstu.photos.BL.BLL;
 import ru.sstu.photos.domain.*;
 import ru.sstu.photos.repo.AlbumRepo;
+import ru.sstu.photos.repo.LikeRepo;
 import ru.sstu.photos.repo.PhotoRepo;
 
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ public class AlbumController {
     private final AlbumRepo albumRepo;
     private final PhotoRepo photoRepo;
     private final BLL bll;
+    private final LikeRepo likeRepo;
 
     @Autowired
-    public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo, BLL bll) {
+    public AlbumController(AlbumRepo albumRepo, PhotoRepo photoRepo, BLL bll, LikeRepo likeRepo) {
         this.albumRepo = albumRepo;
         this.photoRepo = photoRepo;
         this.bll = bll;
+        this.likeRepo = likeRepo;
         albumRepo.save(new Album("test album", 28L, ACCESS.ALL, "img/uploads/img1342273306.jpg"));
         albumRepo.save(new Album("simple album", 28L, ACCESS.ALL, "img/uploads/6.jpg"));
         albumRepo.save(new Album("My BEST album", 29L, ACCESS.ALL, "img/uploads/8.jpg"));
@@ -41,13 +44,28 @@ public class AlbumController {
             @PathVariable("id") Album album,
             @PathVariable("userId") User user
     ) {
+        if (likeRepo.findByUserIdAndAlbumId(user.getId(), album.getId()) != null) {
+            return null;
+        }
         return bll.likeAlbum(album, user);
     }
 
 
     @RequestMapping("/getAlbumsByUserId/{id}")
     public List<Album> getAlbumsByUserId(@PathVariable("id") User user) {
-        return user != null ? albumRepo.findAllByUserId(user.getId()): new ArrayList<Album>();
+        if (user == null) {
+            return new ArrayList<>();
+        }
+        List<Album> albs = albumRepo.findAllByUserId(user.getId());
+        List<Album> aalbs = new ArrayList<>();
+        albs.forEach(a -> {
+            List<Like_> lik = likeRepo.findAllByAlbumId(a.getId());
+            List<Photo> phList = photoRepo.findAllByAlbumId(a.getId());
+            a.setLikes(lik.size());
+            a.setPhotosCount(phList.size());
+            aalbs.add(a);
+        });
+        return aalbs;
     }
 
     @RequestMapping(value = "/getAlbumByQuery/{query}", method = RequestMethod.GET)
@@ -64,12 +82,17 @@ public class AlbumController {
 
     @GetMapping("{id}")
     public Album getOne(@PathVariable("id") Album item) {
+        if (item == null) {
+            return null;
+        }
+        List<Like_> lik = likeRepo.findAllByAlbumId(item.getId());
+        item.setLikes(lik.size());
         return item;
     }
 
     @PostMapping
     public Album create(@RequestBody Album item) {
-        item.setPhotos_count(0);
+        item.setPhotosCount(0);
         return albumRepo.save(item);
     }
 

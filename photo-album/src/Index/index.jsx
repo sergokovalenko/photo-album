@@ -126,11 +126,6 @@ class Index extends Component {
                                 <div className="centeredBlock">
                                     <div className="col-xs-12 col-sm-3 col-sm-offset-2">
                                         <h1>Photo album</h1>
-                                        <ul>
-                                            <li><Link to='/user/30'>user</Link></li>
-                                            <li><Link to='/album/1'>album</Link></li>
-                                            <li><Link to='/'>home</Link></li>
-                                        </ul>
                                     </div>
                                     <div className="col-xs-12 col-sm-5 col-sm-offset-2">
                                         <div className="tab">

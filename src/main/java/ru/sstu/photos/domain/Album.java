@@ -11,15 +11,18 @@ public class Album {
     private Long id;
 
     private String name;
-    private Integer photos_count;
+    private Integer photosCount;
     private Long userId;
     private String url;
+    private Integer likes;
 
     public Album(String name, Long userId, ACCESS access, String url) {
         this.name = name;
         this.userId = userId;
         this.access = access;
         this.url = url;
+        this.likes = 0;
+        this.photosCount = 0;
     }
     private Album() {}
 
@@ -39,12 +42,12 @@ public class Album {
         this.name = name;
     }
 
-    public Integer getPhotos_count() {
-        return photos_count;
+    public Integer getPhotosCount() {
+        return photosCount;
     }
 
-    public void setPhotos_count(Integer photos_count) {
-        this.photos_count = photos_count;
+    public void setPhotosCount(Integer photos_count) {
+        this.photosCount = photos_count;
     }
 
     public Long getUserId() {
@@ -71,5 +74,13 @@ public class Album {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 }
