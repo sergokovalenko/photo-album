@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Route, Redirect, Link} from 'react-router-dom';
 import Index from './../Index/index';
 import Signup from './../Signup/index'
 import fetcher from "../helpers/fetcher";
@@ -11,7 +11,7 @@ class StartPoint extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: { id: 28, firstName: 'Fake', lastName: 'Mock user', nickname: 'testUser', url: 'img/uploads/7.jpg' },
+            user: {id: 28, firstName: 'Fake', lastName: 'Mock user', nickname: 'testUser', url: 'img/uploads/7.jpg'},
             isAuthorized: true,
             friends: [],
             friendsIds: [],
@@ -27,11 +27,11 @@ class StartPoint extends Component {
     albumInterval = null;
 
     onAuthorize = (user) => {
-        this.setState({ user, isAuthorized: true });
+        this.setState({user, isAuthorized: true});
     };
 
     updateFriends = () => {
-        const { user } = this.state;
+        const {user} = this.state;
         if (this.friendsInterval) {
             clearInterval(this.friendsInterval);
         }
@@ -40,7 +40,7 @@ class StartPoint extends Component {
             fetcher(
                 `${window.host}/api/user/getFriendsById/${user.id}`,
                 (res) => {
-                    this.setState({friends: res, friendsIds: res.map(el => el.id)} )
+                    this.setState({friends: res, friendsIds: res.map(el => el.id)})
                 },
                 'error fetching friends'
             );
@@ -51,7 +51,7 @@ class StartPoint extends Component {
         if (value && value.trim()) {
             fetcher(
                 `${window.host}/api/user/getUsersByNicknameLastFirst/${value}`,
-                (res) => this.setState({ friends: res }),
+                (res) => this.setState({friends: res}),
                 'error fetching friends'
             );
         } else {
@@ -60,7 +60,7 @@ class StartPoint extends Component {
     };
 
     updateAlbums = () => {
-        const { user } = this.state;
+        const {user} = this.state;
         if (this.albumInterval) {
             clearInterval(this.albumInterval);
         }
@@ -69,7 +69,7 @@ class StartPoint extends Component {
             fetcher(
                 `${window.host}/api/album/getAlbumsByUserId/${user.id}`,
                 (res) => this.setState({
-                    albums: res.map(el => ({ ...el, access: el.access.toLowerCase() }))
+                    albums: res.map(el => ({...el, access: el.access.toLowerCase()}))
                 }),
                 'albums weren\'t found'
             );
@@ -80,7 +80,7 @@ class StartPoint extends Component {
         if (value && value.trim()) {
             fetcher(
                 `${window.host}/api/album/getAlbumByQuery/${value}`,
-                (res) => this.setState({ friends: res }),
+                (res) => this.setState({friends: res}),
                 'error fetching albums'
             );
         } else {
@@ -93,30 +93,52 @@ class StartPoint extends Component {
             user, isAuthorized,
             friends, albums, friendsIds
         } = this.state;
-        const currentUser = { user, albums, friends, friendsIds };
+        const currentUser = {user, albums, friends, friendsIds};
 
 
         return (
-            <div className="container">
-                <Route path="/" exact render={() => <Index authorize={(val) => this.onAuthorize(val)} />} />
-                <Route path="/file" exact component={FileUpload} />
-                <Route path="/signup" exact component={Signup} />
-                <Route path='/user/:itemId' render={
-                    props => isAuthorized && user.id ?
-                        <UserPage
-                            {...props}
-                            curUser={currentUser}
-                            curUserId={user.id}
-                            onSearch={(val) => this.onFriendsSearch(val)}
-                            onAlbumsSearch={val => this.onAlbumsSearch(val)}
-                        />
-                        : <Redirect to="/" />
-                } />
-                <Route path='/album/:itemId' render={
-                    props => isAuthorized && user.id ?
-                        <AlbumPage {...props} curUser={currentUser} curUserId={user.id} onSearch={(val) => this.onAlbumsSearch(val)} />
-                        : <Redirect to="/" />
-                } />
+            <div>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <a className="navbar-brand" href="#">Photo album</a>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                                <Link className="nav-link" to={'/user/' + user.id}>Home <span className="sr-only">(current)</span></Link>
+                            </li>
+                            <li className="nav-item active">
+                                <Link className="nav-link" to={'/user/' + user.id + '/albums'}>My albums <span className="sr-only">(current)</span></Link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div className="container">
+                    <Route path="/" exact render={() => <Index authorize={(val) => this.onAuthorize(val)}/>}/>
+                    <Route path="/file" exact component={FileUpload}/>
+                    <Route path="/signup" exact component={Signup}/>
+                    <Route path='/user/:itemId' render={
+                        props => isAuthorized && user.id ?
+                            <UserPage
+                                {...props}
+                                curUser={currentUser}
+                                curUserId={user.id}
+                                onSearch={(val) => this.onFriendsSearch(val)}
+                                onAlbumsSearch={val => this.onAlbumsSearch(val)}
+                            />
+                            : <Redirect to="/"/>
+                    }/>
+                    <Route path='/album/:itemId' render={
+                        props => isAuthorized && user.id ?
+                            <AlbumPage {...props} curUser={currentUser} curUserId={user.id}
+                                       onSearch={(val) => this.onAlbumsSearch(val)}/>
+                            : <Redirect to="/"/>
+                    }/>
+                </div>
             </div>
         );
     }
