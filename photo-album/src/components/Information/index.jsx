@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../Button';
 import UserDescription from './components/UserDescription';
 import AlbumDescription from './components/AlbumDescription';
@@ -6,12 +6,17 @@ import CreateUpdateAlbumModal from "./components/CreateUpdateAlbumModal";
 import addFriend from "../../helpers/addFriendRequest";
 import './index.scss';
 import UploadPhoto from "./components/UploadPhoto";
+import {Redirect} from "react-router-dom";
 
 const Information = ({item, isUser, curUserId, isFriend}) => {
-    const {url, id, user_id, admin} = item;
+    const [isDeleted, deleteAlbum] = useState(false);
+    const {url, id, userId, admin} = item;
 
     return (
         <>
+            {
+                isDeleted ? <Redirect to={`/user/${curUserId}`} /> : null
+            }
             <div className="wrapper">
                 <div className="info">
                     <div className="row">
@@ -46,7 +51,7 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                             null
                     }
                     {
-                        !isUser && curUserId === user_id ?
+                        !isUser && curUserId === userId ?
                             <>
                                 <Button
                                     content="Upload photo"
@@ -62,7 +67,7 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                             null
                     }
                     {
-                        (!isUser && curUserId) === user_id || admin ?
+                        (!isUser && curUserId) === userId || admin ?
                             <Button
                                 content="Delete album"
                                 onClick={() => {
@@ -72,7 +77,7 @@ const Information = ({item, isUser, curUserId, isFriend}) => {
                                             method: 'DELETE',
                                             headers: { 'Content-Type': 'application/json' },
                                         }
-                                    ).then(result => console.log(result));
+                                    ).then(result => result.ok ? deleteAlbum(true) : alert('Deleting problems'));
                                 }}
                             /> :
                             null

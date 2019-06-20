@@ -90,7 +90,7 @@ class AlbumPage extends Component {
             .catch(() => {
                 console.log('comment wasn\'t sent')
             });
-    }
+    };
 
     render() {
         const { album, photos, comments } = this.state;
@@ -98,7 +98,14 @@ class AlbumPage extends Component {
         return album ?
             <>
                 <Information curUserId={this.props.curUserId} isUser={false} item={album} />
-                <AlbumContent createComment={(val) => this.createComment(val)} path={this.props.location.pathname} item={album} photos={photos} comments={comments} />
+                <AlbumContent
+                    createComment={(val) => this.createComment(val)}
+                    path={this.props.location.pathname}
+                    item={album}
+                    photos={photos}
+                    comments={comments}
+                    onSearch={(val, is) => this.onSearch(val, is)}
+                />
             </> :
             'Fetching data';
     }

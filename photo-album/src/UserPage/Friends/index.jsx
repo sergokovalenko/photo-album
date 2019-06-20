@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
 import Search from "../../components/Search";
-import addFriend from "../../helpers/addFriendRequest";
+import SingleFriend from "./SingleFriend";
 
-const FriendsContainer = ({item, friends, curUserId, onSearch, friendsIds}) => {
+const FriendsContainer = ({item, friends, curUserId, onSearch, curUser}) => {
     const isCurUser = item.id === curUserId;
     const [search, setSearch] = useState('');
     const onSearchClick = () => {
@@ -25,41 +24,14 @@ const FriendsContainer = ({item, friends, curUserId, onSearch, friendsIds}) => {
                 {
                     friends.length > 0 ?
                         friends.map(friend => {
-                            const {
-                                nickname,
-                                url,
-                                firstName,
-                                lastName,
-                                id
-                            } = friend;
-
                             return (
-                                <div key={nickname} className="col-12 card mt-3">
-                                    <div className="card-body">
-                                        <img
-                                            src={window.host + '/' + url}
-                                            alt="avatar"
-                                            className="rounded-circle mr-2"
-                                            width="60px"
-                                            height="60px"
-                                            onClick={() => console.log('like')}
-                                        />
-                                        <div className="d-inline-block mr-2 ml-2">
-                                            Nickname: {nickname}
-                                        </div>
-                                        <div className="d-inline-block ml-2">
-                                            Name: <Link to={`/user/${friend.id}`}
-                                                        className="text-primary info-user-name">{firstName} {lastName}</Link>
-                                            {
-                                                !isCurUser && !(friendsIds && friendsIds.includes(id)) ?
-                                                    <button className="btn btn-success ml-2"
-                                                            onClick={() => addFriend(curUserId, id)}>Add
-                                                        friend</button>
-                                                    : null
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
+                                <SingleFriend
+                                    key={friend.nickname}
+                                    friend={friend}
+                                    isCurUser={isCurUser}
+                                    curUserId={curUserId}
+                                    friendsIds={curUser.friendsIds}
+                                />
                             );
                         }) :
                         null
