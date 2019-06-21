@@ -22,17 +22,17 @@ public class PhotoController {
     public PhotoController(PhotoRepo photoRepo, BLL bll) {
         this.photoRepo = photoRepo;
         this.bll = bll;
-        photoRepo.save(new Photo(28L, 1L,  "/img/uploads/2.png"));
-        photoRepo.save(new Photo(28L, 2L,  "/img/uploads/3.jpg"));
-        photoRepo.save(new Photo(28L, 3L,  "/img/uploads/8.jpg"));
-        photoRepo.save(new Photo(28L, 11L,  "/img/uploads/9.jpg"));
-        photoRepo.save(new Photo(28L, 1L,  "/img/uploads/7.jpg"));
-        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/6.jpeg"));
-        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/5.jpeg"));
-        photoRepo.save(new Photo(29L, 1L,  "/img/uploads/3.png"));
-        photoRepo.save(new Photo(30L, 1L,  "/img/uploads/3.jpg"));
-        photoRepo.save(new Photo(30L, 4L,  "/img/uploads/2.png"));
-        photoRepo.save(new Photo(31L, 5L,  "/img/uploads/1.png"));
+        photoRepo.save(new Photo(28L, 1L,  "/downloadFile/2.png"));
+        photoRepo.save(new Photo(28L, 2L,  "/downloadFile/3.jpg"));
+        photoRepo.save(new Photo(28L, 3L,  "/downloadFile/8.jpg"));
+        photoRepo.save(new Photo(28L, 11L,  "/downloadFile/9.jpg"));
+        photoRepo.save(new Photo(28L, 1L,  "/downloadFile/7.jpg"));
+        photoRepo.save(new Photo(29L, 1L,  "/downloadFile/6.jpeg"));
+        photoRepo.save(new Photo(29L, 1L,  "/downloadFile/5.jpeg"));
+        photoRepo.save(new Photo(29L, 1L,  "/downloadFile/3.png"));
+        photoRepo.save(new Photo(30L, 1L,  "/downloadFile/3.jpg"));
+        photoRepo.save(new Photo(30L, 4L,  "/downloadFile/2.png"));
+        photoRepo.save(new Photo(31L, 5L,  "/downloadFile/1.png"));
     }
 
     @GetMapping

@@ -265,7 +265,7 @@ class Signup extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <Link className="btn btn-default" to="/">Sign in</Link>
-                                                    <button className="btn btn-primary" onClick={(e) => this.onSignup(e)}>Sign up</button>
+                                                    <Link to={'/'} className="btn btn-primary" onClick={(e) => this.onSignup(e)}>Sign up</Link>
                                                 </div>
                                             </form>
                                         </div>

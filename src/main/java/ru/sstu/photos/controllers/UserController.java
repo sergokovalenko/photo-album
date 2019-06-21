@@ -40,7 +40,7 @@ public class UserController {
                 "Vano",
                 "vano@mail.ru",
                 "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-                "img/uploads/7.jpg",
+                "downloadFile/7.jpg",
                 Instant.now(),
                 false,
                 VERIFICATION_STATUS.YES);
@@ -50,7 +50,7 @@ public class UserController {
                 "Vitya",
                 "vitya@mail.ru",
                 "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-                "img/uploads/8.jpg",
+                "downloadFile/8.jpg",
                 Instant.now(),
                 false,
                 VERIFICATION_STATUS.YES
@@ -61,7 +61,7 @@ public class UserController {
                 "Vovan",
                 "vova@mail.ru",
                 "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-                "img/uploads/9.jpg",
+                "downloadFile/9.jpg",
                 Instant.now(),
                 false,
                 VERIFICATION_STATUS.YES
@@ -72,7 +72,7 @@ public class UserController {
                 "Admin",
                 "Admin@mail.ru",
                 "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-                "img/uploads/logan.jpg",
+                "downloadFile/logan.jpg",
                 Instant.now(),
                 true,
                 VERIFICATION_STATUS.YES);
