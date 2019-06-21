@@ -10,8 +10,7 @@ import {Redirect} from "react-router-dom";
 
 const Information = ({item, isUser, curUserId, isFriend, user}) => {
     const [isDeleted, deleteAlbum] = useState(false);
-        const {url, id, userId, isAdmin} = item;
-        const admin = user ? user.admin : false;
+        const {url, id, userId} = item;
 
     return (
         <>
@@ -86,7 +85,7 @@ const Information = ({item, isUser, curUserId, isFriend, user}) => {
                             null
                     }
                     {
-                        (!isUser && curUserId) === userId || admin ?
+                        (!isUser && curUserId) === userId || (item && item.admin || user && user.admin) ?
                             <Button
                                 content="Delete album"
                                 onClick={() => {

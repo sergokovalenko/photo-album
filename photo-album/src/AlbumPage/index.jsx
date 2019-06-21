@@ -93,12 +93,12 @@ class AlbumPage extends Component {
             });
     };
 
-    render() {
+    render(props) {
         const { album, photos, comments, user } = this.state;
 
         return album ?
             <>
-                <Information curUserId={this.props.curUserId} isUser={false} item={album} user={user} />
+                <Information curUserId={this.props.curUserId} isUser={false} item={album} user={user} {...props} />
                 <AlbumContent
                     createComment={(val) => this.createComment(val)}
                     path={this.props.location.pathname}
