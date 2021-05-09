@@ -1,0 +1,10 @@
+.pointer {
+    cursor: pointer;
+    &:hover {
+        filter: brightness(80%);
+    }
+}
+
+.w-90 {
+    width: 90%;
+}
